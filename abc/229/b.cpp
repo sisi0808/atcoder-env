@@ -55,8 +55,20 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
+int N,K,M;
+int H,W;
 graph G;
 
 int main(void){
     fio();
+    string a,b; cin >> a >> b;
+    reverse(ALL(a));
+    reverse(ALL(b));
+    int f = 0;
+    rep(i,min(a.size(), b.size())){
+        if((a[i]-'0') + (b[i]-'0') > 9) f = 1;
+    }
+
+    string ans = f ? "Hard" : "Easy";
+    cout << ans << endl;
 }

@@ -55,8 +55,17 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
+int N,K,M;
+int H,W;
 graph G;
 
 int main(void){
     fio();
+    char a,b,c,d;
+    cin >> a >> b >> c >> d;
+    if((a == d && a == '#' && b == c && b == '.' ) || (a == d && a == '.' && b == c && b == '#')){
+        no();
+        return 0;
+    }
+    yes();
 }

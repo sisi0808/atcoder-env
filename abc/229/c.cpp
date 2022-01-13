@@ -59,4 +59,21 @@ graph G;
 
 int main(void){
     fio();
+    ll N, W; cin >> N >> W;
+    vector<pair<ll, ll>> C;
+    rep(i,N){
+        ll a,b; cin >> a >> b;
+        C.push_back({a,b});
+    }
+    sort(RALL(C));
+    ll o = 0;
+    ll w = 0;
+
+    rep(i,N){
+        ll a = min(C[i].second, W-w);
+        o += (a * C[i].first);
+        w += a;
+        if(w == W) break;
+    }
+    cout << o << endl;
 }

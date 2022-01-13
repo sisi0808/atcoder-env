@@ -59,4 +59,26 @@ graph G;
 
 int main(void){
     fio();
+    /*
+    '.'をK個含む連続する部分文字列の中から最長のものを求める
+    */
+    string S; ll K;
+    cin >> S >> K;
+    ll N = S.size();
+
+    vector<ll> A(N+1, 0);
+    rep(i,N){
+        if(S[i] == '.') A[i+1] = A[i] + 1;
+        else A[i+1] = A[i];
+    }
+
+    ll r = 0;
+    ll ans = 0;
+    rep(l,N){
+        while(r < N && A[r+1] - A[l] <= K){
+            r ++;
+        }
+        chmax(ans, r-l);
+    }
+    cout << ans << endl;
 }

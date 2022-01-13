@@ -55,6 +55,8 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
+int N,K,M;
+int H,W;
 graph G;
 
 int main(void){
