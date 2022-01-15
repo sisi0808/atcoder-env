@@ -59,4 +59,23 @@ graph G;
 
 int main(void){
     fio();
+    string X; cin >> X;
+    ll N = X.size();
+    vector<ll> A(N+1,0);
+    rep(i,N){
+        A[i+1] = A[i] + (X[i]-'0');
+    }
+    reverse(ALL(A));
+    string ans = "";
+    ll tem = 0;
+    rep(i,N){
+        tem += A[i];
+        ans.push_back(tem % 10 + '0');
+        tem /= 10;
+    }
+
+    if(tem > 0) ans += tem + '0';
+
+    reverse(ALL(ans));
+    cout << ans << endl;
 }

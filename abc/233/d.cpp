@@ -59,4 +59,17 @@ graph G;
 
 int main(void){
     fio();
+    ll N,K; cin >> N >> K;
+    vector<ll> A(N);
+    vector<ll> B(N+1,0);
+    rep(i,N) cin >> A[i];
+    rep(i,N) B[i+1] = B[i] + A[i];
+
+    ll ans = 0;
+    map<ll, ll> mp;
+    rep(i,N){
+        mp[B[i]]++;
+        ans += mp[B[i+1] - K];
+    }
+    cout << ans << endl;
 }
