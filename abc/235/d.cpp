@@ -59,67 +59,47 @@ graph G;
 
 vector<ll> dp;
 ll a,N;
+ll M = 10000009;
 
-void dfs(int v, ll w) {
-    if(v > 1000010) return;
-    if(v != 1 && w >= dp[v]) return;
-    dp[v] = w;
-    cout << v << " " << w << endl;
+ll bfs(int v, ll w){
+    dp.resize(M, -1);
+    dp[v] = 0;
+
     // 現在地、コスト（v, w）
-    string sn = to_string(v);
-    dfs(v*a, w+1);
+    // 現在地(q)
+    queue<ll> q;
+    q.push(v);
 
-    int as = sn.size();
-    vector<ll> ws;
-    rep(i,as){
-        w++;
-        if(sn[0] != '0'){
-            // 回転
-            string ss = sn[sn.size() - 1] + sn.substr(0, sn.size() - 1);
-            v = stoll(ss);
-            bool f = false;
-            fore(www, ws){
-                if(www == v) f = true;
-            }
-            if(f) continue;
-            ws.push_back(v);
+    while(!q.empty()){
+        ll vv = q.front(); q.pop();
+        ll ww = dp[vv];
 
-            dfs(v, w);
-            dfs(v*a, w+1);
-            sn = ss;
+        // 倍する時
+        if(vv*a < M && dp[vv*a] == -1 ){
+            dp[vv*a] = ww + 1;
+            q.push(vv*a);
+            if(vv*a == N) break;
         }
-        else{
-            string ss = sn[sn.size() - 1] + sn.substr(0, sn.size() - 1);
-            sn = ss;
+
+        // 並び替える時
+        if(vv >= 10 && vv%10 != 0 ){
+            string sn = to_string(vv);
+            ll rv = stoll(sn[sn.size() - 1] + sn.substr(0, sn.size() - 1));
+            if(dp[rv] == -1){
+                dp[rv] = ww + 1;
+                q.push(rv);
+                if(rv == N) break;
+            }
         }
     }
-    cout << v << " " << w << endl;
+
+    return dp[N];
 }
 int main(void){
     fio();
     cin >> a >> N;
-    dp.resize(10000009);
-    rep(i,10000009) dp[i]=INT_MAX;
-    dp[1] = 0;
-    string t = to_string(N);
 
-    dfs(1,0);
-    // Nを回転させて、最も小さいものを探索
-    ll ans = INT_MAX;
-    int ts = t.size();
-    rep(i,ts){
-        if(t[0] != '0'){
-            // 回転
-            string ss = t[t.size() - 1] + t.substr(0, t.size() - 1);
-            ans = min(ans, dp[stoll(ss)]);
-            t = ss;
-        }
-        else{
-            string ss = t[t.size() - 1] + t.substr(0, t.size() - 1);
-            t = ss;
-        }
-    }
-    if(ans == INT_MAX) cout << -1 << endl;
-    else cout << ans << endl;
+    ll ans = bfs(1,0);
+    cout << ans << endl;
 
 }
