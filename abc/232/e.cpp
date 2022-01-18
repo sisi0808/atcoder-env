@@ -1,4 +1,8 @@
 #include <bits/stdc++.h>
+/* ACLのライブラリを追加*/
+#include<atcoder/all>
+using namespace atcoder;
+
 #define fio()         \
     cin.tie(nullptr); \
     ios::sync_with_stdio(false);
@@ -56,7 +60,32 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
+using mint = modint998244353;
 
 int main(void){
     fio();
+    int h, w, k;
+    cin >> h >> w >> k;
+    int sx, sy, tx, ty;
+    cin >> sx >> sy >> tx >> ty;
+
+    vector<vector<mint>> dp(2, vector<mint>(2));
+    dp[sx==tx][sy==ty] = 1;
+
+    rep(ki,k){
+        vector<vector<mint>> p(2, vector<mint>(2));
+        swap(dp,p);
+        rep(j,2){
+            dp[0][j] += p[0][j]*(h-2);
+            dp[1][j] += p[0][j];
+            dp[0][j] += p[1][j]*(h-1);
+        }
+        rep(i,2){
+            dp[i][0] += p[i][0]*(w-2);
+            dp[i][1] += p[i][0];
+            dp[i][0] += p[i][1]*(w-1);
+        }
+    }
+    cout << dp[1][1].val() << endl;
+    return 0;
 }

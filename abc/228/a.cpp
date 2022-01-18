@@ -63,4 +63,15 @@ graph G;
 
 int main(void){
     fio();
+    int s,t,x; cin >> s >> t  >> x;
+    bool ans = false;
+
+    if(s < t){
+        if(s <= x && x < t) ans = true;
+    }
+    else{
+        if(s <= x) ans = true;
+        if(x < t) ans = true;
+    }
+    yn(ans);
 }

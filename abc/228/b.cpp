@@ -63,4 +63,16 @@ graph G;
 
 int main(void){
     fio();
+    int N,X; cin >> N >> X;
+    vector<int> A(N+1);
+    rep(i,N) cin >> A[i+1];
+
+    int ans = 0;
+    while(A[X] != 0){
+        int x = A[X];
+        A[X] = 0;
+        X = x;
+        ans ++;
+    }
+    cout << ans << endl;
 }

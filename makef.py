@@ -9,6 +9,9 @@ import shutil
 # 入力として受け取ったコンテスト番号のフォルダを作成
 def make_con_dir(con_cat, con_num):
 
+    # 成功フラグ
+    message = False
+
     tgt_dir = os.path.join(con_cat, con_num)
     # コンテスト種別のフォルダを作成
     if not os.path.exists(con_cat):
@@ -17,9 +20,12 @@ def make_con_dir(con_cat, con_num):
     # その回のフォルダを作成
     if not os.path.exists(tgt_dir):
         os.makedirs(tgt_dir)
+        message = True
 
         for l in 'abcde':
             shutil.copy("template.cpp", os.path.join(tgt_dir, l+'.cpp'))
+
+    if not (message): print("既に存在するフォルダです")
 
 # 誤って作ってしまったコンテスト番号のフォルダを削除
 def del_con_dir(con_cat, con_num):
@@ -29,6 +35,8 @@ def del_con_dir(con_cat, con_num):
     # 指定されたコンテスト番号のフォルダを削除
     if os.path.exists(tgt_dir):
         shutil.rmtree(tgt_dir)
+    else:
+        print("そのフォルダは存在しません")
 
     # もしそのコンテスト種別のフォルダが空なら、コンテスト種別のフォルダを削除
     if len(os.listdir(con_cat)) == 0:

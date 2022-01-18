@@ -63,4 +63,17 @@ graph G;
 
 int main(void){
     fio();
+    int N,K; cin >> N >> K;
+    vector<int> P(N);
+    vector<int> Q(N);
+    rep(i,N){
+        int p1,p2,p3; cin >> p1 >> p2 >> p3;
+        P[i] = p1 + p2 + p3;
+    }
+    Q = P;
+    sort(RALL(P));
+
+    rep(i,N){
+        yn((P[K-1] <= Q[i]+300 ? true: false));
+    }
 }

@@ -63,4 +63,27 @@ graph G;
 
 int main(void){
     fio();
+    int Q; cin >> Q;
+    const int modn = pow(2,20);
+    /* 数列の管理*/
+    vector<ll> A(modn, -1);
+    /* -1の(Xiが代入されていない)インデックス番号*/
+    set<ll> st;
+    rep(i,modn) st.insert(i);
+
+    rep(i,Q){
+        ll t,x; cin >> t >> x;
+        if(t == 1){
+            int h = x % modn;
+            /* -1のインデックス番号を探索*/
+            auto it = st.lower_bound(h);
+            /* 一周した場合、先頭のインデックスを参照（先頭は必ず初期値）*/
+            if(it == st.end()) it = st.begin();
+            A[*it] = x;
+            st.erase(it);
+        }
+        else{
+            cout << A[x % modn] << endl;
+        }
+    }
 }
