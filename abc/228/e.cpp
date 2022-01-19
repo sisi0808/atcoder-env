@@ -61,6 +61,22 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
 
+ll POW(ll a, ll n, ll mod) {
+  ll res = 1;
+  a %= mod;
+  while (n > 0) {
+    if (n & 1) res = res * a % mod;
+    a = a * a % mod;
+    n >>= 1;
+  }
+  return res;
+}
+
 int main(void){
     fio();
+    ll N, K, M; cin >> N >> K >> M;
+    if(M%modll == 0) {cout << 0 << endl; return 0;}
+
+    ll ans = pow_mod(M, pow_mod(K, N, modll-1), modll);
+    cout << ans << endl;
 }
