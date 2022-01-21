@@ -61,6 +61,38 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
 
+/*
+プロジェクトに配属される最大人数ΣAi
+プロジェクトは最大でΣAi / K
+sum_h = ΣAi
+sum_p = ΣAi / K
+
+作れない時:
+* 残りの部署数がK個以下
+プロジェクト数
+(sum_h - Σremain(k)) / k
+
+
+小さい方から見ていき、その時点までの合計数と全体数を比較
+合計数が全体数の半部を上回ったらbreak;
+*/
+
 int main(void){
     fio();
+    int n,k; cin >> n >> k;
+    vector<ll> A(n);
+    rep(i,n) cin >> A[i];
+
+    ll ok = 0;
+    ll ng = 1e18 / k;
+
+    while(ng-ok > 1){
+        ll x = (ok+ng)/2; ll sum_h = 0;
+        rep(i,n){ sum_h += min(A[i], x); }
+        if(sum_h >= x*k) ok = x;
+        else ng = x;
+
+    }
+    cout << ok << endl;
+
 }
