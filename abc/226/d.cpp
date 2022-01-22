@@ -63,4 +63,28 @@ graph G;
 
 int main(void){
     fio();
+    int n; cin >> n;
+    vector<pair<ll, ll>> xy;
+    set<pair<ll, ll>> ans;
+
+    rep(i,n){
+        ll x,y; cin >> x >> y;
+        xy.push_back({x,y});
+    }
+
+    rep(i,n){
+        repp(j,n,i+1){
+            ll xi,yi,xj,yj;
+            tie(xi,yi) = xy[i];
+            tie(xj,yj) = xy[j];
+            ll xx = xi - xj;
+            ll yy = yi - yj;
+            ll g = __gcd(xx, yy);
+            ans.insert({xx/g, yy/g});
+            ans.insert({-1 * xx/g, -1 * yy/g});
+        }
+    }
+
+    cout << ans.size() << endl;
+
 }
