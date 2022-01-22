@@ -63,8 +63,45 @@ graph G;
 
 int main(void){
     fio();
-    string s; cin >> s;
-    ll k; cin >> k;
+    int n; cin >> n;
 
+    // 修行済みリスト
+    set<ll> exp;
+    // 修練にかかる時間
+    vector<ll> T(n);
+    // 修行リスト
+    vector<queue<ll>> que(n);
+
+    rep(i,n){
+        cin >> T[i];
+        ll k; cin >> k;
+        rep(j,k){
+            int a; cin >> a;
+            que[i].push(a-1);
+        }
+    }
+
+    queue<ll> qt;
+    qt.push(n-1);
+    exp.insert(n-1);
+    //rep(i,n) cout << que[i].front() << endl;
+    while(!qt.empty()){
+        ll q = qt.front(); qt.pop();
+
+        while(!que[q].empty()){
+            if(exp.find(que[q].front()) == exp.end()){
+                qt.push(que[q].front());
+                exp.insert(que[q].front());
+            }
+            que[q].pop();
+        }
+
+    }
+
+    // 修練にかかる合計時間
+    ll t_time = 0;
+    fore(t, exp) t_time += T[t];
+    //fore(t, exp) cout <<  t << endl;
+    cout << t_time << endl;
 
 }

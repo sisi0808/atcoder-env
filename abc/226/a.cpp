@@ -63,8 +63,9 @@ graph G;
 
 int main(void){
     fio();
-    string s; cin >> s;
-    ll k; cin >> k;
-
+    string x; cin >> x;
+    double xx = stold(x);
+    if((xx-int(xx)) < 0.5) cout << int(xx) << endl;
+    else cout << int(xx)+1 << endl;
 
 }

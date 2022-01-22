@@ -63,8 +63,15 @@ graph G;
 
 int main(void){
     fio();
-    string s; cin >> s;
-    ll k; cin >> k;
+    int n; cin >> n;
+    set<vector<ll>> st;
 
+    rep(i,n){
+        int l; cin >> l;
+        vector<ll> B(l);
+        rep(i,l) cin >> B[i];
+        st.insert(B);
+    }
 
+    cout << st.size() << endl;
 }

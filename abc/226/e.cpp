@@ -63,8 +63,4 @@ graph G;
 
 int main(void){
     fio();
-    string s; cin >> s;
-    ll k; cin >> k;
-
-
 }
