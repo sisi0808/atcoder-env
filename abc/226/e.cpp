@@ -60,7 +60,47 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
+using mint = modint998244353;
 
 int main(void){
     fio();
+    int n,m; cin >> n >> m;
+
+    dsu d(n);
+    vector<pair<int, int>> edges;
+
+    rep(i,m){
+        int u,v; cin >> u >> v;
+        d.merge(u-1, v-1);
+        edges.emplace_back(u-1, v-1);
+    }
+
+    vector<int> Vedge(n,0);
+
+    /* 辺の数 */
+    for(auto [a,b] : edges){
+        Vedge[d.leader(b)]++;
+    }
+
+    graph td = d.groups();
+    fore(t,td){
+        /* 辺が出ていない頂点が存在する場合*/
+        if(t.size() == 1){
+            cout << 0 << endl;
+            return 0;
+        }
+        /* 辺の数と頂点数が一致しない場合（確実に余る辺 or 頂点が発生する）*/
+        if(Vedge[d.leader(t[0])] != t.size()){
+            cout << 0 << endl;
+            return 0;
+        }
+
+    }
+
+    int group_sum = td.size();
+    mint ans = 1;
+    rep(i,group_sum) ans *= 2;
+    cout << ans.val() << endl;
+
+
 }

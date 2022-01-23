@@ -60,6 +60,7 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
+using mint = modint998244353;
 
 int main(void){
     fio();
