@@ -62,19 +62,42 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
-vector<vector<ll>> a(20, vector<ll> (20,0));
-vector<int> vec;
 int n;
+int a[20][20];
 
-void calc(){
+vector<pair<int, int>> vec;
+bool used[20];
+
+ll calc(){
     /* 組み合わせが確定したら*/
     if(vec.size() == n){
-        ll ans = vec[0];
-        rep(i,n-1) ans ^= vec[i+1];
+        ll ans = 0;
+        fore(p,vec) ans ^= (a[p.first][p.second]);
+        return ans;
     }
 
+    /* ペアの一人目を決める*/
+    int l;
+    rep(i,2*n){
+        if(!used[i+1]){
+            l = i+1;
+            break;
+        }
+    }
+    used[l] = true;
 
-    return 0;
+    /* 残りの中から、ペアの二人目を確定させる*/
+    ll ans = 0;
+    rep(i,2*n){
+        if(!used[i+1]){
+            vec.push_back({l,i+1}); used[i+1] = true;
+            ans = max(ans, calc());
+            vec.pop_back(); used[i+1] = false;
+        }
+    }
+
+    used[l] = false;
+    return ans;
 }
 
 int main(void){
@@ -82,7 +105,7 @@ int main(void){
     cin >> n;
     for(int i = 1; i <= 2*n-1; i++){
         for(int j = i+1; j <= 2*n; j++){
-        cin >> a[i][j];
+            cin >> a[i][j];
         }
     }
 
