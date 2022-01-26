@@ -64,4 +64,43 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int n,q; cin >> n >> q;
+    vector<pair<int, int>> train(n, {-1,-1});
+
+    /* first means connection betewwn front*/
+    /* second means connection betewwn back*/
+
+    rep(i,q){
+        int q_type; cin >> q_type;
+        if(q_type==1){
+            int x,y; cin >> x >> y;
+            x--; y--;
+            train[x].second = y;
+            train[y].first = x;
+
+        }
+        else if(q_type==2){
+            int x,y; cin >> x >> y;
+            x--; y--;
+            train[x].second = -1;
+            train[y].first= -1;
+        }
+        else{
+            vector<int> link;
+            int x; cin >> x;
+            x--;
+            //cout << x << " ";
+            while(train[x].first != -1) x = train[x].first;
+            //cout << x << endl;
+            while(train[x].second != -1){
+                link.push_back(x);
+                x = train[x].second;
+            }
+            link.push_back(x);
+
+            cout << link.size();
+            for(auto x: link) cout << " " << x+1;
+            cout << endl;
+        }
+    }
 }
