@@ -21,6 +21,7 @@ using ll = long long;
 using ld = long double;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
+using P = vector<ll, ll>;
 const int SIZE = 100005;
 const int inf = INT_MAX;
 const int modi = 1000000007;

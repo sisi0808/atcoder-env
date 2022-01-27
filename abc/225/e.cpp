@@ -21,6 +21,7 @@ using ll = long long;
 using ld = long double;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
+using P = vector<ll, ll>;
 const int SIZE = 100005;
 const int inf = INT_MAX;
 const int modi = 1000000007;
@@ -62,6 +63,46 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
+
+struct frac{
+    /* (p,q) = (y,x) */
+    ll p,q;
+    /* x/yを昇順に並び替えた時、最も小さくなる数で初期化 */
+    frac(ll P=1, ll Q=0): p(P), q(Q){}
+
+    /* 傾きが大きいほど(x/yが小さいほど)、座標の左側に位置する！ */
+    bool operator<(const frac &other) const{
+        /* x1/y1 < x2/y2 の式変形 */
+        return q*other.p < p*other.q;
+    }
+    bool operator<=(const frac &other) const{
+        /* x1/y1 <= x2/y2 の式変形 */
+        return q*other.p <= p*other.q;
+    }
+};
+
 int main(void){
     fio();
+    int n; cin >> n;
+    vector<pair<frac, frac>> p;
+    vector<ll> x(n),y(n);
+
+    rep(i,n){
+        cin >> x[i] >> y[i];
+    }
+
+    rep(i,n) p.push_back({frac(y[i], x[i]-1), frac(y[i]-1, x[i])});
+    /* p[i].second を基準にソート */
+    sort(ALL(p), [&](pair<frac,frac> a, pair<frac,frac> b) {return a.second < b.second; });
+
+    int ans = 0;
+    frac r;
+    rep(i,n){
+        if(r <= p[i].first){
+            r = p[i].second;
+            ans++;
+        }
+    }
+
+    cout << ans << endl;
 }
