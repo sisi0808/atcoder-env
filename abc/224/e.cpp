@@ -60,9 +60,48 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-graph G;
+//graph G;
 using mint = modint998244353;
+
+/*
+* 二分探索を用いる
+* 最大移動回数は[その座標よりも大きい数]の数
+* これ以上移動出来ない＝自分より大きい数が縦横にいない
+* メモ化が使いやすい
+
+* 自分がいる列で2分探索を行い、自分以上がいるか
+
+目の整数、何番目か
+vector<pair<ll,ll>> mp
+*/
 
 int main(void){
     fio();
+    int h,w,n; cin >> h >> w >> n;
+
+    /* i毎の情報*/
+    vector<ll> r(n),c(n),a(n);
+    /* (key,value) = (a, [i1...)  */
+    map<ll, vector<int>> mp;
+    /* 縦、横ごとの最大値*/
+    vector<ll> rmax(h+1,0), cmax(w+1,0);
+    /* 答え */
+    vector<ll> dp(n);
+
+    rep(i,n){
+        cin >> r[i] >> c[i] >> a[i];
+        mp[a[i]].push_back(i);
+    }
+
+    /* key(a)が大きい方から逆順に*/
+    for(auto it = mp.rbegin(); it != mp.rend(); it++){
+        for(auto i : it->second) dp[i] = max(rmax[r[i]], cmax[c[i]]);
+        for(auto i : it->second){
+            rmax[r[i]] = max(rmax[r[i]], dp[i] + 1);
+            cmax[c[i]] = max(cmax[c[i]], dp[i] + 1);
+        }
+    }
+
+    rep(i,n) cout << dp[i] << endl;
+
 }
