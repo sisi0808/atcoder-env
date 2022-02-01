@@ -65,4 +65,24 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int n; cin >> n;
+    vector<int> a(n+1), b(n+1);
+    rep(i,n) cin >> a[i+1];
+    rep(i,n) cin >> b[i+1];
+
+    vector<vector<mint>> dp(n+1, vector<mint> (3005, 0));
+    dp[0][0] = 1;
+
+    repp(i,n+1,1){
+        rep(j,3005) dp[i-1][j+1] += dp[i-1][j];
+        repp(j,b[i]+1,a[i]){
+            dp[i][j] += dp[i-1][j];
+        }
+    }
+
+    /* 答えの計算 */
+    mint ans = 0;
+    fore(a,dp[n]){ans += a;}
+    cout << ans.val() << endl;
+
 }
