@@ -62,62 +62,23 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
 using mint = modint998244353;
-/*
-パターンは以下の2つか、それをRotateした計１２通りのみ
-
-(x,y) * (a,b,c) * 以下のパターン
- --------------
-|              |
- --------------
- --------------
-|              |
- --------------
- --------------
-|              |
- --------------
-       OR
- --------------
-|              |
- --------------
- ------ -------
-|      ||      |
-|      ||      |
-|      ||      |
-|      ||      |
- ------ -------
-*/
-
-long long ll_Ceil(ll a, ll b){
-    return (a+b-1)/b;
-}
-
-bool f2(ll x, ll y, ll a, ll b){
-    ll w = ll_Ceil(a,y) + ll_Ceil(b,y);
-    return w <= x;
-}
-
-bool f(ll x, ll y, ll a, ll b, ll c){
-    ll w = ll_Ceil(a,y);
-    if(w >= x) return false;
-    x -= w;
-    return f2(x,y,b,c) || f2(y,x,b,c);
-}
 
 int main(void){
     fio();
-    ll x,y,a,b,c; cin >> x >> y >> a >> b >> c;
+    int n; cin >> n;
+    vector<int> h(n);
+    rep(i,n) cin >> h[i];
+    vector<ll> dp(n);
 
-    /* fiは(x,y)の条件*/
-    rep(fi,2) {
-        /* riは(x,y)の条件*/
-        rep(ri,3){
-            if(f(x,y,a,b,c)){
-                yes();
-                return 0;
-            }
-            swap(a,b); swap(b,c);
+    repp(i,n,1){
+        if(i != 1 && abs(h[i] - h[i-1]) + dp[i-1] > abs(h[i] - h[i-2]) + dp[i-2]){
+            dp[i] = abs(h[i] - h[i-2]) + dp[i-2];
         }
-        swap(x,y);
+        else{
+            dp[i] = abs(h[i] - h[i-1]) + dp[i-1];
+        }
     }
-    no();
+
+    cout << dp[n-1] << endl;
+    return 0;
 }

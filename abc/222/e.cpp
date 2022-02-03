@@ -65,4 +65,6 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int n,m,k; cin >> n >> m >> k;
+
 }

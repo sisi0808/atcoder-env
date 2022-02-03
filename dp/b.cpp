@@ -23,9 +23,9 @@ using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = vector<ll, ll>;
 const int SIZE = 100005;
-const int inf = INT_MAX;
+const int inf = 100000000;
 const int modi = 1000000007;
-const long long INF = LLONG_MAX;
+const long long INF = 10000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -62,62 +62,22 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
 using mint = modint998244353;
-/*
-パターンは以下の2つか、それをRotateした計１２通りのみ
-
-(x,y) * (a,b,c) * 以下のパターン
- --------------
-|              |
- --------------
- --------------
-|              |
- --------------
- --------------
-|              |
- --------------
-       OR
- --------------
-|              |
- --------------
- ------ -------
-|      ||      |
-|      ||      |
-|      ||      |
-|      ||      |
- ------ -------
-*/
-
-long long ll_Ceil(ll a, ll b){
-    return (a+b-1)/b;
-}
-
-bool f2(ll x, ll y, ll a, ll b){
-    ll w = ll_Ceil(a,y) + ll_Ceil(b,y);
-    return w <= x;
-}
-
-bool f(ll x, ll y, ll a, ll b, ll c){
-    ll w = ll_Ceil(a,y);
-    if(w >= x) return false;
-    x -= w;
-    return f2(x,y,b,c) || f2(y,x,b,c);
-}
 
 int main(void){
     fio();
-    ll x,y,a,b,c; cin >> x >> y >> a >> b >> c;
+    int n,k; cin >> n >> k;
+    vector<int> h(n);
+    rep(i,n) cin >> h[i];
+    vector<ll> dp(n, inf);
+    dp[0] = 0;
 
-    /* fiは(x,y)の条件*/
-    rep(fi,2) {
-        /* riは(x,y)の条件*/
-        rep(ri,3){
-            if(f(x,y,a,b,c)){
-                yes();
-                return 0;
-            }
-            swap(a,b); swap(b,c);
+    repp(i,n,1){
+        repp(j,k+1,1){
+            if(i-j < 0) break;
+            dp[i] = min(dp[i], abs(h[i] - h[i-j]) + dp[i-j] );
         }
-        swap(x,y);
     }
-    no();
+
+    cout << dp[n-1] << endl;
+    return 0;
 }

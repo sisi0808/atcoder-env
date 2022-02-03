@@ -6,6 +6,25 @@ import shutil
 実行時引数にdelを渡すと、フォルダの削除も可能
 """
 
+# 入力として受け取ったコンテストのフォルダを作成
+# これはabc223_aといった形式に沿わないコンテスト用
+# 例）dp_a
+def make_ex_con_dir(con_cat):
+
+    # 成功フラグ
+    message = False
+
+    # コンテスト種別のフォルダを作成
+    if not os.path.exists(con_cat):
+        os.makedirs(con_cat)
+        message = True
+
+        for l in 'abcdefghijklmnopqrstuvwxyz':
+            shutil.copy("template.cpp", os.path.join(con_cat, l+'.cpp'))
+
+    if not (message): print("既に存在するフォルダです")
+
+
 # 入力として受け取ったコンテスト番号のフォルダを作成
 def make_con_dir(con_cat, con_num):
 
@@ -45,6 +64,7 @@ def del_con_dir(con_cat, con_num):
 
 # 入力の引数に'del'を指定したらフォルダを削除、指定しなければフォルダ作成
 if __name__ == '__main__':
+    #make_ex_con_dir('dp')
 
     # コンテスト種別、コンテスト番号
     #con_cat, con_num = input("以下の用に入力（abc 222）：").split()
