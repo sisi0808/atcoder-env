@@ -23,9 +23,9 @@ using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = vector<ll, ll>;
 const int SIZE = 100005;
-const int inf = INT_MAX;
+const int inf = 100000000;
 const int modi = 1000000007;
-const long long INF = LLONG_MAX;
+const long long INF = 10000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -65,4 +65,25 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    ll n, w; cin >> n >> w;
+    const int v = 1000000;
+    vector<vector<ll>> dp(n+1, vector<ll> (v, INF));
+    vector<int> ww(n), vv(n);
+    rep(i,n) cin >> ww[i] >> vv[i];
+    dp[0][0] = 0;
+
+    rep(i,n){
+        rep(j,v){
+            chmin(dp[i+1][j], dp[i][j]);
+            chmin(dp[i+1][vv[i]+j], dp[i][j] + ww[i]);
+        }
+    }
+
+    ll ans = 0;
+    rep(i,v) {
+        if(dp[n][i] <= w) ans = i;
+    }
+
+    cout << ans << endl;
+
 }

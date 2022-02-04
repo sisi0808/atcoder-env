@@ -65,4 +65,19 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int n; cin >> n;
+    vector<vector<ll>> dp(n+1, vector<ll> (3, 0));
+
+    rep(i,n){
+        vector<int> abc(3);
+        rep(i,3) cin >> abc[i];
+        rep(j,3){
+            rep(k,3){
+                if(j==k) continue;
+                dp[i+1][j] = max(dp[i+1][j], dp[i][k]+abc[j]);
+            }
+        }
+    }
+
+    cout << max({dp[n][0], dp[n][1], dp[n][2]}) << endl;
 }

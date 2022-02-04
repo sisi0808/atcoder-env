@@ -65,4 +65,23 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int n, w; cin >> n >> w;
+    vector<vector<ll>> dp(n+1, vector<ll> (w+1, -1));
+    vector<int> ww(n), vv(n);
+    rep(i,n) cin >> ww[i] >> vv[i];
+    dp[0][0] = 0;
+
+    rep(i,n){
+        rep(j,w+1){
+            chmax(dp[i+1][j], dp[i][j]);
+            if(ww[i] + j <= w && dp[i][j] != -1){
+                chmax(dp[i+1][ww[i]+j], dp[i][j] + vv[i]);
+            }
+        }
+    }
+    ll ans = 0;
+    rep(i,w) ans = max(ans, dp[n][i+1]);
+
+    cout << ans << endl;
+
 }
