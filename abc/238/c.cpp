@@ -66,11 +66,22 @@ using mint = modint998244353;
 int main(void){
     fio();
     string n; cin >> n;
-    sort(RALL(n));
-    vector<string> ans(2, "");
+    mint ans = 0;
+    vector<mint> memo(20);
+    memo[0] = 45;
 
-    for(int i=0; i < n.size(); i++){
-        ans[i%2] += n[i];
+    mint q = 9;
+    repp(i,20,1){
+        q *= 10;
+        memo[i] = q*(q+1)/2;
     }
-    cout << stoll(ans[0]) * stoll(ans[1]) << endl;
+    q = 0;
+    rep(i,n.size()-1){
+        q *= 10; q+=9;
+        ans += memo[i];
+    }
+    mint qq = stoll(n);
+    qq -= q; ans += (qq*(qq+1)/2);
+
+    cout << ans.val() << endl;
 }

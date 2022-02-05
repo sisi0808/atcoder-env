@@ -65,12 +65,21 @@ using mint = modint998244353;
 
 int main(void){
     fio();
-    string n; cin >> n;
-    sort(RALL(n));
-    vector<string> ans(2, "");
-
-    for(int i=0; i < n.size(); i++){
-        ans[i%2] += n[i];
+    int n; cin >> n;
+    ll r = 0;
+    vector<int> d;
+    d.push_back(0);
+    d.push_back(360);
+    rep(i,n){
+        int a; cin >> a;
+        r += a;
+        r %= 360;
+        d.push_back(r);
     }
-    cout << stoll(ans[0]) * stoll(ans[1]) << endl;
+    ll ans = 0;
+    sort(ALL(d));
+    rep(i,d.size()-1){
+        if(ans < d[i+1] - d[i]) ans = d[i+1] - d[i];
+    }
+    cout << ans << endl;
 }
