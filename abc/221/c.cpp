@@ -23,9 +23,9 @@ using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = vector<ll, ll>;
 const int SIZE = 100005;
-const int inf = INT_MAX;
+const int inf = 100000000;
 const int modi = 1000000007;
-const long long INF = LLONG_MAX;
+const long long INF = 10000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -65,34 +65,4 @@ using mint = modint998244353;
 
 int main(void){
     fio();
-    string s,t; cin >> s >> t;
-    int slen = s.size();
-    int tlen = t.size();
-    int dp[4000][4000];
-    rep(i,4000) rep(j,4000) dp[i][j] = 0;
-
-    //slenはSの長さ、tlenはTの長さとする
-    repp(i,slen,1)repp(j,tlen,1){
-        if(s[i]==t[j])dp[i][j]=dp[i-1][j-1]+1;
-        else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
-    }
-    //dp[slen][tlen]が求める長さ
-
-    int len=dp[slen][tlen];
-    int i=slen-1;
-    int j=tlen-1;
-    string ans = "";
-    while(len>0){
-        if(s[i]==t[j]){
-            ans+=s[i];
-            i--;
-            j--;
-            len--;
-        }else if(dp[i][j]==dp[i-1][j]){
-            i--;
-        }else{
-            j--;
-        }
-    }
-    cout << ans << endl;
 }
