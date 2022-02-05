@@ -68,31 +68,36 @@ int main(void){
     string s,t; cin >> s >> t;
     int slen = s.size();
     int tlen = t.size();
-    int dp[4000][4000];
-    rep(i,4000) rep(j,4000) dp[i][j] = 0;
+    vector<vector<int>>  dp(4000, vector<int> (4000, 0));
 
-    //slenはSの長さ、tlenはTの長さとする
-    repp(i,slen,1)repp(j,tlen,1){
-        if(s[i]==t[j])dp[i][j]=dp[i-1][j-1]+1;
-        else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+    // DPを使い共通文字列長の最大値を求める
+    rep(i,slen){
+        rep(j,tlen){
+            if(s[i] == t[j]) dp[i+1][j+1] = dp[i][j] + 1;
+            else dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j]);
+        }
     }
-    //dp[slen][tlen]が求める長さ
 
-    int len=dp[slen][tlen];
+    // 最長共通部分文字列の長さ
+    int len = dp[slen][tlen];
     int i=slen-1;
     int j=tlen-1;
+    // 答えとなる文字列
+    //vector<char> ans(len);
     string ans = "";
-    while(len>0){
-        if(s[i]==t[j]){
-            ans+=s[i];
+
+    while(len > 0){
+        if(s[i] == t[j]){
+            ans += s[i];
             i--;
             j--;
             len--;
-        }else if(dp[i][j]==dp[i-1][j]){
+        }else if(dp[i+1][j+1] == dp[i][j+1]){
             i--;
         }else{
             j--;
         }
     }
+    reverse(ALL(ans));
     cout << ans << endl;
 }
