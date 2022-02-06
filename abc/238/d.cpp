@@ -68,7 +68,8 @@ int main(void){
     int n; cin >> n;
 
     rep(i,n){
-        string a,s; cin >> a >> s;
-
+        ll a,s; cin >> a >> s;
+        if(2*a <= s && ((s-2*a) & a) == 0) yes();
+        else no();
     }
 }

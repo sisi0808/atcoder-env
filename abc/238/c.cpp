@@ -68,17 +68,12 @@ int main(void){
     string n; cin >> n;
     mint ans = 0;
     vector<mint> memo(20);
-    memo[0] = 45;
 
-    mint q = 9;
-    repp(i,20,1){
-        q *= 10;
-        memo[i] = q*(q+1)/2;
-    }
-    q = 0;
+    mint q = 0;
     rep(i,n.size()-1){
         q *= 10; q+=9;
-        ans += memo[i];
+        ans += (q-memo[i])*((q-memo[i])+1)/2;
+        memo[i+1] = q;
     }
     mint qq = stoll(n);
     qq -= q; ans += (qq*(qq+1)/2);
