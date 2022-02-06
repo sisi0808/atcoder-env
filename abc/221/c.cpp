@@ -66,11 +66,18 @@ using mint = modint998244353;
 int main(void){
     fio();
     string n; cin >> n;
-    sort(RALL(n));
-    vector<string> ans(2, "");
+    sort(ALL(n));
 
-    for(int i=0; i < n.size(); i++){
-        ans[i%2] += n[i];
-    }
-    cout << stoll(ans[0]) * stoll(ans[1]) << endl;
+    // 組み合わせ全探索
+    ll ans = 0;
+    do{
+        vector<string> a(2, "");
+        repp(i,n.size(),1){
+            ll _ans = stoll(n.substr(0,i)) *  stoll(n.substr(i)) ;
+            chmax(ans, _ans);
+        }
+
+    }while(next_permutation(ALL(n)));
+
+    cout << ans << endl;
 }
