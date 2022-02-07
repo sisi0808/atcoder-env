@@ -65,4 +65,22 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int n; cin >> n;
+    vector<pair<ll, int>> ab;
+    rep(i,n) {
+        ll a,b; cin >> a >> b;
+        ab.push_back({a, 1});
+        ab.push_back({a+b, -1});
+    };
+    sort(ALL(ab));
+    vector<ll> ans(n+1,0);
+
+    int k = 0;
+    rep(i,2*n-1){
+        k += ab[i].second;
+        ans[k] += (ab[i+1].first - ab[i].first);
+    }
+
+    rep(i,n) cout << ans[i+1] << " ";
+    cout << endl;
 }
