@@ -2,7 +2,7 @@
 
 ## Installation
 
-First, install[online-judge-tools](https://github.com/online-judge-tools/oj/blob/master/docs/getting-started.ja.md) using pip and clone this repository.
+First, install [online-judge-tools](https://github.com/online-judge-tools/oj/blob/master/docs/getting-started.ja.md) using pip and clone this repository.
 
 ```
 pip3 install --user online-judge-tools
