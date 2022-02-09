@@ -8,7 +8,7 @@ using namespace atcoder;
     ios::sync_with_stdio(false);
 using namespace std;
 #define rep(i, n) for(int i = 0; i < int(n); ++i)
-#define rrep(i, n) for(int i = n; i > 0; --i)
+#define rrep(i, n) for(int i = n; i >= 0; --i)
 #define repp(i, n, m) for(int i = m; i < int(n); ++i)
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
@@ -63,6 +63,22 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
+// コツは後ろから順番に処理して行くこと
+
 int main(void){
     fio();
+    int n; cin >> n;
+    string s; cin >> s;
+
+    deque<int> ans;
+    ans.push_back(n);
+
+    rrep(i,n-1){
+        if(s[i] == 'L') ans.push_back(i);
+        else ans.push_front(i);
+    }
+    for(auto a: ans) cout << a << " ";
+    cout << endl;
+
+    return 0;
 }
