@@ -23,4 +23,7 @@ python makef.py del
 
 # submit code
 oj s main.cpp
+
+# auto commit and push
+sudo python3 auto.py
 ```
