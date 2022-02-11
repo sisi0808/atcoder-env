@@ -4,6 +4,13 @@ import sys
 import subprocess
 from collections import defaultdict
 
+"""
+以下の場合を考慮
+* 変更がなかった場合
+* xxx_a-eとついたファイルが変更されていなかった場合
+* ファイルが追加のみされた場合
+"""
+
 # automate the following comand.
 # [git add -A, git commit -m "xxx-a-c", git push origin master]
 

@@ -8,7 +8,7 @@ using namespace atcoder;
     ios::sync_with_stdio(false);
 using namespace std;
 #define rep(i, n) for(int i = 0; i < int(n); ++i)
-#define rrep(i, n) for(int i = n; i > 0; --i)
+#define rrep(i, n) for(int i = n; i >= 0; --i)
 #define repp(i, n, m) for(int i = m; i < int(n); ++i)
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
@@ -61,57 +61,8 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
-vector<ll> dist;
 using mint = modint998244353;
-
-int n,m;
-vector<ll> h;
-
-void load_map(int st){
-    dist.resize(n,-1*INF);
-    dist[st]=0;
-    queue<ll> pp;
-    pp.push(st);
-
-    while(!pp.empty()){
-        st = pp.front(); pp.pop();
-        for(auto c: G[st]){
-            /* 幸福が＋になるとき */
-            if(h[st] > h[c]){
-                if(dist[c] < dist[st] + (h[st]-h[c])){
-                    dist[c] = dist[st] + (h[st]-h[c]);
-                    pp.push(c);
-                }
-            }
-            /* 幸福が－になるとき */
-            else if(h[st] <= h[c]){
-                if(dist[c] < dist[st] + 2*(h[st]-h[c])){
-                    dist[c] = dist[st] + 2*(h[st]-h[c]);
-                    pp.push(c);
-                }
-            }
-        }
-    }
-}
 
 int main(void){
     fio();
-    cin >> n >> m;
-    h.resize(n);
-    G.resize(n);
-    rep(i,n) cin >> h[i];
-    rep(i,m) {
-        int u,v; cin >> u >> v;
-        u--; v--;
-        G[u].push_back(v);
-        G[v].push_back(u);
-    }
-    load_map(0);
-
-    ll ans = 0;
-    rep(i,n){
-        if(ans < dist[i]) ans = dist[i];
-    }
-
-    cout << ans << endl;
 }
