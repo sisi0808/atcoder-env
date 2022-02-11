@@ -11,12 +11,12 @@ from collections import defaultdict
 * ファイルが追加のみされた場合
 """
 
-# automate the following comand.
+# Automate the following comand.
 # [git add -A, git commit -m "xxx-a-c", git push origin master]
 
 def find_modified_file():
 
-    # get modified file list from 'git status' output.
+    # Get modified file list from 'git status' output.
     cmd = 'git status'
     out_message = (subprocess.Popen(cmd, stdout=subprocess.PIPE,
                             shell=True).communicate()[0]).decode('utf-8')
@@ -29,13 +29,13 @@ def find_modified_file():
         if len(s) >= 2:
             modified_dic[s[-2]].append(s[-1][0])
 
+    # If there are no files with modified.
+    if not modified_dic:
+        return False
+
     return modified_dic
 
-
-def get_commit_message():
-
-    # example:223_a-e and dp_c-d
-    modified_dic = find_modified_file()
+def get_commit_message(modified_dic):
 
     commit_message = ''
     for i, (dkey,dvalues) in enumerate(modified_dic.items()):
@@ -55,6 +55,11 @@ def execute_command(commit_message):
 
 if __name__ == '__main__':
 
-    commit_message = get_commit_message()
-    execute_command(commit_message)
-    print("Done")
+    if modified_dic := find_modified_file():
+        commit_message = get_commit_message(modified_dic)
+        try:
+            execute_command(commit_message)
+        except Exception as e:
+            print(e)
+        else:
+            print("Done")
