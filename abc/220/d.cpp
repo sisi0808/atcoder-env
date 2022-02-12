@@ -65,4 +65,19 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int n; cin >> n;
+    vector<int> a(n);
+    rep(i,n) cin >> a[i];
+    vector<vector<mint>> dp(n+1, vector<mint> (10));
+
+    dp[0][a[0]] = 1;
+    repp(i,n,1){
+        rep(j,10){
+            dp[i][(a[i]+j) % 10] += dp[i-1][j];
+            dp[i][(a[i]*j) % 10] += dp[i-1][j];
+        }
+    }
+
+    rep(i,10) cout << dp[n-1][i].val() << endl;
+
 }
