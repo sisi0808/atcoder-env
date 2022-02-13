@@ -8,7 +8,7 @@ using namespace atcoder;
     ios::sync_with_stdio(false);
 using namespace std;
 #define rep(i, n) for(int i = 0; i < int(n); ++i)
-#define rrep(i, n) for(int i = n; i > 0; --i)
+#define rrep(i, n) for(int i = n; i >= 0; --i)
 #define repp(i, n, m) for(int i = m; i < int(n); ++i)
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
@@ -66,6 +66,6 @@ using mint = modint998244353;
 int main(void){
     fio();
     int n; cin >> n;
-    vector<ll> a(n);
-    rep(i,n) cin >> a[i];
+    string s; cin >> s;
+    cout << (s[n-1] == 'o' ? "Yes" : "No") << endl;
 }
