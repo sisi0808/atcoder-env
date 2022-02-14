@@ -9,6 +9,8 @@ from collections import defaultdict
 * 変更がなかった場合
 * xxx_a-eとついたファイルが変更されていなかった場合
 * ファイルが追加のみされた場合
+
+* ファイルの追加もコミットメッセージに含める
 """
 
 # Automate the following comand.
@@ -64,4 +66,5 @@ if __name__ == '__main__':
         else:
             print("Done")
 
-    print('There are no files with modified')
+    else:
+        print('There are no files with modified')

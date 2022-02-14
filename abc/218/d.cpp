@@ -63,6 +63,31 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
+/*
+つまり任意の4つの点の集合で、X,yが２種類ずつしか存在しないもの
+
+対角となる点を選び、それに対応する２点があるか調べる
+*/
+
 int main(void){
     fio();
+    int n; cin >> n;
+
+    vector<pair<ll, ll>> xy(n);
+    rep(i,n) cin >> xy[i].first >> xy[i].second;
+
+    sort(ALL(xy));
+
+    ll ans = 0;
+    rep(i,n){
+        rep(j,n){
+            // この判定文により、同じ長方形が２回加算される事を防ぐ(２点の位置関係は必ず左下と右上)
+            if(!(xy[i].first < xy[j].first && xy[i].second < xy[j].second)) continue;
+            if(binary_search(ALL(xy), make_pair(xy[i].first, xy[j].second)) && (binary_search(ALL(xy), make_pair(xy[j].first, xy[i].second)))){
+                ans ++;
+            }
+        }
+    }
+
+    cout << ans << endl;
 }
