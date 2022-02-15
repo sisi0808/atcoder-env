@@ -63,6 +63,40 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
+struct edge { int u, v; ll cost;};
+
+bool comp(const edge& e1, const edge& e2){
+    return e1.cost < e2.cost;
+}
+
+edge es[1000000];
+int n,m;
+
+// 最小全域木のコストを求める
+ll kruskal(){
+    sort(es, es + m, comp);
+    dsu d(n);
+    ll res = 0;
+    rep(i,m){
+        edge e = es[i];
+        if(e.cost < 0 || !d.same(e.u, e.v)){
+            d.merge(e.u, e.v);
+        }
+        else{
+            res += e.cost;
+        }
+    }
+    return res;
+}
+
+
 int main(void){
     fio();
+    cin >> n >> m;
+    rep(i,m){
+        cin >> es[i].u >> es[i].v >> es[i].cost;
+        es[i].u --;
+        es[i].v --;
+    }
+    cout << kruskal() << endl;
 }
