@@ -63,6 +63,52 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
+/*
+入力Xが最小の要素だったら
+* ソートされたら最小の要素
+
+二つ持てば良い？
+    通常Queueとpriority queue
+
+末尾はソートされていない
+先頭はソートされている
+
+1の後、ソートが入るか判定？
+
+*/
+
 int main(void){
     fio();
+    int q; cin >> q;
+    queue<int> q1;
+    priority_queue<int, vector<int>, greater<int>> q2;
+
+    rep(i,q){
+        int query; cin >> query;
+
+        // Add x to the tale of A
+        if(query == 1){
+            ll x; cin >> x;
+            q1.push(x);
+        }
+        // Print the first element of A.
+        // Then Delete it.
+        else if(query == 2){
+            if(!q2.empty()){
+                cout << q2.top() << endl;
+                q2.pop();
+            }
+            else{
+                cout << q1.front() << endl;
+                q1.pop();
+            }
+        }
+
+        // sort A in ascending order.
+        else{
+            while(!q1.empty()){
+                q2.push(q1.front()); q1.pop();
+            }
+        }
+    }
 }
