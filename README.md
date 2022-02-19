@@ -25,5 +25,8 @@ python makef.py del
 oj s main.cpp
 
 # auto commit and push
-sudo python3 auto.py
+python auto.py
+
+# delete compiled file
+python delete_compiled_file.py
 ```
