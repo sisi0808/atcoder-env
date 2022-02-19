@@ -63,20 +63,42 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
+/* a+1からbまでの等差数列の輪 */
+ll tousa_sum(ll a, ll b){
+    ll small_a = (a * (a+1) / 2);
+    ll big_b = (b * (b+1) / 2);
+
+    return big_b - small_a;
+}
+
+/* 貪欲法で解ける */
+
 int main(void){
     fio();
-    int n; cin >> n;
-    vector<pair<string>> st;
-    rep(i,n){
-        string s,t;
-        for(auto [fi, se]: st){
-            if(s == fi && t == se){
-                yes();
-                return 0;
-            }
+    ll n,k; cin >> n >> k;
+    vector<ll> a(n+1);
+    rep(i,n) cin >> a[i];
+    a[n] = 0;
+    sort(RALL(a));
 
+    ll ans = 0;
+    rep(i,n){
+        ll diff = a[i] - a[i+1];
+
+        ll cnt = diff * (i+1);
+        if(cnt <= k){
+            k -= cnt;
+            ans += tousa_sum(a[i+1], a[i]) * (i+1);
         }
-        st.emplace_back(s,t);
+        else{
+            ll d = k / (i+1);
+            ll m = k % (i+1);
+            ans += tousa_sum(a[i]-d, a[i]) * (i+1);
+            ans += (a[i]-d) * m;
+
+            break;
+        }
     }
-    no();
+
+    cout << ans << endl;
 }
