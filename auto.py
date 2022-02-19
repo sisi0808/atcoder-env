@@ -82,7 +82,7 @@ class MangeCommitMessage():
     def execute_command(self):
 
         # execute the command.
-        com_list =  ['git add -a', f'git commit -m "{self.commit_message}"', 'git push origin master']
+        com_list =  ['git add -A', f'git commit -m "{self.commit_message}"', 'git push origin master']
         for com in com_list:
             subprocess.run(com, shell=True)
 
