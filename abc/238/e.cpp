@@ -63,6 +63,15 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
+
 int main(void){
     fio();
+    int n,q; cin >> n >> q;
+    dsu ds(n+1);
+
+    rep(i,q){
+        int l,r; cin >> l >> r;
+        ds.merge(l-1, r);
+    }
+    cout << (ds.same(0,n) ? "Yes" : "No")  << endl;
 }

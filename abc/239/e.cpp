@@ -62,67 +62,7 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 using mint = modint998244353;
 
-int N,M; //頂点と辺の数
-vector<vector<int>> G; //グラフ
-vector<int> h; //入次数
-vector<int> ans; //答えを格納
-vector<vector<ll>>  pq;
-vector<ll> x;
-
-void topoBFS(){
-  priority_queue<int, vector<int>, greater<int>> unchecked;
-  for(int i=0; i<N; i++){
-    if(h[i]==0){
-      unchecked.push(i); //入次数が0の頂点をキューに入れる
-      pq[i].push_back(x[i]);
-    }
-  }
-  while(!unchecked.empty()){
-    int current = unchecked.top();
-    unchecked.pop();
-    ans.push_back(current); //キューから取り出したらすぐソート後のリストに加える
-
-    for(int next: G[current]){ //「行ける」頂点について
-      h[next]--; //入次数を減らす
-      for(ll xx: pq[current]){
-        pq[next].push_back(xx);
-      }
-      if(h[next]==0){ //入次数0になったらキューに追加
-        unchecked.push(next);
-        pq[next].push_back(x[next]);
-      }
-    }
-  }
-}
-
-
 int main(void){
     fio();
     int n,q; cin >> n >> q;
-    pq.resize(n);
-    x.resize(n);
-    rep(i,n) cin >> x[i];
-
-    N = n; M = N-1;
-    G.resize(N);
-    h.resize(N, 0); //入次数0初期化
-    int f,t;
-    for(int i=0; i<M; i++){
-        cin>>f>>t;
-        f--; t--; //1始まりで辺の情報を入れるならデクリメントする
-        G[f].push_back(t); //fからtに行ける
-        h[t]++; //tの入次数を増やす
-    }
-
-    topoBFS();
-    rep(i,n){
-        sort(ALL(pq[i]));
-    }
-
-
-    rep(i,q){
-        int v,k; cin >> v >> k;
-        v--; k--;
-        cout << pq[v][k] << endl;
-    }
 }

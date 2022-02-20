@@ -65,42 +65,7 @@ using mint = modint998244353;
 
 int main(void){
     fio();
-    string x; cin >> x;
-    int xx = x.size();
-    if(xx == 1) {
-        cout << 0 << endl;
-        return 0;
-    }
-    if(xx == 2 && x[0] == '-'){
-        cout << "-1" << endl;
-        return 0;
-    }
-    if(x[0] == '-'){
-        if(x[xx-1] == '0'){
-            cout << x.substr(0,xx-1) << endl;
-        }
-        else{
-            /*
-            string ans = x.substr(1,xx-2);
-            cout << ans << endl;
-            reverse(ALL(ans));
-            for(auto &a: ans){
-                if(a == '9'){
-                    a = '0';
-                }
-                else{
-                    a += 1;
-                    break;
-                }
-            }
-            reverse(ALL(ans));
-            ans = '-' + ans;
-            cout << ans << endl;
-            */
-            cout << stoll(x.substr(0,xx-1))-1 << endl;
-        }
-
-        return 0;
-    }
-    cout << x.substr(0,xx-1) << endl;
+    ll x; cin >> x;
+    if(x < 0 && x%10 != 0) cout << (x/10)-1 << endl;
+    else cout << x/10 << endl;
 }
