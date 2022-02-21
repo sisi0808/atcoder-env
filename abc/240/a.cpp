@@ -66,8 +66,6 @@ using mint = modint998244353;
 int main(void){
     fio();
     int a,b; cin >> a >> b;
-    if(abs(a-b) == 1) yes();
-    else if(a == 10 && b == 1) yes();
-    else if(a == 1 && b == 10) yes();
+    if(abs(a-b) == 1 || abs(a-b) == 9) yes();
     else no();
 }

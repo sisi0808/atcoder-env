@@ -60,45 +60,70 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-graph G;
+//graph G;
 using mint = modint998244353;
 
 /*
 最大値は葉の数
 yt
 */
-vector<pair<int, int>> ans;
-vector<int> E[101010];
+vector<int>  G[501010];
+int L[501010], R[501010];
+int leaf[500000];
+int id = 0;
 
-int idx = 0;
-int L[101010], R[101010];
-
-void euler(int cu, int pa = -1) { // [L[v],R[v])
-    L[cu] = idx; idx++;
-    for (int to : E[cu]) if (to != pa) euler(to, cu);
-    R[cu] = idx;
+// 葉に番号を割り振る
+// (v, p) = (見ているnode, 親のnode)
+void dfs(int v, int p){
+    /* 葉の場合 */
+    if(v != 0 && G[v].size() == 1){
+        leaf[v] = ++id;
+        return;
+    }
+    for(auto u: G[v]) if(u != p) dfs(u, v);
 }
+
+// nodeに組み合わせを割り当てる
+// (v, p) = (見ているnode, 親のnode)
+void dfs2(int v, int p){
+    /* 葉の場合 */
+    if(leaf[v]){
+        L[v] = R[v] = leaf[v];
+        return;
+    }
+    //L[v] = 1e9; R[v] = 0;
+    for(auto u: G[v]){
+        if(u == p) continue;
+        else{
+            dfs2(u, v);
+            L[v] = min(L[v], L[u]);
+            R[v] = max(R[v], R[u]);
+        }
+    }
+}
+
 
 int main(void){
     fio();
     int n; cin >> n;
-    ans.resize(n);
     rep(i,n-1){
         int u,v; cin >> u >> v;
         u--; v--;
-        E[u].push_back(v);
-        E[v].push_back(u);
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+    rep(i,n){
+        L[i] = inf;
+        R[i] = 0;
     }
 
-    euler(0);
+    dfs(0, -1);
+    dfs2(0, -1);
 
-    rep(i, n) cout << L[i] << " ";
-    cout << endl;
-    rep(i, n) cout << R[i] << " ";
-    cout << endl;
+    //rep(i,n) cout << leaf[i] << endl;
 
     /* 回答 */;
-    //rep(i,n){
-    //    cout << ans[i].first << " " << ans[i].second << endl;
-    //}
+    rep(i,n){
+        cout << L[i] << " " << R[i] << endl;
+    }
 }
