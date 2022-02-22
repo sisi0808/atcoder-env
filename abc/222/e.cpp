@@ -62,15 +62,17 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
 using mint = modint998244353;
-vector<vector<ll>> count;
+vector<vector<ll>> cou;
 
 /*
  最短経路は必ず一つ
  各頂点毎に通る合計数を記録
  kが-+で処理は変わらない
+まず絶対値で試す
+
 */
 
-false flag = false;
+bool flag = false;
 /* 現在頂点, 目標頂点 */
 void dfs(int v, int t){
     if(v == t){
@@ -81,7 +83,7 @@ void dfs(int v, int t){
         if(v != g){
             dfs(g, t);
             if(flag){
-                count[min(g, v)][max(g, v)]++;
+                cou[min(g, v)][max(g, v)]++;
                 return ;
             }
         }
@@ -92,11 +94,11 @@ int main(void){
     fio();
     int n,m,k; cin >> n >> m >> k;
     G.resize(n);
-    count.resize(n, vector<ll> (n, 0));
+    cou.resize(n, vector<ll> (n, 0));
 
     rep(i,n-1){
         int u,v; cin >> u >> v;
-        u---; v--;
+        u--;  v--;
         G[u].push_back(v);
         G[v].push_back(u);
     }
@@ -106,11 +108,21 @@ int main(void){
     repp(i,n,1){ dfs(a[i-1], a[i]); }
 
     vector<ll> _ans;
-    rep(i,n) rep(j,n) if(count[i][j] != 0) _ans.push_back(count[i][j]);
+    ll ans_sum = 0;
+    rep(i,n) rep(j,n) if(cou[i][j] != 0) {_ans.push_back(cou[i][j]); ans_sum += cou[i][j];}
     int a_s = _ans.size();
     repp(i,n-1, a_s) _ans.push_back(0);
-    ll ans_sum = 0;
-    rep(i,n-1) ans_sum += _ans[i];
 
+    vector<vector<ll>> dp(n, vector<ll> (200000, 0));
+    dp[0][0] = 1;
 
+    rep(i,n-1){
+        rep(j,200000){
+            if(dp[i][j] == 0) continue;
+            dp[i+1][j+_ans[i]] +=  dp[i][j];
+            dp[i+1][abs(j-_ans[i])] +=  dp[i][j];
+        }
+    }
+
+    cout << dp[n][abs(k)] << endl;
 }
