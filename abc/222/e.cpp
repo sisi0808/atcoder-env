@@ -62,9 +62,55 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
 using mint = modint998244353;
+vector<vector<ll>> count;
+
+/*
+ 最短経路は必ず一つ
+ 各頂点毎に通る合計数を記録
+ kが-+で処理は変わらない
+*/
+
+false flag = false;
+/* 現在頂点, 目標頂点 */
+void dfs(int v, int t){
+    if(v == t){
+        flag = true;
+        return;
+    }
+    for(auto g: G[v]){
+        if(v != g){
+            dfs(g, t);
+            if(flag){
+                count[min(g, v)][max(g, v)]++;
+                return ;
+            }
+        }
+    }
+}
 
 int main(void){
     fio();
     int n,m,k; cin >> n >> m >> k;
+    G.resize(n);
+    count.resize(n, vector<ll> (n, 0));
+
+    rep(i,n-1){
+        int u,v; cin >> u >> v;
+        u---; v--;
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+
+    vector<int> a(m);
+    rep(i,m) cin >> a[i];
+    repp(i,n,1){ dfs(a[i-1], a[i]); }
+
+    vector<ll> _ans;
+    rep(i,n) rep(j,n) if(count[i][j] != 0) _ans.push_back(count[i][j]);
+    int a_s = _ans.size();
+    repp(i,n-1, a_s) _ans.push_back(0);
+    ll ans_sum = 0;
+    rep(i,n-1) ans_sum += _ans[i];
+
 
 }
