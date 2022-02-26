@@ -1,0 +1,159 @@
+#include <bits/stdc++.h>
+/* ACLのライブラリを追加*/
+#include<atcoder/all>
+using namespace atcoder;
+
+#define fio()         \
+    cin.tie(nullptr); \
+    ios::sync_with_stdio(false);
+using namespace std;
+#define rep(i, n) for(int i = 0; i < int(n); ++i)
+#define rrep(i, n) for(int i = n; i >= 0; --i)
+#define repp(i, n, m) for(int i = m; i < int(n); ++i)
+#define fore(i_in, a) for(auto &i_in : a)
+#define ALL(v) (v).begin(), (v).end()
+#define RALL(v) (v).rbegin(), (v).rend()
+#define chmin(a, b) a = min(a, b)
+#define chmax(a, b) a = max(a, b)
+
+// alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
+using ll = long long;
+using ld = long double;
+using graph = vector<vector<int>>;
+using Graph = vector<vector<ll>>;
+using P = vector<ll, ll>;
+const int SIZE = 100005;
+const int inf = 100000000;
+const int modi = 1000000007;
+const long long INF = 10000000000;
+const long long modl = 1000000007LL;
+const long long modll = 998244353LL;
+
+void yes() { cout << "Yes" << endl; }
+void no() { cout << "No" << endl; }
+void yn(bool t) {
+    if(t)
+        yes();
+    else
+        no();
+}
+void Yes() { cout << "YES" << endl; }
+void No() { cout << "NO" << endl; }
+void YN(bool t) {
+    if(t)
+        Yes();
+    else
+        No();
+}
+
+void pri(ll a) { cout << a << endl; }
+void spri(string a) { cout << a << endl; }
+void priV(vector<ll> &vec) {
+    for(size_t i = 0; i < vec.size(); i++) {
+        cout << vec[i] << ":";
+    }
+    cout << endl;
+}
+
+vector<int> dx = {1, 0, -1, 0};
+vector<int> dy = {0, 1, 0, -1};
+const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
+const string alp = "abcdefghijklmnopqrstuvwxyz";
+
+graph G;
+using mint = modint998244353;
+
+/*
+縦、横、左斜め上、右斜め上
+*/
+
+vector<vector<int>> rot_90(vector<vector<int>> IMAGE, int x_size, int y_size){
+
+    vector<vector<int>> rot(x_size, vector<int> (y_size));
+    vector<int> tmp(y_size);
+    int i;
+    int j;
+    for(j = 0; j < x_size; j++){
+        for (i = 0; i < y_size; i++){
+            tmp[i] = IMAGE[y_size-i-1][j];
+        }
+        for(i = 0; i < y_size; i++){
+            rot[j][i] = tmp[i];
+        }
+    }
+    return rot;
+}
+
+int main(void){
+    fio();
+    int n; cin >> n;
+    vector<vector<int>> fi(n, vector<int> (n,0));
+    rep(i,n) {
+        string s; cin >> s;
+        rep(j,s.size()){
+            if(s[j] == '#') fi[i][j] = 1;
+        }
+    }
+
+    rep(i,n){
+        // 横
+        for(int j=0; j <= n-6; j ++){
+            int couw = 0;
+            int couh = 0;
+            rep(k,6) couh += fi[j+k][i];
+            rep(k,6) couw += fi[i][j+k];
+            if(couw >= 4 || couh >= 4){
+                yes();
+                return 0;
+            }
+        }
+    }
+
+    // 斜め
+    rep(i,n){
+        int ii, jj;
+        ii = i;
+        rep(j,n-i-5){
+            int couw = 0;
+            int couh = 0;
+
+            jj = j;
+            rep(k,6) {
+                if(jj >= n || ii >= n) break;
+                couh += fi[jj][ii];
+                couw += fi[ii][jj];
+                ii++; jj++;
+            }
+            if(couw >= 4 || couh >= 4){
+                yes();
+                return 0;
+            }
+            ii++;
+        }
+    }
+
+    vector<vector<int>> fii = rot_90(fi, n, n);
+    // 斜め
+    rep(i,n){
+        int ii, jj;
+        ii = i;
+        rep(j,n-i-5){
+            int couw = 0;
+            int couh = 0;
+
+            jj = j;
+            rep(k,6) {
+                couh += fi[jj][ii];
+                couw += fi[ii][jj];
+                ii++; jj++;
+            }
+            if(couw >= 4 || couh >= 4){
+                yes();
+                return 0;
+            }
+            ii++;
+        }
+    }
+
+    no();
+}
