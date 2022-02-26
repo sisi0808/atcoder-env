@@ -63,6 +63,28 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
+struct edge{
+    int to;
+    ll w;
+};
+
 int main(void){
     fio();
+    int n; cin >> n;
+    vector<tuple<int, int, int>> edge(n-1);
+
+    for (auto& [w, u, v] : edge) {
+        cin >> u >> v >> w;
+        u -= 1;
+        v -= 1;
+    }
+    sort(ALL(edge));
+
+    dsu d(n);
+    ll ans = 0;
+    for(const auto& [w,u,v] : edge){
+        ans += (ll)w * d.size(u) * d.size(v);
+        d.merge(u, v);
+    }
+    cout << ans << endl;
 }

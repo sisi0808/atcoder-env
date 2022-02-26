@@ -71,8 +71,7 @@ int main(void){
     rep(i,n) cin >> s[i];
     rep(i,n) cin >> t[i];
 
-    vector<ll> ans(n);
-    rep(i,n) ans[i] = t[i];
+    vector<ll> ans(ALL(t));
 
     ll tt = ans[0];
     rep(i,n){
