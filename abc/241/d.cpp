@@ -71,12 +71,12 @@ int main(void){
     rep(i,q){
         int qq; cin >> qq;
         ll x; cin >> x;
-        if(qq == 1){ st.insert(x); }
+        if(qq == 1) st.insert(x);
         else if(qq == 2){
             int k; cin >> k;
             auto it = st.upper_bound(x);
             while(k > 0 && it != st.begin()){
-                it = prev(it);
+                it--;
                 k--;
             }
             if(it == st.begin() && k > 0){
@@ -90,11 +90,11 @@ int main(void){
         else{
             int k; cin >> k;
             auto it = st.lower_bound(x);
-            while(k > 1 && *it){
-                it = next(it);
+            while(k > 1 && it != st.end()){
+                it++;
                 k--;
             }
-            if(it == st.end() && k > 1){
+            if(it == st.end()){
                 cout << -1 << endl;
             }
             else{

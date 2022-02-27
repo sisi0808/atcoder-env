@@ -63,27 +63,6 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
-/*
-縦、横、左斜め上、右斜め上
-*/
-
-vector<vector<int>> rot_90(vector<vector<int>> IMAGE, int x_size, int y_size){
-
-    vector<vector<int>> rot(x_size, vector<int> (y_size));
-    vector<int> tmp(y_size);
-    int i;
-    int j;
-    for(j = 0; j < x_size; j++){
-        for (i = 0; i < y_size; i++){
-            tmp[i] = IMAGE[y_size-i-1][j];
-        }
-        for(i = 0; i < y_size; i++){
-            rot[j][i] = tmp[i];
-        }
-    }
-    return rot;
-}
-
 int main(void){
     fio();
     int n; cin >> n;
@@ -96,8 +75,8 @@ int main(void){
     }
 
     rep(i,n){
-        // 横
-        for(int j=0; j <= n-6; j ++){
+        // 縦・横
+        rep(j,n-5){
             int couw = 0;
             int couh = 0;
             rep(k,6) couh += fi[j+k][i];
@@ -110,48 +89,20 @@ int main(void){
     }
 
     // 斜め
-    rep(i,n){
-        int ii, jj;
-        ii = i;
-        rep(j,n-i-5){
+    rep(i,n-5){
+        // 斜め
+        rep(j,n-5){
             int couw = 0;
             int couh = 0;
-
-            jj = j;
             rep(k,6) {
-                if(jj >= n || ii >= n) break;
-                couh += fi[jj][ii];
-                couw += fi[ii][jj];
-                ii++; jj++;
+                couh += fi[j+k][i+k];
+                couw += fi[5+i-k][j+k];
             }
             if(couw >= 4 || couh >= 4){
                 yes();
                 return 0;
             }
-            ii++;
-        }
-    }
 
-    vector<vector<int>> fii = rot_90(fi, n, n);
-    // 斜め
-    rep(i,n){
-        int ii, jj;
-        ii = i;
-        rep(j,n-i-5){
-            int couw = 0;
-            int couh = 0;
-
-            jj = j;
-            rep(k,6) {
-                couh += fi[jj][ii];
-                couw += fi[ii][jj];
-                ii++; jj++;
-            }
-            if(couw >= 4 || couh >= 4){
-                yes();
-                return 0;
-            }
-            ii++;
         }
     }
 
