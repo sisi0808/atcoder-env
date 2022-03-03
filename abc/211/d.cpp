@@ -61,8 +61,57 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
-using mint = modint998244353;
+//using mint = modint998244353;
+using mint = modint1000000007;
+int n,m;
+
+vector<vector<int>> g;
+vector<mint> ans;
+
+vector<int> temp;
+
+void bfs(int st){
+    int dis;
+    temp[st] = 1;
+    // 次に探索する経路、距離
+    queue<int> pp;
+    pp.push(st);
+
+    while(!pp.empty()){
+        st = pp.front(); pp.pop();
+        for(auto c: g[st]){
+            /* 最短経路更新の場合 */
+            if(temp[st]+1 < temp[c]){
+                temp[c] = temp[st] + 1;
+                ans[c] = ans[st];
+                pp.push(c);
+            }
+            /* 最短経路の場合 */
+            else if(temp[st]+1 == temp[c]){
+                ans[c] += ans[st];
+            }
+        }
+    }
+}
 
 int main(void){
     fio();
+    cin >> n >> m;
+    g.resize(n);
+    ans.resize(n);
+    temp.resize(n, INT_MAX);
+
+    rep(i,m){
+        int a,b; cin >> a >> b;
+        a--; b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+
+    ans[0] = 1;
+    bfs(0);
+
+    if(ans[n-1] != INT_MAX) cout << ans[n-1].val() << endl;
+    else cout << 0 << endl;
+
 }
