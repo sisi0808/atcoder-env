@@ -65,4 +65,23 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int q; cin >> q;
+    priority_queue<ll, vector<ll>, greater<ll>> ans;
+    ll tem = 0;
+
+    rep(i,q){
+        int qq; cin >> qq;
+        if(qq == 1){
+            ll x; cin >> x;
+            ans.push(x-tem);
+        }
+        if(qq == 2){
+            ll x; cin >> x;
+            tem += x;
+        }
+        if(qq == 3){
+            ll a = ans.top(); ans.pop();
+            cout << a + tem << endl;
+        }
+    }
 }
