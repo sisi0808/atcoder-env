@@ -65,4 +65,38 @@ using mint = modint998244353;
 
 int main(void){
     fio();
+    int n; cin >> n;
+    string s; cin >> s;
+    string con = "abcdefghij";
+
+    vector<vector<vector<mint>>> dp(1024, vector<vector<mint>> (1024, vector<mint> (10, 0)));
+
+    rep(i,n){
+        int x = s[i] - 'A';
+        rep(j,1024){
+            rep(k,10){
+                dp[i+1][j][k] = dp[i][j][k];
+                if(k == x){
+                    dp[i+1][j][k] += dp[i][j][k];
+                }
+            }
+        }
+        rep(j,1024){
+            if(j & (1 << x)) continue;
+            rep(k,10){
+                dp[i+1][j | (1 << x)][x] += dp[i][j][k];
+            }
+        }
+        dp[i+1][(1 << x)][x]++;
+    }
+
+    mint res = 0;
+    rep(j,1024){
+        rep(k,10){
+            res += dp[n][j][k];
+        }
+    }
+
+    cout << res.val() << endl;
+    return 0;
 }
