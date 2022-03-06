@@ -64,47 +64,28 @@ graph G;
 using mint = modint998244353;
 //using mint = modint1000000007
 
-/*
-対応するブロックがT0のどの文字なのか探る
+string s;
 
-*/
+char g(char c, ll tt){
+    return ((c - 'A') + tt ) % 3 + 'A';
+}
+
+char f(ll t, ll k){
+    if(t == 0) return s[k];
+    if(k == 0) return g(s[0], t);
+
+    if(k % 2 == 0) return g(f(t-1, k/2), 1);
+    else return g(f(t-1, k/2), 2);
+}
 
 int main(void){
     fio();
-    string s; cin >> s;
-    string st = "abcabc";
+    cin >> s;
     int n = s.size();
     int q; cin >> q;
+
     rep(i,q){
         ll t,k; cin >> t >> k;
-        ll _k = k;
-
-        ll kk = 0;
-        bool f = false;
-        if(t % 2 == 0) f = true;
-        while(k > 1){
-            k = (k + 2 - 1) / 2;
-            kk++;
-        }
-
-        /* 2ブロック目以降の時*/
-        int block = 0;
-        if(kk > t){
-            block = kk - t;
-            if(f) _k -= pow(2, kk);
-            else _k -= pow(2, kk-1);
-        }
-
-        k = _k - 1;
-
-        // block == 何ブロック目か (0 - ?)
-        // _k == ブロック内で何番目か (1 - ?)
-
-        //cout << _k << endl;
-        //cout << kk << endl;
-
-        cout << st[block + t % 3] << endl;
-
+        cout << f(t,k-1) << endl;
     }
-
 }
