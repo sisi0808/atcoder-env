@@ -61,9 +61,20 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
-using mint = modint998244353;
-//using mint = modint1000000007;
+//using mint = modint998244353;
+using mint = modint1000000007;
 
 int main(void){
     fio();
+    int n; cin >> n;
+    vector<ll> c(n);
+    rep(i,n) cin >> c[i];
+    sort(ALL(c));
+
+    mint ans = 1;
+    rep(i,n){
+        ans *= (c[i] - i);
+    }
+
+    cout << ans.val() << endl;
 }

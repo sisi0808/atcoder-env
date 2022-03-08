@@ -62,8 +62,15 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
 using mint = modint998244353;
-//using mint = modint1000000007;
+//using mint = modint1000000007
 
 int main(void){
     fio();
+    int n,x; cin >> n >> x;
+    x += n/2;
+    rep(i,n){
+        int a; cin >> a;
+        x -= a;
+    }
+    yn(x >= 0);
 }
