@@ -64,6 +64,52 @@ graph G;
 using mint = modint998244353;
 //using mint = modint1000000007;
 
+int n, m;
+bool temp[300000];
+vector<vector<pair<ll, ll>>> yg;
+vector<vector<vector<ll>>> ans;
+
+void bfs(int st, int k){
+    queue<int> q;
+    q.push(st);
+
+    while(!q.empty()){
+        int now = q.front(); q.pop();
+        for(pair<ll, ll> p : yg[now]){
+            ll ed, c;
+            tie(ed, c) = p;
+            if(ed < k && ans[st][now][k] + c < ans[st][ed][k]){
+                ans[st][ed][k] = ans[st][now][k] + c;
+                q.push(ed);
+            }
+        }
+
+    }
+}
+
 int main(void){
     fio();
+    cin >> n >> m;
+    yg.resize(n);
+    ans.resize(n, vector<vector<ll>> (n, vector<ll> (n, INF)));
+    rep(j,n) rep(i,n) ans[i][i][j] = 0;
+    rep(i,m){
+        ll a,b,c; cin >> a >> b >> c;
+        a--; b--;
+        yg[a].push_back({b, c});
+    }
+
+    ll ans = 0;;
+    rep(i,n){
+        rep(j,n){
+            bfs(i,j);
+            rep(l, n){
+                //cout << i << j << l << endl;
+                //if(ans[i][l][j] != INF) ans+= ans[i][l][j];
+                if(ans.at(i).at(l).at(j) != INF) ans+= ans.at(i).at(l).at(j);
+            }
+        }
+    }
+
+    cout << ans << endl;
 }
