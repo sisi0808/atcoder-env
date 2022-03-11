@@ -64,6 +64,44 @@ graph G;
 using mint = modint998244353;
 //using mint = modint1000000007
 
+vector<int> ans;
+vector<vector<int>> g;
+
+void bfs(){
+    ans[0] = 1;
+    queue<int> q;
+    q.push(0);
+
+    while(!q.empty()){
+        int st = q.front(); q.pop();
+        for(auto e: g[st]){
+            if(ans[e] == 0){
+                ans[e] = ans[st] * -1;
+                q.push(e);
+            }
+        }
+    }
+}
+
 int main(void){
     fio();
+    int n,q; cin >> n >> q;
+    g.resize(n);
+    ans.resize(n, 0);
+
+    rep(i,n-1){
+        int a, b; cin >> a >> b;
+        a--; b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+
+    bfs();
+
+    rep(i,q){
+        int a,b; cin >> a >> b;
+        if(ans[a-1] == ans[b-1]) cout << "Town" << endl;
+        else cout << "Road" << endl;
+
+    }
 }
