@@ -68,40 +68,28 @@ int main(void){
     fio();
     ll n,x; cin >> n >> x;
     string s; cin >> s;
-    string t = s;
+    string t = "";
+
+    while(x > 0) {
+        t += (x % 2) + '0';
+        x /= 2;
+    }
+
     reverse(ALL(t));
 
-
-    ll cou = 0;
-    string a = "";
-    for(auto c: t){
-        if(c == 'U') cou++;
-        else if(cou > 0) cou--;
-        else a += c;
+    for(auto c : s){
+        if(c == 'U') t.pop_back();
+        else if(c == 'L') t.push_back('0');
+        else if(c == 'R') t.push_back('1');
     }
 
-    string tt = "";
-    while(cou > 0){
-        a += 'U';
-        cou--;
+    int t_size = t.size();
+
+    ll ans = 0;
+    rep(i, t_size){
+        ans *= 2;
+        if(t[i] == '1') ans += 1;
     }
 
-    reverse(ALL(a));
-
-    //rep(i,n){
-    for(auto c: a){
-        //char c = s[i];
-        if(c == 'U'){
-            x = (x - (x % 2)) / 2;
-        }
-        if(c == 'L'){
-            x *= 2;
-        }
-        if(c == 'R'){
-            x *= 2;
-            x ++;
-        }
-    }
-
-    cout << x << endl;
+    cout << ans << endl;
 }

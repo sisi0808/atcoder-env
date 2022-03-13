@@ -67,23 +67,9 @@ using mint = modint998244353;
 int main(void){
     fio();
     ll v,a,b,c; cin >> v >> a >> b >> c;
-    while(v >= 0){
-        if(v < a) {
-            cout << "F" << endl;
-            return 0;
-        }
-        v -= a;
-        if(v < b) {
-            cout << "M" << endl;
-            return 0;
-        }
-        v -= b;
-
-        if(v < c) {
-            cout << "T" << endl;
-            return 0;
-        }
-        v -= c;
-    }
-
+    // 先にmodを求めておく
+    v %= (a+b+c);
+    if(v < a) cout << "F" << endl;
+    else if(v < a+b) cout << "M" << endl;
+    else cout << "T" << endl;
 }
