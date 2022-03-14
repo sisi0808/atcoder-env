@@ -63,6 +63,7 @@ class MangeCommitMessage():
 
         self.updated_dic = c
 
+    # Make commit message.
     def make_commit_message(self):
         commit_message = ""
 
@@ -87,13 +88,24 @@ class MangeCommitMessage():
 
         self.commit_message = commit_message
 
+    # Make path list of the modified files.
+    def make_modified_files_path_list(self):
+        created_dic = self.make_created_files_dic()
+        created_file_path_list = []
+        for key, values in created_dic.items():
+            created_file_path_list += [f'abc/{key}/{v}.cpp' for v in values]
+
+        return created_file_path_list
+
     # Execute git command.
     def execute_command(self):
 
         # execute the command.
-        com_list =  ['git add -A', f'git commit -m "{self.commit_message}"', 'git push origin master']
+        add_file_list = ['git add '+ path for path in self.make_modified_files_path_list()]
+        com_list =  add_file_list + [f'git commit -m "{self.commit_message}"', 'git push origin master']
         for com in com_list:
             subprocess.run(com, shell=True)
+            # print(com)
 
 
 if __name__ == '__main__':
@@ -104,8 +116,6 @@ if __name__ == '__main__':
     mcm.merge_dic(mcm.make_modified_files_dic())
 
     mcm.make_commit_message()
-
-    print(mcm.commit_message)
 
     # If there are some updated codes.
     if mcm.commit_message != "":
