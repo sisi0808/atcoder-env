@@ -1,4 +1,5 @@
 from email.policy import default
+from gc import DEBUG_SAVEALL
 import re
 import sys
 import filecmp
@@ -62,9 +63,7 @@ class MangeCommitMessage():
 
         self.updated_dic = c
 
-    # Make commit message.
     def make_commit_message(self):
-
         commit_message = ""
 
         for i, (dkey,dvalues) in enumerate(self.updated_dic.items()):
@@ -73,8 +72,18 @@ class MangeCommitMessage():
             commit_message += f'{dkey}_{dvalues[0]}'
 
             # If modified multiple files in one directry
-            if dvalues[0] != dvalues[-1]:
-                commit_message +=  f'-{dvalues[-1]}'
+            # For example, '217_a-c,e and 218_a,c'
+            is_serise = False
+            for j in range(1, len(dvalues)):
+                if ord(dvalues[j-1]) + 1 == ord(dvalues[j]):
+                    is_serise = True
+                    if j == len(dvalues) - 1:
+                        commit_message +=  f'-{dvalues[j]}'
+                else:
+                    if is_serise:
+                        commit_message +=  f'-{dvalues[j-1]}'
+                    commit_message +=  f',{dvalues[j]}'
+                    is_serise = False
 
         self.commit_message = commit_message
 
@@ -95,6 +104,8 @@ if __name__ == '__main__':
     mcm.merge_dic(mcm.make_modified_files_dic())
 
     mcm.make_commit_message()
+
+    print(mcm.commit_message)
 
     # If there are some updated codes.
     if mcm.commit_message != "":
