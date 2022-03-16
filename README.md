@@ -18,8 +18,11 @@ python makef.py
 # Delete a directory for each contest
 python makef.py del
 
-# test with sample cases
-./cptest_atcoder.sh abc001_a
+# Test sample cases in C++
+python cptest_atcoder.py abc001_a
+
+# Test sample cases in Python
+python cptest_atcoder.py abc001_a
 
 # submit code
 oj s main.cpp
