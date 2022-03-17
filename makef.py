@@ -11,25 +11,21 @@ import shutil
 # 例）dp_a
 def make_ex_con_dir(con_cat):
 
-    # 成功フラグ
-    message = False
-
     # コンテスト種別のフォルダを作成
     if not os.path.exists(con_cat):
         os.makedirs(con_cat)
-        message = True
 
-        for l in 'abcdefghijklmnopqrstuvwxyz':
-            shutil.copy("template.cpp", os.path.join(con_cat, l+'.cpp'))
-
-    if not (message): print("既に存在するフォルダです")
+    for l in 'abcdefghijklmnopqrstuvwxyz':
+        tgt_file = os.path.join(con_cat, l+'.cpp')
+        if not os.path.exists(tgt_file):
+            shutil.copy("template.cpp", tgt_file)
+            print(tgt_file)
+        else:
+            print("既に存在するファイルです")
 
 
 # 入力として受け取ったコンテスト番号のフォルダを作成
 def make_con_dir(con_cat, con_num):
-
-    # 成功フラグ
-    message = False
 
     tgt_dir = os.path.join(con_cat, con_num)
     # コンテスト種別のフォルダを作成
@@ -39,12 +35,15 @@ def make_con_dir(con_cat, con_num):
     # その回のフォルダを作成
     if not os.path.exists(tgt_dir):
         os.makedirs(tgt_dir)
-        message = True
 
-        for l in 'abcde':
-            shutil.copy("template.cpp", os.path.join(tgt_dir, l+'.cpp'))
+    for l in 'abcde':
+        tgt_file = os.path.join(tgt_dir, l+'.cpp')
+        if not os.path.exists(tgt_file):
+            shutil.copy("template.cpp", tgt_file)
+            print(tgt_file)
+        else:
+            print("既に存在するファイルです")
 
-    if not (message): print("既に存在するフォルダです")
 
 # 誤って作ってしまったコンテスト番号のフォルダを削除
 def del_con_dir(con_cat, con_num):
