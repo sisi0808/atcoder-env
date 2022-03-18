@@ -60,7 +60,7 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-graph G;
+Graph g;
 using mint = modint998244353;
 //using mint = modint1000000007;
 
