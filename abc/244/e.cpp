@@ -63,6 +63,12 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 //using mint = modint1000000007;
 
+/*
+* 頂点sから辺をi回通って頂点jへ行く数
+* それを更に、xを奇数回 or 偶数回通ったかで分ける
+dp[i][j][o]
+*/
+
 int main(void){
     fio();
     int n,m,k,s,t,x; cin >> n >> m >> k >> s >> t >> x;
