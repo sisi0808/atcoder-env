@@ -90,12 +90,14 @@ class MangeCommitMessage():
 
     # Make path list of the modified files.
     def make_modified_files_path_list(self):
-        created_dic = self.make_created_files_dic()
-        created_file_path_list = []
-        for key, values in created_dic.items():
-            created_file_path_list += [f'abc/{key}/{v}.cpp' for v in values]
+        # created_dic = self.make_created_files_dic()
+        modified_files_dic = self.updated_dic
 
-        return created_file_path_list
+        modified_files_path_list = []
+        for key, values in modified_files_dic.items():
+            modified_files_path_list += [f'abc/{key}/{v}.cpp' for v in values]
+
+        return modified_files_path_list
 
     # Execute git command.
     def execute_command(self):
