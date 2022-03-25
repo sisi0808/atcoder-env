@@ -26,9 +26,9 @@ class PushUpdatedFiles():
     def make_commit_message(self, created=False, modified=False):
 
         if created:
-            self.merge_dict(puf.make_created_file_dict())
+            self.merge_dict(self.make_created_file_dict())
         if modified:
-            self.merge_dict(puf.make_modified_file_dict())
+            self.merge_dict(self.make_modified_file_dict())
 
         updated_file_list = sorted(self.updated_dict.items())
 
@@ -119,23 +119,3 @@ class PushUpdatedFiles():
         for com in com_list:
             subprocess.run(com, shell=True)
             # print(com)
-
-if __name__ == '__main__':
-
-    puf = PushUpdatedFiles()
-
-    # If you don't want to include created or modified files to commit message,
-    # You can change those flags to False.
-    puf.make_commit_message(created=True, modified=True)
-
-    # If there are some updated codes.
-    if puf.commit_message != "":
-        try:
-            print(puf.commit_message)
-            # puf.execute_command()
-        except Exception as e:
-            print(e)
-        else:
-            print("Done")
-    else:
-        print('There are no contest codes with updated')
