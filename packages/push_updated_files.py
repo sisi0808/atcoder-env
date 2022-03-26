@@ -13,6 +13,8 @@ class PushUpdatedFiles():
     updated_dict = {}
     commit_message = ""
 
+    contest_name_dict = {'abc': 5, 'typical90': 90, 'dp': 26}
+
     def __init__(self):
         self.execute_git_status()
 
@@ -21,6 +23,40 @@ class PushUpdatedFiles():
         cmd = 'git status -s'
         self.git_stat_msg = (subprocess.Popen(cmd, stdout=subprocess.PIPE,
                                               shell=True).communicate()[0]).decode('utf-8')
+
+    # Make new_created file dict.
+    def make_created_file_dict(self):
+
+        regex = r'\?\?\s(.*)'
+        created_dict = defaultdict(list)
+
+        for m in re.finditer(regex,  self.git_stat_msg, re.MULTILINE):
+
+            s = m.groups()[0].split('/')
+            # If it's contest file
+            if s[0] in self.contest_name_dict:
+                contest_folder_path = "/".join(s[0:-1])
+                contest_name = "".join(s[0:-1])
+                for rank in self.get_problem_name_list(s[0]):
+                    if not filecmp.cmp(f'{contest_folder_path}/{rank}.cpp',  './template.cpp'):
+                        created_dict[contest_name].append(rank)
+
+        return created_dict
+
+    # Make modified file dict.
+    def make_modified_file_dict(self):
+
+        regex = r'M\s(.*)$'
+        modified_dict = defaultdict(list)
+
+        for m in re.finditer(regex,  self.git_stat_msg, re.MULTILINE):
+            s = m.groups()[0].split('/')
+            # If it's contest file
+            if s[0] in self.contest_name_dict:
+                contest_name = "".join(s[0:-1])
+                modified_dict[contest_name].append(s[-1][0])
+
+        return modified_dict
 
     # Make commit message.
     def make_commit_message(self, created=False, modified=False):
@@ -57,36 +93,6 @@ class PushUpdatedFiles():
 
         self.commit_message = commit_message
 
-    # Make new_created file dict.
-    def make_created_file_dict(self):
-
-        regex = r'\?\?\s(.*)'
-        created_dict = defaultdict(list)
-
-        for m in re.finditer(regex,  self.git_stat_msg, re.MULTILINE):
-            s = m.groups()[0].split('/')
-            # If it's contest file
-            if len(s) >= 2:
-                for rank in "abcde":
-                    if not filecmp.cmp(f'{s[0]}/{s[1]}/{rank}.cpp',  './template.cpp'):
-                        created_dict[s[-2]].append(rank)
-
-        return created_dict
-
-    # Make modified file dict.
-    def make_modified_file_dict(self):
-
-        regex = r'M\s(.*)$'
-        modified_dict = defaultdict(list)
-
-        for m in re.finditer(regex,  self.git_stat_msg, re.MULTILINE):
-            s = m.groups()[0].split('/')
-            # If it's contest file
-            if len(s) >= 2:
-                modified_dict[s[-2]].append(s[-1][0])
-
-        return modified_dict
-
     # Merge dict to self.updated_dict.
     def merge_dict(self, a):
 
@@ -99,14 +105,33 @@ class PushUpdatedFiles():
 
         self.updated_dict = c
 
+    # Get problem_name_list
+    # Like ['a', 'b', 'c', 'd', 'e']
+    def get_problem_name_list(self, contest_name):
+
+        problem_name_list = []
+        for i in range(self.contest_name_dict[contest_name]):
+            problem_name = chr(ord('a') + i%26)
+            if i >= 26:
+                problem_name = chr(ord('a') + int(i//26) - 1) + problem_name
+            problem_name_list.append(problem_name)
+
+        return problem_name_list
+
     # Get path list of the updated files.
     def get_updated_file_path_list(self):
 
         updated_file_dict = self.updated_dict
 
         updated_file_path_list = []
+        # key = ['abc210', 'dp']
         for key, values in updated_file_dict.items():
-            updated_file_path_list += [f'abc/{key}/{v}.cpp' for v in values]
+
+            # 'abc210', 'arc54'
+            if res := re.search(r'^(a[a-z]c)(?=\d+)', key):
+                key = f'{res.group()}/{key[3:]}'
+
+            updated_file_path_list += [f'{key}/{v}.cpp' for v in values]
 
         return updated_file_path_list
 
