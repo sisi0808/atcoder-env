@@ -12,7 +12,7 @@ if __name__ == '__main__':
     if puf.commit_message != "":
         try:
             print(puf.commit_message)
-            # puf.execute_command()
+            puf.execute_command()
         except Exception as e:
             print(e)
         else:
