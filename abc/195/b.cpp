@@ -67,10 +67,9 @@ int main(void){
     fio();
     double a,b,w; cin >> a >> b >> w;
     w *= 1000;
+    int u = (floor(w/a));
+    int l = (ceil(w/b));
 
-    if(ceil(w/b) > floor(w/a)) {
-        cout << "UNSATISFIABLE" << endl;
-        return 0;
-    }
-    cout << ceil(w/b) << " " << floor(w/a) << endl;
+    if(l > u) cout << "UNSATISFIABLE" << endl;
+    else cout << l << " " << u << endl;
 }
