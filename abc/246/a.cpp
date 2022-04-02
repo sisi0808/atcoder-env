@@ -65,19 +65,21 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
-    ll n;
-    cin >> n;
-    vector<ll> a(n);
-    ll sum = 0;
-    rep(i, n) cin >> a[i];
-    rep(i, n) sum += a[i];
-
-    ll ans = 0;
-    rep(i, n) {
-        sum -= a[i];
-        ans += i * a[i] * a[i];
-        ans += (n - i - 1) * a[i] * a[i];
-        ans -= 2 * a[i] * sum;
+    map<int, int> a, b;
+    rep(i, 3) {
+        int x, y;
+        cin >> x >> y;
+        a[x]++;
+        b[y]++;
     }
-    cout << ans << endl;
+    for(auto &i : a) {
+        if(i.second == 1) {
+            cout << i.first << " ";
+        }
+    }
+    for(auto &i : b) {
+        if(i.second == 1) {
+            cout << i.first << endl;
+        }
+    }
 }

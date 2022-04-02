@@ -63,21 +63,30 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 
+ll f(ll a, ll b) {
+    return a * a * a + a * a * b + a * b * b + b * b * b;
+}
+
 int main(void) {
     fio();
     ll n;
     cin >> n;
-    vector<ll> a(n);
-    ll sum = 0;
-    rep(i, n) cin >> a[i];
-    rep(i, n) sum += a[i];
 
-    ll ans = 0;
-    rep(i, n) {
-        sum -= a[i];
-        ans += i * a[i] * a[i];
-        ans += (n - i - 1) * a[i] * a[i];
-        ans -= 2 * a[i] * sum;
+    ll x = 8e18;
+    ll i = 0, j = 1000000;
+
+    while(i <= j) {
+        ll cf = f(i, j);
+
+        /* iを増やすと、関数の結果がかなり大きくなる */
+        /* jを減らすと、関数の結果が僅かに小さくなる */
+        if(cf >= n) {
+            x = min(x, cf);
+            j--;
+        } else {
+            i++;
+        }
     }
-    cout << ans << endl;
+
+    cout << x << endl;
 }

@@ -65,19 +65,46 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
-    ll n;
-    cin >> n;
+    ll n, k, x;
+    cin >> n >> k >> x;
     vector<ll> a(n);
-    ll sum = 0;
     rep(i, n) cin >> a[i];
+    ll sum = 0;
     rep(i, n) sum += a[i];
+    sort(ALL(a));
 
-    ll ans = 0;
-    rep(i, n) {
-        sum -= a[i];
-        ans += i * a[i] * a[i];
-        ans += (n - i - 1) * a[i] * a[i];
-        ans -= 2 * a[i] * sum;
+    ll xx = x;
+    rep(i, 100000) {
+        auto itr = a.end() - lower_bound(ALL(a), xx);
+        /* クーポンの枚数が足りるとき */
+        if(itr <= k) {
+            k -= itr;
+            sum -= itr * x;
+            xx += x;
+        } else {
+            sum -= k * x;
+            break;
+        }
+
+        if(sum <= 0) {
+            sum = 0;
+            break;
+        }
+
+        if(itr == 0) {
+            vector<ll> b(n);
+            rep(i, n) b[i] = a[i] % x;
+            sort(RALL(b));
+            rep(i, k) {
+                sum -= b[i];
+                if(sum <= 0) {
+                    sum = 0;
+                    break;
+                }
+            }
+            break;
+        }
     }
-    cout << ans << endl;
+
+    cout << sum << endl;
 }
