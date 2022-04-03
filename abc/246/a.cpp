@@ -72,14 +72,16 @@ int main(void) {
         a[x]++;
         b[y]++;
     }
-    for(auto &i : a) {
-        if(i.second == 1) {
-            cout << i.first << " ";
+    for(auto [k, v] : a) {
+        if(v == 1) {
+            cout << k << " ";
+            break;
         }
     }
-    for(auto &i : b) {
-        if(i.second == 1) {
-            cout << i.first << endl;
+    for(auto [k, v] : b) {
+        if(v == 1) {
+            cout << k << endl;
+            break;
         }
     }
 }

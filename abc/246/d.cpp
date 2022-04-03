@@ -72,21 +72,20 @@ int main(void) {
     ll n;
     cin >> n;
 
-    ll x = 8e18;
-    ll i = 0, j = 1000000;
+    ll ans = LLONG_MAX;
 
-    while(i <= j) {
-        ll cf = f(i, j);
-
-        /* iを増やすと、関数の結果がかなり大きくなる */
-        /* jを減らすと、関数の結果が僅かに小さくなる */
-        if(cf >= n) {
-            x = min(x, cf);
-            j--;
-        } else {
-            i++;
+    rep(i, 1010101) {
+        ll ng = -1, ok = 1010101;
+        while(ok - ng > 1) {
+            ll mid = (ok + ng) / 2;
+            if(f(i, mid) >= n) {
+                ok = mid;
+            } else {
+                ng = mid;
+            }
+            chmin(ans, f(i, ok));
         }
     }
 
-    cout << x << endl;
+    cout << ans << endl;
 }

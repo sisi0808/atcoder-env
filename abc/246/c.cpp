@@ -63,48 +63,34 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 
+/*
+1. クーポンでできるだけ値下げ
+2. まだ余っていたら、それを使う
+*/
+
 int main(void) {
     fio();
     ll n, k, x;
     cin >> n >> k >> x;
     vector<ll> a(n);
+    ll ans = 0;
     rep(i, n) cin >> a[i];
-    ll sum = 0;
-    rep(i, n) sum += a[i];
-    sort(ALL(a));
+    rep(i, n) ans += a[i];
 
-    ll xx = x;
-    rep(i, 100000) {
-        auto itr = a.end() - lower_bound(ALL(a), xx);
-        /* クーポンの枚数が足りるとき */
-        if(itr <= k) {
-            k -= itr;
-            sum -= itr * x;
-            xx += x;
-        } else {
-            sum -= k * x;
-            break;
-        }
+    ll m = 0;
+    rep(i, n) m += a[i] / x;
+    ans -= min(m, k) * x;
+    k -= min(m, k);
 
-        if(sum <= 0) {
-            sum = 0;
-            break;
-        }
+    rep(i, n) a[i] %= x;
+    sort(RALL(a));
 
-        if(itr == 0) {
-            vector<ll> b(n);
-            rep(i, n) b[i] = a[i] % x;
-            sort(RALL(b));
-            rep(i, k) {
-                sum -= b[i];
-                if(sum <= 0) {
-                    sum = 0;
-                    break;
-                }
-            }
+    rep(i, n) {
+        if(k == 0)
             break;
-        }
+        ans -= a[i];
+        k--;
     }
 
-    cout << sum << endl;
+    cout << ans << endl;
 }

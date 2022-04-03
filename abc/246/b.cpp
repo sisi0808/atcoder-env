@@ -67,7 +67,8 @@ int main(void) {
     fio();
     double a, b;
     cin >> a >> b;
-    double c = sqrt(b * b + a * a);
+    double c = atan(b / a);
 
-    cout << fixed << setprecision(13) << a / c << " " << b / c << endl;
+    cout << fixed << setprecision(13);
+    cout << cos(c) << " " << sin(c) << endl;
 }
