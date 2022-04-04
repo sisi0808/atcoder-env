@@ -70,17 +70,24 @@ int main(void) {
     vector<int> w(n), v(n), x(m);
     rep(i, n) cin >> w[i] >> v[i];
     rep(i, m) cin >> x[i];
+
+    // vector<int> y, _y;
     while(q--) {
         ll ans = 0;
         int l, r;
         cin >> l >> r;
-        vector<int> y(x.begin(), x.begin() + l);
-        vector<int> _y(x.begin() + l, x.begin() + r);
-        y.insert(y.end(), _y.begin(), _y.end());
+        vector<int> y = {};
+        // rep(i, r - 1) y.push_back(x[i]);
+        // repp(i, r, l) y.push_back(x[i]);
+        rep(i, m) {
+            if(i >= l - 1 && r > i)
+                continue;
+            y.push_back(x[i]);
+        }
         vector<int> c(50, 0);
         sort(ALL(y));
         rep(i, y.size()) {
-            int f = 0;
+            int f = -1;
             int max_val = 0;
             rep(j, n) {
                 if(w[j] <= y[i] && c[j] == 0) {
@@ -89,11 +96,14 @@ int main(void) {
                         f = j;
                     }
                 }
-                c[f] = 1;
-                ans += max_val;
             }
+            if(f != -1)
+                c[f] = 1;
+            ans += max_val;
         }
 
         cout << ans << endl;
+        y.clear();
+        y.shrink_to_fit();
     }
 }
