@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -13,8 +13,8 @@ using namespace std;
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
 #define RALL(v) (v).rbegin(), (v).rend()
-#define chmin(a, b) a = min(a, b)
-#define chmax(a, b) a = max(a, b)
+#define chmin(a, b) a = min((ll)a, (ll)b)
+#define chmax(a, b) a = max((ll)a, (ll)b)
 
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
@@ -61,8 +61,8 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 using mint = modint998244353;
-//using mint = modint1000000007;
+// using mint = modint1000000007;
 
-int main(void){
+int main(void) {
     fio();
 }
