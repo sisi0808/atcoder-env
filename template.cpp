@@ -62,6 +62,7 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 using mint = modint998244353;
 // using mint = modint1000000007;
+// cout << fixed << setprecision(12);
 
 int main(void) {
     fio();
