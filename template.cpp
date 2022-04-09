@@ -25,7 +25,7 @@ using P = pair<ll, ll>;
 const int SIZE = 100005;
 const int inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = 10000000000;
+const long long INF = 1000000000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
