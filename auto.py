@@ -1,4 +1,4 @@
-from packages import *
+from packages import Puf
 
 if __name__ == '__main__':
 

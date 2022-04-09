@@ -1,4 +1,4 @@
-from packages import *
+from packages import Aat
 import sys
 
 # ex) abc210_a
@@ -11,7 +11,7 @@ if __name__ == '__main__':
         else:
             extension = 'cpp'
         try:
-            #print(sys.argv[1].split('_'))
+            # print(sys.argv[1].split('_'))
             autotest = Aat.AtcoderAutoTest(*sys.argv[1].split('_'), extension)
             autotest.download_test_cases()
             autotest.execute_test_cases()
