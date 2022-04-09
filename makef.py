@@ -16,7 +16,3 @@ if __name__ == "__main__":
 
         mcf = Mcf.MakeContestFolder(con_name)
         mcf.make_contest_dir()
-
-
-def foo():
-    print("Hello" "World")
