@@ -78,11 +78,13 @@ class MakeContestFolder:
         if self.contest_num != "":
             tgt_dir = os.path.join(tgt_dir, self.contest_num)
 
-        # 指定されたコンテスト番号内の未編集ののフォルダを削除
+        # 指定されたコンテスト番号内の未編集のフォルダを削除
         if os.path.exists(tgt_dir):
             for tgt_file in os.listdir(tgt_dir):
-                shutil.rmtree(os.path.join(tgt_dir, tgt_file))
-                print(os.path.join(tgt_dir, tgt_file))
+                os.remove(os.path.join(tgt_dir, tgt_file))
+
+            if len(os.listdir(tgt_dir)) == 0:
+                shutil.rmtree(tgt_dir)
         else:
             print("そのフォルダは存在しません")
 
