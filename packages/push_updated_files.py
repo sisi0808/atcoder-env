@@ -37,13 +37,13 @@ class PushUpdatedFiles:
             s = m.groups()[0].split("/")
             # If it's contest file
             if s[0] in self.contest_name_dict:
-                contest_folder_path = "/".join(s[0:-1])
-                contest_name = "".join(s[0:-1])
-                for rank in self.get_problem_name_list(s[0]):
-                    if not os.path.exists(f"{contest_folder_path}/{rank}.cpp"):
-                        continue
-                    if not filecmp.cmp(f"{contest_folder_path}/{rank}.cpp", "./template.cpp"):
-                        created_dict[contest_name].append(rank)
+                contest_folder_path = "/".join(s[:-1])
+                contest_name = "".join(s[:-1])
+                contest_file_path = [s[-1]] if s[-1] != "" else os.listdir(contest_folder_path)
+                for rank in contest_file_path:
+                    if not filecmp.cmp(f"{contest_folder_path}/{rank}", "./template.cpp"):
+                        created_dict[contest_name].append(rank.split(".")[0])
+                        # print(f"{contest_folder_path}/{rank}")
 
         return created_dict
 
@@ -148,5 +148,6 @@ class PushUpdatedFiles:
             f'git commit -m "{self.commit_message}"',
             "git push origin master",
         ]
+        print(add_file_list)
         for com in com_list:
             subprocess.run(com, shell=True)  # print(com)

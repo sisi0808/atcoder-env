@@ -1,6 +1,6 @@
 from packages import Puf
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     puf = Puf.PushUpdatedFiles()
 
@@ -12,10 +12,11 @@ if __name__ == '__main__':
     if puf.commit_message != "":
         try:
             print(puf.commit_message)
+            # print(puf.updated_dict)
             puf.execute_command()
         except Exception as e:
             print(e)
         else:
             print("Done")
     else:
-        print('There are no contest codes with updated')
+        print("There are no contest codes with updated")
