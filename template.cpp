@@ -19,6 +19,7 @@ using namespace std;
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
+using vs = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
