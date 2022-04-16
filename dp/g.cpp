@@ -72,10 +72,9 @@ vector<ll> dp;
 void dfs(int st) {
     int longest = 0;
     for(auto to : g[st]) {
-        if(dp[to] == -1) {
+        if(dp[to] == -1)
             dfs(to);
-            chmax(longest, dp[to] + 1);
-        }
+        chmax(longest, dp[to] + 1);
     }
     dp[st] = longest;
 }
