@@ -69,26 +69,19 @@ int main(void) {
     fio();
     int n, m, k;
     cin >> n >> m >> k;
-    // vector<vector<vector<mint>>> dp(n + 1, vector<vector<mint>>(m + 1, vector<mint>(2*k + 1, 0)));
-    // dp[0][0][0] = 1;
-    // dp[1][1][1] = 1;
-    // vector<vector<mint>> dp(n+1, vector<mint> (k, 0));
-    // dp[1][1] = 1;
+
     vector<vector<mint>> dp(n + 1, vector<mint>(2 * k + 1, 0));
     dp[0][0] = 1;
     rep(i, n) {
         repp(j, m + 1, 1) {
             rep(l, k) {
                 dp[i + 1][l + j] += dp[i][l];
-                // cout << dp[i + 1][l + j].val() << endl;
             }
         }
     }
-    // cout << dp[n][m][k].val() << endl;
     mint ans = 0;
     rep(i, k + 1) {
         ans += dp[n][i];
-        // cout << dp[n][i].val() << endl;
     }
     cout << ans.val() << endl;
 }
