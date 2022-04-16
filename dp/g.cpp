@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -8,24 +8,25 @@ using namespace atcoder;
     ios::sync_with_stdio(false);
 using namespace std;
 #define rep(i, n) for(int i = 0; i < int(n); ++i)
-#define rrep(i, n) for(int i = n; i > 0; --i)
+#define rrep(i, n) for(int i = n; i >= 0; --i)
 #define repp(i, n, m) for(int i = m; i < int(n); ++i)
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
 #define RALL(v) (v).rbegin(), (v).rend()
-#define chmin(a, b) a = min(a, b)
-#define chmax(a, b) a = max(a, b)
+#define chmin(a, b) a = min((ll)a, (ll)b)
+#define chmax(a, b) a = max((ll)a, (ll)b)
 
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
+using vs = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
-using P = vector<ll, ll>;
+using P = pair<ll, ll>;
 const int SIZE = 100005;
-const int inf = INT_MAX;
+const int inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = LLONG_MAX;
+const long long INF = 1000000000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -60,9 +61,46 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-graph G;
 using mint = modint998244353;
+// using mint = modint1000000007;
+// cout << fixed << setprecision(12);
 
-int main(void){
+int n, m;
+Graph g;
+vector<ll> dp;
+
+void dfs(int st) {
+    int longest = 0;
+    for(auto to : g[st]) {
+        if(dp[to] == -1) {
+            dfs(to);
+            chmax(longest, dp[to] + 1);
+        }
+    }
+    dp[st] = longest;
+}
+
+int main(void) {
     fio();
+    cin >> n >> m;
+    g.resize(n);
+    dp.resize(n, -1);
+    rep(i, m) {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        g[x].push_back(y);
+    }
+
+    rep(i, n) {
+        if(dp[i] == -1) {
+            /* iから出る有効パスの最大値を求める */
+            dfs(i);
+        }
+    }
+
+    ll ans = 0;
+    rep(i, n) chmax(ans, dp[i]);
+    cout << ans << endl;
 }
