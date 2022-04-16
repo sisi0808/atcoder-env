@@ -67,28 +67,22 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
-    int n, m, k;
-    cin >> n >> m >> k;
-    // vector<vector<vector<mint>>> dp(n + 1, vector<vector<mint>>(m + 1, vector<mint>(2*k + 1, 0)));
-    // dp[0][0][0] = 1;
-    // dp[1][1][1] = 1;
-    // vector<vector<mint>> dp(n+1, vector<mint> (k, 0));
-    // dp[1][1] = 1;
-    vector<vector<mint>> dp(n + 1, vector<mint>(2 * k + 1, 0));
-    dp[0][0] = 1;
+    int n;
+    cin >> n;
+    vector<ll> a(n);
+    rep(i, n) cin >> a[i];
+    vector<vector<int>> b(n + 1);
     rep(i, n) {
-        repp(j, m + 1, 1) {
-            rep(l, k) {
-                dp[i + 1][l + j] += dp[i][l];
-                // cout << dp[i + 1][l + j].val() << endl;
-            }
-        }
+        b[a[i]].push_back(i + 1);
     }
-    // cout << dp[n][m][k].val() << endl;
-    mint ans = 0;
-    rep(i, k + 1) {
-        ans += dp[n][i];
-        // cout << dp[n][i].val() << endl;
+
+    ll Q;
+    cin >> Q;
+    while(Q--) {
+        int l, r, x;
+        cin >> l >> r >> x;
+        int ans = upper_bound(ALL(b[x]), r) - lower_bound(ALL(b[x]), l);
+
+        cout << ans << endl;
     }
-    cout << ans.val() << endl;
 }
