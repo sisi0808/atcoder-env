@@ -148,6 +148,6 @@ class PushUpdatedFiles:
             f'git commit -m "{self.commit_message}"',
             "git push origin master",
         ]
-        print(add_file_list)
+        # print(add_file_list)
         for com in com_list:
             subprocess.run(com, shell=True)  # print(com)
