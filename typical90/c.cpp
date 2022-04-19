@@ -65,24 +65,53 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+int n;
+Graph g;
+int temp[SIZE];
+
+void dfs(int st) {
+    for(ll to : g[st]) {
+        if(temp[to] != -1)
+            continue;
+        temp[to] = temp[st] + 1;
+        dfs(to);
+    }
+}
+
 int main(void) {
     fio();
-    int h, w;
-    cin >> h >> w;
-    Graph g(h, vector<ll>(w));
-    vs hh(h, 0);
-    vs ww(w, 0);
-    rep(i, h) rep(j, w) cin >> g[i][j];
-    rep(i, h) {
-        rep(j, w) {
-            hh[i] += g[i][j];
-            ww[j] += g[i][j];
+    cin >> n;
+    g.resize(n);
+    rep(i, n - 1) {
+        int a, b;
+        cin >> a >> b;
+        a--;
+        b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+
+    // 初期化
+    rep(i, n) temp[i] = -1;
+    temp[0] = 0;
+
+    // 頂点0からもっとも遠い頂点を求める
+    dfs(0);
+    int edge, score = 0;
+    rep(i, n) {
+        if(temp[i] > score) {
+            edge = i;
+            score = temp[i];
         }
     }
-    rep(i, h) {
-        rep(j, w) {
-            cout << hh[i] + ww[j] - g[i][j] << " ";
-        }
-        cout << endl;
-    }
+
+    // 初期化
+    rep(i, n) temp[i] = -1;
+    temp[edge] = 0;
+
+    // 木の直径を求める
+    dfs(edge);
+    rep(i, n) chmax(score, temp[i]);
+
+    cout << score + 1 << endl;
 }
