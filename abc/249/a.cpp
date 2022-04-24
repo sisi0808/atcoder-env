@@ -73,11 +73,22 @@ int main(void) {
     ll aa, bb;
     aa = bb = 0;
 
-    aa = (x / (a + c)) * a * b;
-    aa += min(a, (x % (a + c))) * b;
+    // 解1
+    // aa = (x / (a + c)) * a * b;
+    // aa += min(a, (x % (a + c))) * b;
 
-    bb = (x / (d + f)) * d * e;
-    bb += min(d, (x % (d + f))) * e;
+    // bb = (x / (d + f)) * d * e;
+    // bb += min(d, (x % (d + f))) * e;
+
+    // 解2
+    rep(i, x) {
+        if(i % (a + c) < a) {
+            aa += b;
+        }
+        if(i % (d + f) < d) {
+            bb += e;
+        }
+    }
 
     if(aa > bb) {
         cout << "Takahashi" << endl;

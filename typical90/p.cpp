@@ -67,27 +67,23 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
-    string s;
-    cin >> s;
-    bool ans = true;
-    bool bns = false;
-    bool cns = false;
-    rep(i, s.size()) {
-        if(isupper(s[i]))
-            bns = true;
-        else
-            cns = true;
-        rep(j, s.size()) {
-            if(i == j)
-                continue;
-            if(s[j] == s[i])
-                ans = false;
+    ll n;
+    cin >> n;
+    vs a(3);
+    rep(i, 3) cin >> a[i];
+    sort(RALL(a));
+
+    ll ans = INF;
+    rep(i, 10000) {
+        if(n < a[0] * i)
+            break;
+        rep(j, 10000) {
+            if(n < a[0] * i + a[1] * j)
+                break;
+            if((n - a[0] * i - a[1] * j) % a[2] == 0) {
+                chmin(ans, i + j + (n - a[0] * i - a[1] * j) / a[2]);
+            }
         }
     }
-
-    if(ans && bns && cns) {
-        yes();
-    } else {
-        no();
-    }
+    pri(ans);
 }
