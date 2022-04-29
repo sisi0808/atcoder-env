@@ -85,7 +85,7 @@ class PushUpdatedFiles:
             # For example, '217_a-c,e and 218_a,c'
             is_serise = False
             for j in range(1, len(dvalues)):
-                if ord(dvalues[j - 1]) + 1 == ord(dvalues[j]):
+                if ord(dvalues[j - 1][-1]) + 1 == ord(dvalues[j][-1]):
                     is_serise = True
                     if j == len(dvalues) - 1:
                         commit_message += f"-{dvalues[j]}"
