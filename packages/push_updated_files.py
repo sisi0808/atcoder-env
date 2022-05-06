@@ -58,7 +58,7 @@ class PushUpdatedFiles:
             # If it's contest file
             if s[0] in self.contest_name_dict:
                 contest_name = "".join(s[0:-1])
-                modified_dict[contest_name].append(s[-1][0])
+                modified_dict[contest_name].append(s[-1].split(".")[0])
 
         return modified_dict
 
