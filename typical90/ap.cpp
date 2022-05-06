@@ -61,10 +61,26 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-using mint = modint998244353;
-// using mint = modint1000000007;
+// using mint = modint998244353;
+using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 int main(void) {
     fio();
+    int k;
+    cin >> k;
+    /* 各桁の数字の和は必ず9の倍数である必要がある */
+    if(k % 9 != 0) {
+        pri(0);
+        return 0;
+    }
+    vector<mint> dp(k + 1);
+    dp[0] = 1;
+
+    /* 各桁の数字の和*/
+    repp(i, k + 1, 1) {
+        repp(j, min(i + 1, 10), 1) dp[i] += dp[i - j];
+    }
+
+    cout << dp[k].val() << endl;
 }
