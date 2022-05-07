@@ -49,7 +49,7 @@ void YN(bool t) {
 
 void pri(ll a) { cout << a << endl; }
 void spri(string a) { cout << a << endl; }
-void priV(vector<ll> &vec) {
+void priV(vector<int> vec) {
     for(size_t i = 0; i < vec.size(); i++) {
         cout << vec[i] << ":";
     }
@@ -67,4 +67,21 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n, k;
+    cin >> n >> k;
+    vs c(n + 1, 0);
+
+    ll ans = 0;
+    repp(i, n + 1, 2) {
+        if(c[i] != 0)
+            continue;
+        for(int j = i; j <= n; j += i)
+            c[j] += 1;
+    }
+
+    repp(i, n + 1, 2) {
+        if(c[i] >= k)
+            ans++;
+    }
+    pri(ans);
 }
