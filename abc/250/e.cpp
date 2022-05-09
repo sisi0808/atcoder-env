@@ -74,21 +74,43 @@ int main(void) {
     rep(i, n) cin >> a[i];
     rep(i, n) cin >> b[i];
 
+    /* a[i=1..n], b[i=1..n]における数字の種類数を記録 */
+    /* 同時にb[i=1...n]における最大値も記録*/
+    ivec as(n), bs(n), bm(n);
+
+    lvec vta = a;
+    vta.erase(unique(ALL(vta)), vta.end());
+
+    set<ll> sta, stb;
+    rep(i, n) {
+        sta.insert(a[i]);
+        as[i] = sta.size();
+        stb.insert(b[i]);
+        bs[i] = stb.size();
+    }
+
+    map<ll, int> mp;
+    int max_num = -1;
+
+    /* aにおいて、出てくる数字を振りなおす */
+    rep(i, vta.size()) mp[vta[i]] = i;
+
+    /* bにのみ出てくる数字には適当に大きな数を振っておく */
+    rep(i, n) {
+        if(!mp.count(b[i])) mp[b[i]] = n;
+        chmax(max_num, mp[b[i]]);
+        bm[i] = max_num + 1;
+    }
+
     int q;
     cin >> q;
-    /* x, y, i */
-    vector<tuple<int, int, int>> tu(n);
     rep(i, q) {
         int x, y;
         cin >> x >> y;
-        tu[i] = make_tuple(x, y, i);
+        x--;
+        y--;
+        if(as[x] == bs[y] && bs[y] == bm[y]) yes();
+        else no();
+        // cout << as[x] << ':' << bs[y] << ':' << bm[y] << endl;
     }
-    sort(ALL(tu));
-
-    int x, y, idx;
-    rep(i, n) {
-        tie(x, y, idx) = tu[i];
-    }
-    vector<boo> ans(n);
-    rep(i, n) yn(ans[i]);
 }
