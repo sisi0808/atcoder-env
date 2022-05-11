@@ -109,7 +109,6 @@ int main(void) {
         cin >> x >> y;
         x--;
         y--;
-        // cout << as[x] << " " << bs[y] << " " << bm[y];
         yn(as[x] == bs[y] && as[x] == bm[y]);
     }
 }
