@@ -67,4 +67,38 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n, Q;
+    cin >> n >> Q;
+    vs x(n), y(n);
+
+    /* 入力 */
+    rep(i, n) cin >> x[i] >> y[i];
+
+    ll min_x, min_y;
+    min_x = min_y = inf;
+    ll max_x, max_y;
+    max_x = max_y = 0;
+    /* 45度回転 */
+    rep(i, n) {
+        ll p1 = x[i] + y[i];
+        ll p2 = y[i] - x[i];
+        x[i] = p1;
+        y[i] = p2;
+        chmin(min_x, x[i]);
+        chmin(min_y, y[i]);
+        chmax(max_x, x[i]);
+        chmax(max_y, y[i]);
+    }
+
+    /* クエリに答える */
+    while(Q--) {
+        int q;
+        cin >> q;
+        q--;
+        ll ret1 = abs(x[q] - min_x);
+        ll ret2 = abs(y[q] - min_y);
+        ll ret3 = abs(x[q] - max_x);
+        ll ret4 = abs(y[q] - max_y);
+        cout << max(max(ret1, ret2), max(ret3, ret4)) << endl;
+    }
 }

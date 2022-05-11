@@ -78,28 +78,28 @@ int main(void) {
     /* 同時にb[i=1...n]における最大値も記録*/
     ivec as(n), bs(n), bm(n);
 
-    lvec vta = a;
-    vta.erase(unique(ALL(vta)), vta.end());
-
-    set<ll> sta, stb;
+    /* aに出てくる値の降り直しと、種類数の記録を行う */
+    map<ll, int> mp;
     rep(i, n) {
-        sta.insert(a[i]);
-        as[i] = sta.size();
-        stb.insert(b[i]);
-        bs[i] = stb.size();
+        if(!mp.count(a[i])) {
+            mp[a[i]] = mp.size() + 1;
+        }
+        as[i] = mp.size();
     }
 
-    map<ll, int> mp;
-    int max_num = -1;
-
-    /* aにおいて、出てくる数字を振りなおす */
-    rep(i, vta.size()) mp[vta[i]] = i;
-
-    /* bにのみ出てくる数字には適当に大きな数を振っておく */
+    /* bに出てくる値の最大値の記録と、種類数の記録を行う */
+    ll m = 0;   // bのその時点での最大値(降り直し後)
+    set<ll> st; // 種類数記録用
     rep(i, n) {
-        if(!mp.count(b[i])) mp[b[i]] = n;
-        chmax(max_num, mp[b[i]]);
-        bm[i] = max_num + 1;
+        /* 種類数を記録 */
+        st.insert(b[i]);
+        bs[i] = st.size();
+
+        /* 最大値を記録 */
+        ll x = mp[b[i]];
+        if(x == 0) x = n * 2;
+        chmax(m, x);
+        bm[i] = m;
     }
 
     int q;
@@ -109,8 +109,7 @@ int main(void) {
         cin >> x >> y;
         x--;
         y--;
-        if(as[x] == bs[y] && bs[y] == bm[y]) yes();
-        else no();
-        // cout << as[x] << ':' << bs[y] << ':' << bm[y] << endl;
+        // cout << as[x] << " " << bs[y] << " " << bm[y];
+        yn(as[x] == bs[y] && as[x] == bm[y]);
     }
 }
