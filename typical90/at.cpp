@@ -67,4 +67,30 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vs a(n), b(n), c(n);
+    vector<ll> aa(46, 0);
+    vector<ll> bb(46, 0);
+    vector<ll> cc(46, 0);
+    rep(i, n) cin >> a[i];
+    rep(i, n) cin >> b[i];
+    rep(i, n) cin >> c[i];
+    rep(i, n) {
+        aa[a[i] % 46]++;
+        bb[b[i] % 46]++;
+        cc[c[i] % 46]++;
+    }
+
+    ll ans = 0;
+    rep(i, 46) {
+        rep(j, 46) {
+            rep(k, 46) {
+                if((i + j + k) % 46 == 0) {
+                    ans += (aa[i] * bb[j] * cc[k]);
+                }
+            }
+        }
+    }
+    pri(ans);
 }

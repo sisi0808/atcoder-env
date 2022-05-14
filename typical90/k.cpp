@@ -64,7 +64,52 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
+int n;
+
+struct state {
+    int d, c;
+    ll s;
+};
+
+/* 締め切り、必要日数、報酬*/
+vector<state> a;
+
+ll solve() {
+    Graph dp(5005, vector<ll>(5005, 0));
+
+    /* 締め切りの早い順にソート*/
+    sort(ALL(a), [&](state i, state j) {
+        return i.d < j.d;
+    });
+    rep(i, n) {
+        rep(j, 5001) {
+            // 仕事 i+1をやらない場合
+            chmax(dp[i + 1][j], dp[i][j]);
+            // 仕事 i+1をやる場合
+            if(j + a[i].c <= a[i].d) {
+                chmax(dp[i + 1][j + a[i].c], dp[i][j] + a[i].s);
+            }
+        }
+    }
+
+    ll ans = 0;
+    rep(i, 5001) {
+        chmax(ans, dp[n][i]);
+    }
+    return ans;
+}
 
 int main(void) {
     fio();
+    cin >> n;
+
+    rep(i, n) {
+        int d, c;
+        ll s;
+        cin >> d >> c >> s;
+        a.push_back({d, c, s});
+    }
+
+    ll ans = solve();
+    pri(ans);
 }
