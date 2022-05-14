@@ -65,6 +65,62 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+int h, w;
+int yy1, xx1, yy2, xx2;
+vector<string> s;
+vector<vector<vector<int>>> dist;
+
+bool judge_root(int y, int x) {
+    if(y < 0 || x < 0 || y >= h || x >= w) return false;
+    if(s[y][x] == '#') return false;
+    return true;
+}
+
+/* (現在の位置、現在の位置)*/
+void bfs(int y, int x) {
+    rep(i, 4) dist[y][x][i] = 0;
+
+    queue<pair<int, P>> q;
+    rep(i, 4) q.push({i, {y, x}});
+
+    while(!q.empty()) {
+        auto st = q.front();
+        q.pop();
+        int dd = st.first;
+        int yy, xx;
+        tie(yy, xx) = st.second;
+
+        rep(i, 4) {
+            if(judge_root(yy + dy[i], xx + dx[i])) {
+                if(dd == i && dist[yy + dy[i]][xx + dx[i]][i] > dist[yy][xx][dd]) {
+                    dist[yy + dy[i]][xx + dx[i]][i] = dist[yy][xx][dd];
+                    q.push({i, {yy + dy[i], xx + dx[i]}});
+                } else if(dist[yy + dy[i]][xx + dx[i]][i] > dist[yy][xx][dd] + 1) {
+                    dist[yy + dy[i]][xx + dx[i]][i] = dist[yy][xx][dd] + 1;
+                    q.push({i, {yy + dy[i], xx + dx[i]}});
+                }
+            }
+        }
+    }
+}
+
 int main(void) {
     fio();
+    cin >> h >> w;
+    cin >> yy1 >> xx1 >> yy2 >> xx2;
+    yy1--;
+    xx1--;
+    yy2--;
+    xx2--;
+    s.resize(h);
+    dist.resize(h, vector<vector<int>>(w, vector<int>(4, inf)));
+    rep(i, h) cin >> s[i];
+
+    bfs(yy1, xx1);
+
+    ll ans = INF;
+    rep(i, 4) {
+        chmin(ans, dist[yy2][xx2][i]);
+    }
+    pri(ans);
 }
