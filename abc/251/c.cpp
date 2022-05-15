@@ -73,16 +73,16 @@ int main(void) {
     vector<string> s(n);
     lvec t(n);
     rep(i, n) cin >> s[i] >> t[i];
-    map<string, P> mp;
-    rep(i, n) {
-        if(!mp.count(s[i])) mp[s[i]] = make_pair(t[i], i);
-    }
+
+    set<string> st;
     int ans_idx = -1;
     ll ans_max = 0;
-    for(auto itr : mp) {
-        if(ans_max < itr.second.first) {
-            ans_max = itr.second.first;
-            ans_idx = itr.second.second;
+    rep(i, n) {
+        if(st.count(s[i])) continue;
+        st.insert(s[i]);
+        if(ans_max < t[i]) {
+            ans_max = t[i];
+            ans_idx = i;
         }
     }
 

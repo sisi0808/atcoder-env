@@ -67,7 +67,8 @@ using mint = modint998244353;
 // cout << fixed << setprecision(12);
 
 /*
-偶数だったら、回数としてはn/2で良い
+頂点数が1の木を無くせれば良い
+脇の数の合計<=自身の数ならば、脇の二本をつなぐ
 */
 
 int main(void) {
@@ -76,4 +77,32 @@ int main(void) {
     cin >> n;
     lvec a(n);
     rep(i, n) cin >> a[i];
+    vector<bool> v(n, false);
+    // dp[N個目の条件を][行うか]
+    vector<vector<ll>> dp1(n + 1, vector<ll>(2, INF));
+    vector<vector<ll>> dp2(n + 1, vector<ll>(2, INF));
+
+    /* 行動１を行わない場合 */
+    dp1[0][0] = 0;
+    dp1[0][1] = INF;
+
+    repp(i, n, 1) {
+        /* 行動i+1を行わない場合 */
+        dp1[i][0] = dp1[i - 1][1];
+        /* 行動i+1を行う場合 */
+        dp1[i][1] = min(dp1[i - 1][0], dp1[i - 1][1]) + a[i];
+    }
+
+    /* 行動１を行う場合 */
+    dp2[0][0] = INF;
+    dp2[0][1] = a[0];
+
+    repp(i, n, 1) {
+        /* 行動i+1を行わない場合 */
+        dp2[i][0] = dp2[i - 1][1];
+        /* 行動i+1を行う場合 */
+        dp2[i][1] = min(dp2[i - 1][0], dp2[i - 1][1]) + a[i];
+    }
+
+    cout << min({dp1[n - 1][1], dp2[n - 1][0], dp2[n - 1][1]}) << endl;
 }
