@@ -66,6 +66,12 @@ using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 mint fact[100005];
+
+void init() {
+    fact[0] = 1;
+    rep(i, 100004) fact[i + 1] = fact[i] * (i + 1);
+}
+
 mint nCr(int n, int r) {
     if(n == 0) return r == 0;
     r = min(r, n - r);
@@ -76,16 +82,10 @@ mint nCr(int n, int r) {
     return nu / de;
 }
 
-// void init() {
-// }
-
 int main(void) {
     fio();
     int n;
     cin >> n;
-
-    fact[0] = 1;
-    rep(i, n) fact[i + 1] = fact[i] * (i + 1);
 
     /* query(1~k) */
     repp(k, n + 1, 1) {
