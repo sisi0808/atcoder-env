@@ -80,7 +80,7 @@ int main(void) {
     ivec ans;
     int ii = 1;
     rep(i, 3) {
-        rep(j, 100) {
+        repp(j, 100, 1) {
             ans.push_back(j * ii);
         }
         ii *= 100;
