@@ -67,8 +67,7 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
-    int n, k;
-    ll p;
+    ll n, k, p;
     cin >> n >> k >> p;
     vs a(n);
     rep(i, n) cin >> a[i];
@@ -89,7 +88,7 @@ int main(void) {
         }
         fh[cou].push_back(total_fee);
     }
-    rep(i, f_half) sort(ALL(fh[i]));
+    rep(i, f_half + 1) sort(ALL(fh[i]));
 
     /* 後半に分ける */
     rep(i, (1 << s_half)) {
@@ -103,10 +102,10 @@ int main(void) {
         }
         sh[cou].push_back(total_fee);
     }
-    rep(i, s_half) sort(ALL(sh[i]));
+    rep(i, s_half + 1) sort(ALL(sh[i]));
 
     ll ans = 0;
-    repp(i, f_half, 1) {
+    rep(i, f_half + 1) {
         for(auto f_fee : fh[i]) {
             ans += upper_bound(ALL(sh[k - i]), p - f_fee) - sh[k - i].begin();
         }
