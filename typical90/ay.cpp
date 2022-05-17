@@ -67,4 +67,49 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n, k;
+    ll p;
+    cin >> n >> k >> p;
+    vs a(n);
+    rep(i, n) cin >> a[i];
+
+    int f_half = n / 2;
+    int s_half = n - n / 2;
+    Graph fh(f_half + 1), sh(s_half + 1);
+
+    /* 前半に分ける */
+    rep(i, (1 << f_half)) {
+        ll total_fee = 0;
+        int cou = 0;
+        rep(j, f_half) {
+            if(i & (1 << j)) {
+                total_fee += a[j];
+                cou++;
+            }
+        }
+        fh[cou].push_back(total_fee);
+    }
+    rep(i, f_half) sort(ALL(fh[i]));
+
+    /* 後半に分ける */
+    rep(i, (1 << s_half)) {
+        ll total_fee = 0;
+        int cou = 0;
+        rep(j, s_half) {
+            if(i & (1 << j)) {
+                total_fee += a[f_half + j];
+                cou++;
+            }
+        }
+        sh[cou].push_back(total_fee);
+    }
+    rep(i, s_half) sort(ALL(sh[i]));
+
+    ll ans = 0;
+    repp(i, f_half, 1) {
+        for(auto f_fee : fh[i]) {
+            ans += upper_bound(ALL(sh[k - i]), p - f_fee) - sh[k - i].begin();
+        }
+    }
+    pri(ans);
 }
