@@ -75,6 +75,7 @@ int main(void) {
     rep(i, n) cin >> b[i];
 
     /* a[i=1..n], b[i=1..n]における数字の種類数を記録 */
+<<<<<<< HEAD
     ivec as(n), bs(n);
     set<ll> sta, stb;
     vector<set<ll>> st(n + 2);
@@ -83,6 +84,7 @@ int main(void) {
         as[i] = sta.size();
         stb.insert(b[i]);
         bs[i] = stb.size();
+=======
     }
 
     int q;
@@ -92,8 +94,12 @@ int main(void) {
         cin >> x >> y;
         x--;
         y--;
+<<<<<<< HEAD
         if(as[x] == bs[y] && st[as[x]].size() == 0) yes();
         else no();
         // cout << as[x] << ':' << bs[y] << ':' << bm[y] << endl;
+=======
+        yn(as[x] == bs[y] && as[x] == bm[y]);
+>>>>>>> 70d81cd8efdbcd33ece6451297f7ee5cdd7f33fe
     }
 }

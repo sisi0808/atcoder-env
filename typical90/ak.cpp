@@ -65,6 +65,41 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+// opでは求める値に応じて関数を設定
+ll op(ll a, ll b) {
+    return max(a, b);
+}
+
+// eでは条件に応じた初期値を設定
+// 区間最大値を求める際は-1
+// 区間最大値を求める際はINFを指定
+ll e() {
+    return (ll)(-1);
+}
+
 int main(void) {
     fio();
+    ll w, n;
+    cin >> w >> n;
+    vs l(n), r(n), v(n);
+
+    rep(i, n) cin >> l[i] >> r[i] >> v[i];
+    vector<vector<ll>> dp(n + 1, vector<ll>(w + 1, -1));
+    dp[0][0] = 0;
+
+    // 初期化1(長さn, 初期値e()のsegtreeを作成)
+    segtree<ll, op, e> seg(w + 1);
+    seg.set(0, 0);
+
+    rep(i, n) {
+        rep(j, w + 1) {
+            dp[i + 1][j] = dp[i][j];
+            ll m_n = seg.prod(max(0LL, j - r[i]), max(0LL, j - l[i] + 1));
+            if(m_n != -1) dp[i + 1][j] = max(dp[i + 1][j], m_n + v[i]);
+        }
+        rep(j, w + 1) {
+            seg.set(j, dp[i + 1][j]);
+        }
+    }
+    cout << dp[n][w] << endl;
 }

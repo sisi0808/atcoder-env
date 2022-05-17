@@ -67,4 +67,24 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n, q;
+    cin >> n >> q;
+    vs a(n);
+    rep(i, n)
+            cin >>
+        a[i];
+    int tgt = 0;
+    while(q--) {
+        int t, x, y;
+        cin >> t >> x >> y;
+        x--;
+        y--;
+        if(t == 1) {
+            swap(a[((x + tgt) % n + n) % n], a[((y + tgt) % n + n) % n]);
+        } else if(t == 2) {
+            tgt -= 1;
+        } else {
+            cout << a[((x + tgt) % n + n) % n] << endl;
+        }
+    }
 }

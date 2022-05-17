@@ -19,14 +19,15 @@ using namespace std;
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
-using vs = vector<ll>;
+using ivec = vector<int>;
+using lvec = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
 const int inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = 1000000000000000;
+const long long INF = 1000000000000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -64,52 +65,29 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
-int n;
-
-struct state {
-    int d, c;
-    ll s;
-};
-
-/* 締め切り、必要日数、報酬*/
-vector<state> a;
-
-ll solve() {
-    Graph dp(5005, vector<ll>(5005, 0));
-
-    /* 締め切りの早い順にソート*/
-    sort(ALL(a), [&](state i, state j) {
-        return i.d < j.d;
-    });
-    rep(i, n) {
-        rep(j, 5001) {
-            // 仕事 i+1をやらない場合
-            chmax(dp[i + 1][j], dp[i][j]);
-            // 仕事 i+1をやる場合
-            if(j + a[i].c <= a[i].d) {
-                chmax(dp[i + 1][j + a[i].c], dp[i][j] + a[i].s);
-            }
-        }
-    }
-
-    ll ans = 0;
-    rep(i, 5001) {
-        chmax(ans, dp[n][i]);
-    }
-    return ans;
-}
 
 int main(void) {
     fio();
-    cin >> n;
-
+    int n, w;
+    cin >> n >> w;
+    ivec a(n);
+    rep(i, n) cin >> a[i];
+    set<int> st;
     rep(i, n) {
-        int d, c;
-        ll s;
-        cin >> d >> c >> s;
-        a.push_back({d, c, s});
+        repp(j, n, i + 1) {
+            repp(k, n, j + 1) {
+                if(a[i] + a[j] + a[k] <= w) {
+                    st.insert(a[i] + a[j] + a[k]);
+                }
+            }
+        }
     }
-
-    ll ans = solve();
-    pri(ans);
+    rep(i, n) {
+        repp(j, n, i + 1) {
+            if(a[i] + a[j] <= w)
+                st.insert(a[i] + a[j]);
+        }
+    }
+    rep(i, n) if(a[i] <= w) st.insert(a[i]);
+    pri(st.size());
 }

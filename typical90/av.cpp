@@ -67,4 +67,24 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n, k;
+    cin >> n >> k;
+    vs a(n), b(n);
+    rep(i, n) cin >> a[i] >> b[i];
+
+    priority_queue<P> pq;
+
+    rep(i, n) {
+        pq.push({b[i], i});
+    }
+
+    ll ans = 0;
+    rep(i, k) {
+        P p = pq.top();
+        pq.pop();
+        // cout << p.first << ":" << p.second << endl;
+        ans += p.first;
+        if(p.second != n) pq.push({a[p.second] - p.first, n});
+    }
+    pri(ans);
 }

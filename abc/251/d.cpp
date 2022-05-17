@@ -19,14 +19,15 @@ using namespace std;
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
-using vs = vector<ll>;
+using ivec = vector<int>;
+using lvec = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
 const int inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = 1000000000000000;
+const long long INF = 1000000000000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -64,52 +65,28 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
-int n;
 
-struct state {
-    int d, c;
-    ll s;
-};
-
-/* 締め切り、必要日数、報酬*/
-vector<state> a;
-
-ll solve() {
-    Graph dp(5005, vector<ll>(5005, 0));
-
-    /* 締め切りの早い順にソート*/
-    sort(ALL(a), [&](state i, state j) {
-        return i.d < j.d;
-    });
-    rep(i, n) {
-        rep(j, 5001) {
-            // 仕事 i+1をやらない場合
-            chmax(dp[i + 1][j], dp[i][j]);
-            // 仕事 i+1をやる場合
-            if(j + a[i].c <= a[i].d) {
-                chmax(dp[i + 1][j + a[i].c], dp[i][j] + a[i].s);
-            }
-        }
-    }
-
-    ll ans = 0;
-    rep(i, 5001) {
-        chmax(ans, dp[n][i]);
-    }
-    return ans;
-}
+/*
+w <= 10^6を以下のように考える
+w <= 10^6 = 1,00,00,00 = aa*10000+bb*100++cc
+ここで、aa,bb,ccはそれぞれ1~99までの数字が考えられるため、
+答えは99 * 3 = 297 となる
+*/
 
 int main(void) {
     fio();
-    cin >> n;
-
-    rep(i, n) {
-        int d, c;
-        ll s;
-        cin >> d >> c >> s;
-        a.push_back({d, c, s});
+    int w;
+    cin >> w;
+    ivec ans;
+    int ii = 1;
+    rep(i, 3) {
+        repp(j, 100, 1) {
+            ans.push_back(j * ii);
+        }
+        ii *= 100;
     }
 
-    ll ans = solve();
-    pri(ans);
+    cout << ans.size() << endl;
+    for(auto a : ans) cout << a << " ";
+    cout << endl;
 }

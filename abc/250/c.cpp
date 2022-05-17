@@ -66,6 +66,11 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+i番目の数を管理する配列aと
+xの場所を管理するmapを用意する(mapでは無くVectorでも可)
+*/
+
 int main(void) {
     fio();
     int n, q;

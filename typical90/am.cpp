@@ -65,6 +65,58 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+int n;
+Graph g;
+
+bool temp[100008]; /* 既に行った場所ならTrue*/
+vector<int> root;  /* 頂点の遷移を管理 */
+
+/* オイラーツアーを使う */
+void dfs(int now) {
+    temp[now] = true;
+
+    for(int to : g[now]) {
+        if(!temp[to]) {
+            root.push_back(to);
+            dfs(to);
+            root.push_back(now);
+        }
+    }
+
+    if(now == 0) return;
+}
+
 int main(void) {
     fio();
+    cin >> n;
+    g.resize(n);
+    rep(i, n - 1) {
+        int a, b;
+        cin >> a >> b;
+        a--;
+        b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+    // rep(i, n) sort(ALL(g));
+
+    /* オイラーツアー開始 */
+    root.push_back(0);
+    dfs(0);
+
+    /* オイラーツアーの表を作成 */
+    vector<int> v_in(n, -1);
+    vector<int> v_out(n, -1);
+    rep(i, root.size()) {
+        // cout << i << ":" << root[i] << endl;
+        if(v_in[root[i]] == -1) v_in[root[i]] = i;
+        else v_out[root[i]] = i;
+    }
+    ll ans = 0;
+    rep(i, n) {
+        int a = v_out[i] - v_in[i];
+        ans += (ll)a * (n - a);
+        // cout << a << ":" << n - a << endl;
+    }
+    pri(ans);
 }

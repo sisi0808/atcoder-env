@@ -65,6 +65,18 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+//組み合わせの数nCrを計算
+ll calcNumOfCombination(ll n, ll r) {
+    ll num = 1;
+    for(int i = 1; i <= r; i++) {
+        num = num * (n - i + 1) / i;
+    }
+    return num;
+}
+
 int main(void) {
     fio();
+    ll l;
+    cin >> l;
+    pri(calcNumOfCombination(l - 1, 11));
 }

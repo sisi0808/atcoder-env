@@ -19,14 +19,15 @@ using namespace std;
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
-using vs = vector<ll>;
+using ivec = vector<int>;
+using lvec = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
 const int inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = 1000000000000000;
+const long long INF = 1000000000000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -64,52 +65,44 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
-int n;
 
-struct state {
-    int d, c;
-    ll s;
-};
-
-/* 締め切り、必要日数、報酬*/
-vector<state> a;
-
-ll solve() {
-    Graph dp(5005, vector<ll>(5005, 0));
-
-    /* 締め切りの早い順にソート*/
-    sort(ALL(a), [&](state i, state j) {
-        return i.d < j.d;
-    });
-    rep(i, n) {
-        rep(j, 5001) {
-            // 仕事 i+1をやらない場合
-            chmax(dp[i + 1][j], dp[i][j]);
-            // 仕事 i+1をやる場合
-            if(j + a[i].c <= a[i].d) {
-                chmax(dp[i + 1][j + a[i].c], dp[i][j] + a[i].s);
-            }
-        }
-    }
-
-    ll ans = 0;
-    rep(i, 5001) {
-        chmax(ans, dp[n][i]);
-    }
-    return ans;
-}
+/*
+頂点数が1の木を無くせれば良い
+脇の数の合計<=自身の数ならば、脇の二本をつなぐ
+*/
 
 int main(void) {
     fio();
+    int n;
     cin >> n;
+    lvec a(n);
+    rep(i, n) cin >> a[i];
+    vector<bool> v(n, false);
+    // dp[N個目の条件を][行うか]
+    vector<vector<ll>> dp1(n + 1, vector<ll>(2, INF));
+    vector<vector<ll>> dp2(n + 1, vector<ll>(2, INF));
 
-    rep(i, n) {
-        int d, c;
-        ll s;
-        cin >> d >> c >> s;
-        a.push_back({d, c, s});
+    /* 行動１を行わない場合 */
+    dp1[0][0] = 0;
+    dp1[0][1] = INF;
+
+    repp(i, n, 1) {
+        /* 行動i+1を行わない場合 */
+        dp1[i][0] = dp1[i - 1][1];
+        /* 行動i+1を行う場合 */
+        dp1[i][1] = min(dp1[i - 1][0], dp1[i - 1][1]) + a[i];
     }
 
-    ll ans = solve();
-    pri(ans);
+    /* 行動１を行う場合 */
+    dp2[0][0] = INF;
+    dp2[0][1] = a[0];
+
+    repp(i, n, 1) {
+        /* 行動i+1を行わない場合 */
+        dp2[i][0] = dp2[i - 1][1];
+        /* 行動i+1を行う場合 */
+        dp2[i][1] = min(dp2[i - 1][0], dp2[i - 1][1]) + a[i];
+    }
+
+    cout << min({dp1[n - 1][1], dp2[n - 1][0], dp2[n - 1][1]}) << endl;
 }

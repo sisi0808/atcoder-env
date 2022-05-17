@@ -61,10 +61,39 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-using mint = modint998244353;
-// using mint = modint1000000007;
+// using mint = modint998244353;
+using mint = modint1000000007;
 // cout << fixed << setprecision(12);
+
+mint fact[100005];
+
+void init() {
+    fact[0] = 1;
+    rep(i, 100004) fact[i + 1] = fact[i] * (i + 1);
+}
+
+mint nCr(int n, int r) {
+    if(n == 0) return r == 0;
+    r = min(r, n - r);
+    if(r < 0) return 0;
+    auto nr = make_pair(n, r);
+    mint nu = fact[n];
+    mint de = fact[r] * fact[n - r];
+    return nu / de;
+}
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+
+    /* query(1~k) */
+    repp(k, n + 1, 1) {
+        mint mt = 0;
+        /* 選ぶ個数a */
+        repp(a, (n) / k + 2, 1) {
+            mt += nCr(n - (k - 1) * (a - 1), a);
+        }
+        cout << mt.val() << endl;
+    }
 }
