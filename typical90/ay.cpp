@@ -105,7 +105,8 @@ int main(void) {
     rep(i, s_half + 1) sort(ALL(sh[i]));
 
     ll ans = 0;
-    rep(i, f_half + 1) {
+    rep(i, k + 1) {
+        if(i > f_half || k - i > s_half) continue;
         for(auto f_fee : fh[i]) {
             ans += upper_bound(ALL(sh[k - i]), p - f_fee) - sh[k - i].begin();
         }
