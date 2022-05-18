@@ -67,4 +67,24 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vs a(n);
+    rep(i, 2 * n) cin >> a[i];
+
+    graph dp(2 * n + 1, vector<int>(2 * n + 1, inf));
+
+    rep(i, 2 * n - 1) {
+        dp[i][i + 1] = abs(a[i] - a[i + 1]);
+    }
+
+    rep(i, 2 * n - 1) {
+        repp(j, 2 * n, 1) {
+            dp[i][j] = dp[i + 1][j - 1] + abs(a[i] - a[j]);
+            repp(k, j, i + 1) {
+                dp[i][j] = dp[i][k] + dp[k + 1][j];
+            }
+        }
+    }
+    cout << dp[0][2 * n] << endl;
 }
