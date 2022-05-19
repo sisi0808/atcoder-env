@@ -65,26 +65,30 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+vector<vector<ll>> dp(409, vector<ll>(409, inf));
+vs a;
+
+ll rec(int l, int r) {
+    // 計算済み
+    if(dp[l][r] != inf) return dp[l][r];
+    if(r - l == 1) return abs(a[r] - a[l]);
+
+    //  パターン１
+    for(int k = l + 1; k < r - 1; k += 2) {
+        chmin(dp[l][r], rec(l, k) + rec(k + 1, r));
+    }
+    // パターン2
+    chmin(dp[l][r], rec(l + 1, r - 1) + abs(a[r] - a[l]));
+
+    return dp[l][r];
+}
+
 int main(void) {
     fio();
     int n;
     cin >> n;
-    vs a(n);
+    a.resize(2 * n);
     rep(i, 2 * n) cin >> a[i];
 
-    graph dp(2 * n + 1, vector<int>(2 * n + 1, inf));
-
-    rep(i, 2 * n - 1) {
-        dp[i][i + 1] = abs(a[i] - a[i + 1]);
-    }
-
-    rep(i, 2 * n - 1) {
-        repp(j, 2 * n, 1) {
-            dp[i][j] = dp[i + 1][j - 1] + abs(a[i] - a[j]);
-            repp(k, j, i + 1) {
-                dp[i][j] = dp[i][k] + dp[k + 1][j];
-            }
-        }
-    }
-    cout << dp[0][2 * n] << endl;
+    pri(rec(0, 2 * n - 1));
 }

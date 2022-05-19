@@ -61,10 +61,24 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-using mint = modint998244353;
-// using mint = modint1000000007;
+// using mint = modint998244353;
+using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    graph a(n, vector<int>(6));
+    rep(i, n) rep(j, 6) cin >> a[i][j];
+
+    mint ans = 1;
+    rep(i, n) {
+        int t = 0;
+        rep(j, 6) {
+            t += a[i][j];
+        }
+        ans *= t;
+    }
+    pri(ans.val());
 }
