@@ -67,4 +67,34 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n;
+    ll p, q;
+    cin >> n >> p >> q;
+    vs a(n);
+    rep(i, n) {
+        cin >> a[i];
+        a[i] %= p;
+    }
+
+    ll ans = 0;
+    rep(i, n) {
+        repp(j, n, i + 1) {
+            repp(k, n, j + 1) {
+                repp(l, n, k + 1) {
+                    repp(m, n, l + 1) {
+                        ll temp = (a[i] * a[j]) % p;
+                        temp = (temp * a[k]) % p;
+                        temp = (temp * a[l]) % p;
+                        temp = (temp * a[m]) % p;
+
+                        if(temp == q) {
+                            ans++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    pri(ans);
 }
