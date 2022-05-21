@@ -77,14 +77,9 @@ int main(void) {
 
     rep(i, n) {
         repp(j, s + 1, 1) {
-            /* Aを買う場合 */
-            if(j - a[i] >= 0 && dp[i][j - a[i]]) {
-                dp[i + 1][j] = true;
-            }
-            if(j - b[i] >= 0 && dp[i][j - b[i]]) {
-                /* Bを買う場合 */
-                dp[i + 1][j] = true;
-            }
+            /* A or B を買う場合 */
+            if(j - a[i] >= 0 && dp[i][j - a[i]]) dp[i + 1][j] = true;
+            if(j - b[i] >= 0 && dp[i][j - b[i]]) dp[i + 1][j] = true;
         }
     }
     /* 方法が存在しない場合 */
