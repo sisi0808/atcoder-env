@@ -65,6 +65,44 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+int digit_total(int n) {
+    int total = 0;
+    while(n > 0) {
+        total += n % 10;
+        n /= 10;
+    }
+    return total;
+}
+
 int main(void) {
     fio();
+    int n;
+    ll k;
+    cin >> n >> k;
+    vector<int> ans;
+    set<int> st;
+    ans.push_back(n);
+    st.insert(n);
+    int b;
+    while(1) {
+        int a = (ans[ans.size() - 1] + digit_total(ans[ans.size() - 1])) % 100000;
+        // cout << a << endl;
+        if(st.count(a)) {
+            b = a;
+            break;
+        }
+        ans.push_back(a);
+        st.insert(a);
+    }
+    int idx;
+    rep(i, ans.size()) {
+        if(ans[i] == b) {
+            idx = i;
+            break;
+        }
+    }
+    if(k < idx) pri(ans[k]);
+    else {
+        cout << ans[idx + (k - idx) % (ans.size() - idx)] << endl;
+    }
 }
