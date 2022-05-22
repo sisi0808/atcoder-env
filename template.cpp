@@ -16,6 +16,12 @@ using namespace std;
 #define chmin(a, b) a = min((ll)a, (ll)b)
 #define chmax(a, b) a = max((ll)a, (ll)b)
 
+#define pb = push_back;
+#define pf = push_front;
+
+#define fi first
+#define se second
+
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
@@ -24,7 +30,6 @@ using lvec = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
-using pb = pushback;
 const int SIZE = 100005;
 const int inf = 1000000000;
 const int modi = 1000000007;
