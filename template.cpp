@@ -16,8 +16,8 @@ using namespace std;
 #define chmin(a, b) a = min((ll)a, (ll)b)
 #define chmax(a, b) a = max((ll)a, (ll)b)
 
-#define pb push_back;
-#define pf push_front;
+#define pb push_back
+#define pf push_front
 
 #define fi first
 #define se second
