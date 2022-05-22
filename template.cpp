@@ -24,6 +24,7 @@ using lvec = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
+using pb = pushback;
 const int SIZE = 100005;
 const int inf = 1000000000;
 const int modi = 1000000007;
