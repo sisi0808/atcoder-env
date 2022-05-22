@@ -67,4 +67,34 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vs a(n);
+    rep(i, n) cin >> a[i];
+
+    /* そこを頂点とする、最長増加部分列の長さ */
+    /* 昇順 */
+    vector<int> dp1(n + 1, inf);
+    vector<int> p(n, 0);
+    rep(i, n) {
+        int pos = lower_bound(ALL(dp1), a[i]) - dp1.begin();
+        dp1[pos] = a[i];
+        p[i] = pos + 1;
+    }
+
+    /* そこを頂点とする、最長増加部分列の長さ */
+    /* 降順 */
+    vector<int> dp2(n + 1, inf);
+    vector<int> q(n, 0);
+    rrep(i, n - 1) {
+        int pos = lower_bound(ALL(dp2), a[i]) - dp2.begin();
+        dp2[pos] = a[i];
+        q[i] = pos + 1;
+    }
+
+    ll ans = 0;
+    rep(i, n) {
+        chmax(ans, p[i] + q[i] - 1);
+    }
+    cout << ans << endl;
 }
