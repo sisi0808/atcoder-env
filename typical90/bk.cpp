@@ -67,4 +67,36 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int h, w;
+    cin >> h >> w;
+    graph g(h, vector<int>(w));
+    rep(i, h) rep(j, w) cin >> g[i][j];
+
+    ll ans = 0;
+    repp(i, (1 << h), 1) {
+        map<int, int> mp;
+        rep(j, w) {
+            bool f = true;
+            int idx = 0;
+            rep(ii, h) {
+                if((i & (1 << ii)) == 0) continue;
+                if(idx == 0) idx = g[ii][j];
+                else if(idx != g[ii][j]) f = false;
+            }
+            if(f) mp[idx]++;
+        }
+
+        int cntH, cntW;
+        cntH = cntW = 0;
+
+        /* cntWを求める */
+        for(auto m : mp) chmax(cntW, m.second);
+
+        /* cntHを求める */
+        rep(ii, h) if(i & (1 << ii)) cntH++;
+
+        chmax(ans, cntH * cntW);
+    }
+
+    cout << ans << endl;
 }

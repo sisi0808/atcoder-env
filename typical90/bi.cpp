@@ -67,4 +67,19 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int q;
+    cin >> q;
+    deque<ll> a;
+    rep(i, q) {
+        int t;
+        ll x;
+        cin >> t >> x;
+        if(t == 1) {
+            a.push_front(x);
+        } else if(t == 2) {
+            a.push_back(x);
+        } else { // t==3
+            cout << a[x - 1] << endl;
+        }
+    }
 }
