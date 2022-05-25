@@ -67,4 +67,31 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n, q;
+    cin >> n >> q;
+    vs a(n), b(n);
+    rep(i, n) cin >> a[i];
+    ll total = 0;
+    rep(i, n - 1) {
+        b[i] = a[i + 1] - a[i];
+        total += abs(b[i]);
+    }
+    rep(i, q) {
+        int l, r;
+        ll v;
+        cin >> l >> r >> v;
+        l--;
+        r--;
+        if(l - 1 >= 0) {
+            total -= abs(b[l - 1]);
+            b[l - 1] += v;
+            total += abs(b[l - 1]);
+        }
+        if(r + 1 < n) {
+            total -= abs(b[r]);
+            b[r] -= v;
+            total += abs(b[r]);
+        }
+        pri(total);
+    }
 }
