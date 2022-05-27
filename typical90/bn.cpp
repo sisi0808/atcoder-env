@@ -63,8 +63,29 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 using mint = modint998244353;
 // using mint = modint1000000007;
-// cout << fixed << setprecision(12);
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vs L(n), R(n);
+    rep(i, n) cin >> L[i] >> R[i];
+
+    double ans = 0.0;
+    rep(i, n) {
+        repp(j, n, i + 1) {
+            /* (cnt,all) = (転倒数、全ての組み合わせの数) */
+            int cnt = 0, all = 0;
+            repp(k, R[i] + 1, L[i]) {
+                repp(l, R[j] + 1, L[j]) {
+                    if(k > l) cnt++;
+                    all++;
+                }
+            }
+
+            ans += (double)cnt / all;
+        }
+    }
+    cout << fixed << setprecision(12);
+    cout << ans << endl;
 }
