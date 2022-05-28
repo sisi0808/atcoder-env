@@ -65,6 +65,40 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+string convert_n(string xx, int n) {
+    // まずは8進数->10進数
+    ll x = 0;
+    reverse(ALL(xx));
+    ll base = 1;
+    rep(i, xx.size()) {
+        x += ((ll)(xx[i] - '0') * base);
+        base *= 8;
+    }
+    // 次に10進数->9進数
+    if(x == 0) {
+        return "0";
+    }
+    string res;
+    while(x) {
+        char d = (x % n) + '0';
+        res = d + res;
+        x /= n;
+    }
+
+    return res;
+}
+
 int main(void) {
     fio();
+    string x;
+    int k;
+    cin >> x >> k;
+
+    rep(i, k) {
+        x = convert_n(x, 9);
+        for(char &c : x) {
+            if(c == '8') c = '5';
+        }
+    }
+    cout << x << endl;
 }
