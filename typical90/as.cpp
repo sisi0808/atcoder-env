@@ -67,4 +67,45 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n, k;
+    cin >> n >> k;
+    vs x(n), y(n);
+    rep(i, n) cin >> x[i] >> y[i];
+
+    /* 任意の２頂点間のユークリッド距離の２乗 */
+    vector<vector<ll>> dis(n, vector<ll>(n, 0));
+
+    rep(i, n) {
+        rep(j, n) {
+            ll dis_x = (x[i] - x[j]) * (x[i] - x[j]);
+            ll dis_y = (y[i] - y[j]) * (y[i] - y[j]);
+            dis[i][j] = dis_x + dis_y;
+        }
+    }
+
+    /* その頂点グループの中のコスト最大値 */
+    vector<ll> cost((1 << n), 0);
+    repp(i, (1 << n), 1) {
+        rep(j, n) {
+            if(i & (1 << j)) {
+                repp(jj, n, j + 1) {
+                    if(i & (1 << jj)) {
+                        chmax(cost[i], dis[jj][j]);
+                    }
+                }
+            }
+        }
+    }
+
+    vector<vector<ll>> dp(k + 1, vector<ll>(1 << n, (1LL << 62)));
+    dp[0][0] = 0;
+    rep(i, k) {
+        repp(j, (1 << n), 1) {
+            for(int jj = j; jj != 0; jj = (jj - 1) & j) {
+                chmin(dp[i + 1][j], max(dp[i][j - jj], cost[jj]));
+            }
+        }
+    }
+
+    cout << dp[k][(1 << n) - 1] << endl;
 }
