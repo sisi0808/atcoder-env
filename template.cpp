@@ -31,9 +31,11 @@ using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
-const int inf = 1000000000;
+const int inf = 1 << 31;
+const int _inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = 1000000000000000000;
+const long long INF = 1LL << 62;
+const long long _INF = 1000000000000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
