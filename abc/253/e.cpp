@@ -79,8 +79,6 @@ int main(void) {
     ll n, m, k;
     cin >> n >> m >> k;
 
-    // vector<vector<mint>> dp(n + 1, vector<mint>(m + 1, 0));
-
     vector<fenwick_tree<mint>> dp(n + 1, fenwick_tree<mint>(m + 1));
     repp(i, m + 1, 1) dp[1].add(i, 1);
 
@@ -97,6 +95,9 @@ int main(void) {
                 /* 左から */
                 if(j > k) {
                     dp[i].add(j, dp[i - 1].sum(1, (j - k) + 1));
+                }
+                if(k == 0) {
+                    dp[i].add(j, -1);
                 }
             }
         }

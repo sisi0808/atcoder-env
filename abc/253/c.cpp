@@ -78,25 +78,20 @@ int main(void) {
     fio();
     int Q;
     cin >> Q;
-    map<ll, ll> mp;
-    set<ll> st;
+    multiset<ll> st;
     while(Q--) {
         int q;
         cin >> q;
         if(q == 1) {
             ll x;
             cin >> x;
-            mp[x]++;
-            if(!st.count(x)) {
-                st.insert(x);
-            }
+            st.insert(x);
         }
         if(q == 2) {
             ll x, c;
             cin >> x >> c;
-            mp[x] -= min(mp[x], c);
-            if(mp[x] == 0) {
-                st.erase(x);
+            while(c-- and st.find(x) != st.end()) {
+                st.erase(st.find(x));
             }
         }
         if(q == 3) {

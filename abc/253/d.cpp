@@ -88,20 +88,7 @@ ll lcm(ll a, ll b) {
 
 /* 1~n中のaの倍数の和を求める */
 ll calc_sum(ll a) {
-    /* aの倍数の数 */
-    ll a_num = (n / a);
-    /* aの最終項 */
-    ll _a = a_num * a;
-
-    if(a_num == 0) {
-        return 0;
-    } else if(a_num == 1) {
-        return a;
-    } else if(a_num % 2 == 0) {
-        return (a + _a) * (a_num / 2);
-    } else {
-        return (a + _a) / 2 * (a_num);
-    }
+    return (a) * (a + 1) / 2;
 }
 
 int main(void) {
@@ -109,9 +96,9 @@ int main(void) {
     ll a, b;
     cin >> n >> a >> b;
     /* nまでの総和 */
-    ll ans = (n) * (n + 1) / 2;
+    ll ans = calc_sum(n);
     ll c = lcm(a, b);
 
-    cout << ans - calc_sum(a) - calc_sum(b) + calc_sum(c) << endl;
-    // cout << ans << ":" << calc_sum(a) << ":" << calc_sum(b) << ":" << calc_sum(c) << endl;
+    // cout << ans - calc_sum(a) - calc_sum(b) + calc_sum(c) << endl;
+    cout << ans - a * calc_sum(n / a) - b * calc_sum(n / b) + c * calc_sum(n / c) << endl;
 }
