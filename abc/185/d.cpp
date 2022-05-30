@@ -67,4 +67,35 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    ll n, m;
+    cin >> n >> m;
+    vs a(m);
+    rep(i, m) cin >> a[i];
+    a.push_back(0);
+    a.push_back(n + 1);
+    sort(ALL(a));
+    // pri(a.size());
+
+    /* まずははんこの幅を決める */
+    ll k = INF;
+    rep(i, m + 1) {
+        if(a[i] + 1 != a[i + 1]) {
+            chmin(k, a[i + 1] - a[i] - 1);
+            // pri(a[i + 1]);
+            // pri(a[i]);
+        }
+    }
+    // pri(k);
+    if(k == INF) {
+        cout << 0 << endl;
+        return 0;
+    }
+
+    int ans = 0;
+    rep(i, m + 1) {
+        ll mas_n = a[i + 1] - a[i] - 1;
+        ans += (mas_n + k - 1) / k;
+    }
+
+    pri(ans);
 }
