@@ -67,4 +67,22 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vs x(n), y(n);
+    rep(i, n) cin >> x[i] >> y[i];
+
+    ll x_ans = 0;
+    ll y_ans = 0;
+
+    sort(ALL(x));
+    sort(ALL(y));
+    ll x_ele = x[x.size() / 2];
+    ll y_ele = y[y.size() / 2];
+    rep(i, n) {
+        x_ans += abs(x[i] - x_ele);
+        y_ans += abs(y[i] - y_ele);
+    }
+
+    pri(x_ans + y_ans);
 }
