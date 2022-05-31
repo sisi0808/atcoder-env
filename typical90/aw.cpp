@@ -65,6 +65,45 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+struct edge {
+    int u, v;
+    ll cost;
+};
+
+bool comp(const edge &e1, const edge &e2) {
+    return e1.cost < e2.cost;
+}
+
+edge es[1000000];
+int n, m;
+ll cnt = 0;
+
+// 最小全域木のコストを求める
+ll kruskal() {
+    sort(es, es + m, comp);
+    dsu d(n + 1);
+    ll res = 0;
+    rep(i, m) {
+        edge e = es[i];
+        if(!d.same(e.u, e.v)) {
+            d.merge(e.u, e.v);
+            res += e.cost;
+            cnt++;
+        } else if(e.cost < 0) {
+            res += e.cost;
+        }
+    }
+    return res;
+}
+
 int main(void) {
     fio();
+    cin >> n >> m;
+    rep(i, m) {
+        cin >> es[i].cost >> es[i].u >> es[i].v;
+        es[i].u--;
+    }
+
+    ll ans = kruskal();
+    pri(cnt != n ? -1 : ans);
 }
