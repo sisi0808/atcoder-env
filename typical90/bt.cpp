@@ -64,7 +64,37 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
+int H, W;
+int sty, stx;
+vector<string> c(17);
+int ans = 0;
+
+bool seen[16][16];
+void dfs(int y, int x, int a) {
+    seen[y][x] = true;
+    if(abs(sty - y) + abs(stx - x) == 1) chmax(ans, a);
+
+    rep(i, 4) {
+        int yy = y + dy[i];
+        int xx = x + dx[i];
+        if((0 <= yy && yy < H) && (0 <= xx && xx < W) && (c[yy][xx] != '#') && (seen[yy][xx] == false)) {
+            dfs(yy, xx, a + 1);
+        }
+    }
+    seen[y][x] = false;
+}
 
 int main(void) {
     fio();
+    cin >> H >> W;
+    rep(i, H) cin >> c[i];
+    rep(i, H) {
+        rep(j, W) {
+            if(c[i][j] == '#') continue;
+            sty = i;
+            stx = j;
+            dfs(i, j, 0);
+        }
+    }
+    pri((ans < 3 ? -1 : ans + 1));
 }
