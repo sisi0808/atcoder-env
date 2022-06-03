@@ -61,10 +61,50 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-using mint = modint998244353;
-// using mint = modint1000000007;
+// using mint = modint998244353;
+using mint = modint1000000007;
 // cout << fixed << setprecision(12);
+
+/*
+まずは、絶対に切れない辺を見つける？
+*/
+
+int n;
+graph g;
+vector<char> c;
+vector<vector<mint>> dp;
+
+void dfs(int pos, int pre) {
+    mint val1 = 1, val2 = 1;
+    /* 根から順番に考えていく*/
+    for(int i : g[pos]) {
+        /* 探索済みの場合飛ばす */
+        if(i == pre) continue;
+        dfs(i, pos);
+        val1 *= (dp[i][c[pos] - 'a'] + dp[i][2]);
+        val2 *= (dp[i][0] + dp[i][1] + 2LL * dp[i][2]);
+    }
+
+    dp[pos][c[pos] - 'a'] = val1;
+    dp[pos][2] = val2 - val1;
+}
 
 int main(void) {
     fio();
+    cin >> n;
+    c.resize(n);
+    g.resize(n);
+    dp.resize(n, vector<mint>(3));
+    rep(i, n) cin >> c[i];
+    rep(i, n - 1) {
+        int a, b;
+        cin >> a >> b;
+        a--;
+        b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+
+    dfs(0, -1);
+    pri(dp[0][2].val());
 }
