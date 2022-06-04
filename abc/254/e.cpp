@@ -16,17 +16,26 @@ using namespace std;
 #define chmin(a, b) a = min((ll)a, (ll)b)
 #define chmax(a, b) a = max((ll)a, (ll)b)
 
+#define pb push_back
+#define pf push_front
+
+#define fi first
+#define se second
+
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
-using vs = vector<ll>;
+using ivec = vector<int>;
+using lvec = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
-const int inf = 1000000000;
+const int inf = 1 << 31;
+const int _inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = 1000000000000000;
+const long long INF = 1LL << 62;
+const long long _INF = 1000000000000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -65,28 +74,59 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-/*
- * Tと直接の共著がある場合、高橋数は１
- * 共著した人間との高橋数はn+1
- *
- *
- * グラフの可能性が高い気がする
- *  距離が１の場合、高橋数は１
- */
+graph g;
+int n, m;
+vector<vector<ll>> aa;
+vector<vector<bool>> dist;
+
+void load_map(int st, int k) {
+    queue<P> pp;
+    pp.push({st, 0});
+    aa[st][0] = st + 1;
+
+    while(!pp.empty()) {
+        int kk, t;
+        tie(t, kk) = pp.front();
+        pp.pop();
+        for(auto c : g[t]) {
+            if(!dist[st][c] && kk < k) {
+                dist[st][c] = true;
+                pp.push({c, kk + 1});
+                aa[st][kk + 1] += c + 1;
+            }
+        }
+    }
+}
 
 int main(void) {
     fio();
-    int n, m;
     cin >> n >> m;
-    graph r(n);
-
-    /* 研究者毎の高橋数 */
-    vector<ll> ans(n, -1);
-    ans[0] = 0;
+    g.resize(n);
+    aa.resize(n, vector<ll>(4));
+    dist.resize(n, vector<bool>(n));
 
     rep(i, m) {
-        int k;
-        cin >> k;
-        rep(j, k)
+        int a, b;
+        cin >> a >> b;
+        a--;
+        b--;
+        g[a].pb(b);
+        g[b].pb(a);
+    }
+    rep(i, n) {
+        load_map(i, 3);
+        aa[i][2] -= i + 1;
+    }
+
+    int q;
+    cin >> q;
+    rep(i, q) {
+        int x, k;
+        cin >> x >> k;
+        ll ans = 0;
+        rep(j, k + 1) {
+            ans += aa[x - 1][j];
+        }
+        pri(ans);
     }
 }
