@@ -76,35 +76,42 @@ using mint = modint998244353;
 
 graph g;
 int n, m;
-vector<vector<ll>> aa;
-vector<vector<bool>> dist;
+vector<int> dist;
 
-void load_map(int st, int k) {
+ll load_map(int st, int k) {
+    vector<int> v;
+    v.push_back(st);
+    dist[st] = 0;
     queue<P> pp;
     pp.push({st, 0});
-    aa[st][0] = st + 1;
 
     while(!pp.empty()) {
-        int kk, t;
-        tie(t, kk) = pp.front();
+        int kk;
+        tie(st, kk) = pp.front();
         pp.pop();
-        for(auto c : g[t]) {
-            if(!dist[st][c] && kk < k) {
-                dist[st][c] = true;
+        for(auto c : g[st]) {
+            if(dist[c] == -1 && kk < k) {
+                dist[c] = 0;
                 pp.push({c, kk + 1});
-                aa[st][kk + 1] += c + 1;
+                v.push_back(c);
             }
         }
     }
+
+    ll ans = 0;
+    for(auto vv : v) {
+        ans += vv + 1;
+        dist[vv] = -1;
+    }
+
+    return ans;
 }
 
 int main(void) {
     fio();
     cin >> n >> m;
     g.resize(n);
-    aa.resize(n, vector<ll>(4));
-    dist.resize(n, vector<bool>(n));
-
+    dist.resize(n, -1);
     rep(i, m) {
         int a, b;
         cin >> a >> b;
@@ -113,20 +120,11 @@ int main(void) {
         g[a].pb(b);
         g[b].pb(a);
     }
-    rep(i, n) {
-        load_map(i, 3);
-        aa[i][2] -= i + 1;
-    }
-
     int q;
     cin >> q;
     rep(i, q) {
         int x, k;
         cin >> x >> k;
-        ll ans = 0;
-        rep(j, k + 1) {
-            ans += aa[x - 1][j];
-        }
-        pri(ans);
+        pri(load_map(x - 1, k));
     }
 }
