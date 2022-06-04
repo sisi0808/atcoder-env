@@ -65,6 +65,22 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+vector<ll> pfact(ll x) {
+    vector<ll> res;
+    for(ll i = 2; i * i <= x; i++) {
+        while(x % i == 0) {
+            x /= i;
+            res.push_back(i);
+        }
+    }
+    if(x != 1) res.push_back(x);
+    return res;
+}
+
 int main(void) {
     fio();
+    ll n;
+    cin >> n;
+    vector<ll> p = pfact(n);
+    pri(ceil(log2(p.size())));
 }
