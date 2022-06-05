@@ -79,8 +79,14 @@ int main(void) {
     int n;
     cin >> n;
 
-    vector<ll> h;
+    ll ans = 0;
+    /* iを固定する方法 */
     repp(i, n + 1, 1) {
-        h.push_back(i * i);
+        ll k = i;
+        for(ll j = 2; j * j <= k; j++) {
+            while(k % (j * j) == 0) k /= (j * j);
+        }
+        for(ll j = 1; k * j * j <= n; j++) ans++;
     }
+    pri(ans);
 }
