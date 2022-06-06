@@ -72,21 +72,52 @@ using mint = modint998244353;
  *
  * グラフの可能性が高い気がする
  *  距離が１の場合、高橋数は１
+ *
+ *
+ * その時点で最も高橋数が高いものから線を伸ばす？
  */
+
+int n, m;
+vector<vector<int>> g;
+vector<int> dist;
+
+void load_map(int st) {
+    dist.resize(n + m, -2);
+    dist[st] = 0;
+    queue<int> pp;
+    pp.push(st);
+
+    while(!pp.empty()) {
+        st = pp.front();
+        pp.pop();
+        for(auto c : g[st]) {
+            if(dist[c] == -2) {
+                dist[c] = dist[st] + 1;
+                pp.push(c);
+            }
+        }
+    }
+}
 
 int main(void) {
     fio();
-    int n, m;
     cin >> n >> m;
-    graph r(n);
-
-    /* 研究者毎の高橋数 */
-    vector<ll> ans(n, -1);
-    ans[0] = 0;
+    g.resize(n + m);
 
     rep(i, m) {
         int k;
         cin >> k;
-        rep(j, k)
+        rep(j, k) {
+            int v;
+            cin >> v;
+            v--;
+            g[v].push_back(n + i);
+            g[n + i].push_back(v);
+        }
+    }
+    load_map(0);
+
+    rep(i, n) {
+        pri(dist[i] / 2);
     }
 }
