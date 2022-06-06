@@ -67,4 +67,28 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vs a(n);
+    double sum = 0;
+    rep(i, n) {
+        cin >> a[i];
+        sum += a[i];
+    }
+    sum /= 10;
+
+    ll r = 0;
+    ll total = 0;
+    rep(l, 2 * n) {
+        while(r < 2 * n && total < sum) {
+            total += a[r % n];
+            r++;
+        }
+        if(total == sum) {
+            yes();
+            return 0;
+        }
+        total -= a[l % n];
+    }
+    no();
 }
