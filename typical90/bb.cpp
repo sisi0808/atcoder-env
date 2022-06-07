@@ -78,11 +78,12 @@ using mint = modint998244353;
  */
 
 int n, m;
-vector<vector<int>> g;
-vector<int> dist;
+vector<vector<int>> g, o;
+vector<int> dist, dad;
 
 void load_map(int st) {
-    dist.resize(n + m, -2);
+    dist.resize(n, -1);
+    dad.resize(m, -1);
     dist[st] = 0;
     queue<int> pp;
     pp.push(st);
@@ -90,19 +91,30 @@ void load_map(int st) {
     while(!pp.empty()) {
         st = pp.front();
         pp.pop();
+        /* c == 共著者グループ番号 */
         for(auto c : g[st]) {
-            if(dist[c] == -2) {
-                dist[c] = dist[st] + 1;
-                pp.push(c);
+            if(dad[c] != -1) continue;
+            dad[c] = 1;
+            /* d == 著者番号 */
+            for(auto d : o[c]) {
+                if(dist[d] == -1) {
+                    dist[d] = dist[st] + 1;
+                    pp.push(d);
+                }
             }
         }
     }
 }
+/*
+ * どの共著に関わったか
+ * その共著の著者
+ */
 
 int main(void) {
     fio();
     cin >> n >> m;
-    g.resize(n + m);
+    g.resize(n);
+    o.resize(m);
 
     rep(i, m) {
         int k;
@@ -111,13 +123,13 @@ int main(void) {
             int v;
             cin >> v;
             v--;
-            g[v].push_back(n + i);
-            g[n + i].push_back(v);
+            g[v].push_back(i);
+            o[i].push_back(v);
         }
     }
     load_map(0);
 
     rep(i, n) {
-        pri(dist[i] / 2);
+        pri(dist[i]);
     }
 }
