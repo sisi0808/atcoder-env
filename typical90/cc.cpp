@@ -65,6 +65,49 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+以下の値をそれぞれ持っておけばよい
+* チーム内最高・最低身長
+* チーム内最高・最低体重
+*/
+
 int main(void) {
     fio();
+    int n, k;
+    cin >> n >> k;
+    vs a(n), b(n);
+    vs aa(n + 1), bb(n + 1);
+    graph g(5001, vector<int>(5001, 0));
+    graph gg(5001, vector<int>(5001, 0));
+    rep(i, n) cin >> a[i] >> b[i];
+    rep(i, n) g[a[i]][b[i]] += 1;
+
+    /* 横で累積和を取る */
+    rep(i, 5001) {
+        repp(j, 5001, 1) {
+            gg[i][j] = g[i][j] + gg[i][j - 1];
+        }
+    }
+    /* 縦で累積和を取る */
+    rep(i, 5001) {
+        repp(j, 5001, 1) {
+            gg[j][i] = g[j][i] + gg[j - 1][i];
+        }
+    }
+    // repp(i, 5001, 1) {
+    //     repp(j, 5001, 1) {
+    //         cout << gg[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    ll ans = 0;
+    /* 身長の2分探索 */
+    rep(i, 5001 - k) {
+        /* 体重の2分探索 */
+        rep(j, 5001 - k) {
+            chmax(ans, gg[i][j] + gg[i + k + 1][j + k + 1] + gg[i][j + k + 1] + gg[i + k + 1][j]);
+        }
+    }
+    pri(ans);
 }

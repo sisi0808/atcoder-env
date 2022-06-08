@@ -67,4 +67,21 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n, m;
+    cin >> n >> m;
+    vector<int> ab(n + 1);
+    rep(i, m) {
+        int a, b;
+        cin >> a >> b;
+        if(a < b) {
+            ab[b]++;
+        } else if(b < a) {
+            ab[a]++;
+        }
+    }
+    ll ans = 0;
+    rep(i, n) {
+        if(ab[i + 1] == 1) ans++;
+    }
+    pri(ans);
 }
