@@ -16,17 +16,26 @@ using namespace std;
 #define chmin(a, b) a = min((ll)a, (ll)b)
 #define chmax(a, b) a = max((ll)a, (ll)b)
 
+#define pb push_back
+#define pf push_front
+
+#define fi first
+#define se second
+
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
-using vs = vector<ll>;
+using ivec = vector<int>;
+using lvec = vector<ll>;
 using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
-const int inf = 1000000000;
+const int inf = 1 << 31;
+const int _inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = 1000000000000000;
+const long long INF = 1LL << 62;
+const long long _INF = 1000000000000000000;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -61,37 +70,10 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-// using mint = modint998244353;
-using mint = modint1000000007;
+using mint = modint998244353;
+// using mint = modint1000000007;
 // cout << fixed << setprecision(12);
-
-/* a+1からbまでの等差数列の和 */
-mint tousa_sum(ll a, ll b) {
-    mint aa = mint(a);
-    mint bb = mint(b);
-    mint small_a = (aa * (aa + 1) / 2);
-    mint big_b = (bb * (bb + 1) / 2);
-
-    return big_b - small_a;
-}
 
 int main(void) {
     fio();
-    ll l, r;
-    cin >> l >> r;
-    mint ans = 0;
-    int l_d = to_string(l).size();
-    int r_d = to_string(r).size();
-    repp(i, r_d, l_d + 1) {
-        ans += i * tousa_sum(pow_mod(10LL, i - 1, modl) - 1, pow_mod(10LL, i, modl) - 1);
-    }
-    if(l_d == r_d) {
-        ans += l_d * tousa_sum(l - 1, r);
-    } else {
-        ans += l_d * tousa_sum(l - 1, pow_mod(10LL, l_d, modl) - 1);
-        // cout << ans.val() << endl;
-        ans += r_d * tousa_sum(pow_mod(10LL, r_d - 1, modl) - 1, r);
-    }
-
-    pri(ans.val());
 }
