@@ -67,4 +67,24 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    ll r = 0;
+    ll ans = 0;
+    map<char, int> mp;
+    mp['o'] = 0;
+    mp['x'] = 0;
+    rep(l, n) {
+        // while(r < n && (st.find('o') == st.end() || st.find('x') == st.end())) {
+        while(r < n && (mp['o'] == 0 || mp['x'] == 0)) {
+            mp[s[r]]++;
+            r++;
+        }
+        if(!(mp['o'] == 0 || mp['x'] == 0)) ans += n - (r - 1);
+        mp[s[l]]--;
+    }
+    pri(ans);
 }
