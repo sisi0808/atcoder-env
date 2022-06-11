@@ -64,7 +64,45 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
+/*
+i番目のアイテムを使う前に、AiとBiのアイテムのどちらかを使っていない
+*/
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vs a(n + 1), b(n + 1);
+    vector<bool> used(n + 1, false);
+    graph g(n + 1);
+    queue<int> q;
+
+    repp(i, n + 1, 1) {
+        cin >> a[i] >> b[i];
+        g[a[i]].push_back(i);
+        g[b[i]].push_back(i);
+        if(a[i] == i || b[i] == i) {
+            used[i] = true;
+            q.push(i);
+        }
+    }
+
+    /* 後ろからシミュレーション */
+    vs ans;
+    while(!q.empty()) {
+        int pos = q.front();
+        q.pop();
+        ans.push_back(pos);
+        for(int i : g[pos]) {
+            if(used[i]) continue;
+            used[i] = true;
+            q.push(i);
+        }
+    }
+
+    reverse(ALL(ans));
+    if(ans.size() != n) pri(-1);
+    else {
+        for(auto _ans : ans) pri(_ans);
+    }
 }
