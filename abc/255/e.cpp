@@ -75,7 +75,10 @@ using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 /*
-整数列の初項が決まったら、その数列は確定する
+* 整数列の初項が決まったら、その数列は確定する
+* そこから逆算して、
+    第i項の値がラッキーナンバーjの時の初項をC_ijとする
+* その後、C_00...C_nmの中で最も出現率が高いモノを答とする
 */
 
 int main(void) {
@@ -88,5 +91,17 @@ int main(void) {
     rep(i, n - 1) cin >> s[i];
     rep(i, m) cin >> x[i];
     rep(i, n - 1) a[i + 1] = s[i] - a[i];
-    rep(i, n) cout << a[i] << " ";
+
+    map<ll, ll> mp;
+    rep(i, n) {
+        rep(j, m) {
+            ll c = x[j] - a[i];
+            if(i % 2 == 0) c *= -1;
+            mp[c]++;
+        }
+    }
+
+    ll ans = 0;
+    for(auto p : mp) ans = max(ans, p.second);
+    cout << ans << endl;
 }

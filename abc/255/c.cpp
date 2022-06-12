@@ -74,20 +74,31 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+二分探索[0, n]を探索
+*/
+
+ll x, a, d, n;
+bool f(ll mid) {
+    return x <= a + mid * d;
+}
+
 int main(void) {
     fio();
-    ll x, a, d, n;
     cin >> x >> a >> d >> n;
-    ll ans = 0;
-    vector<ll> aa(2);
-    aa[0] = a;
-    aa[1] = a + d * (n - 1);
-    sort(ALL(aa));
-    if(x <= aa[0] || aa[1] <= x) {
-        cout << min(abs(x - aa[0]), abs(x - aa[1])) << endl;
-        return 0;
+    /* dが負数だと厄介なので、初項を入れ替える事で対処 */
+    if(d < 0) {
+        a = a + d * (n - 1);
+        d = -1 * d;
     }
 
-    // pri(min(abs(x - ((x - a) / d * d))), x - ((x - a) / d * (d + 1)));
-    pri(min(abs(x - a - (min((x - a) / d, n) * d)), abs(x - a - ((min((x - a) / d, n) + 1) * d))));
+    ll left = -1;
+    ll right = n - 1;
+    while(right - left > 1) {
+        ll mid = left + (right - left) / 2;
+        if(f(mid)) right = mid;
+        else left = mid;
+    }
+    ll ans = min(abs(x - (a + d * (right))), abs(x - (a + d * max(0LL, right - 1))));
+    cout << ans << endl;
 }
