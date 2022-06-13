@@ -82,12 +82,16 @@ int main(void) {
     mint ans = 0;
     int l_d = to_string(l).size();
     int r_d = to_string(r).size();
+    /* 桁が(l_r, r_d)の時の文字の個数を計算 */
     repp(i, r_d, l_d + 1) {
         ans += i * tousa_sum(pow_mod(10LL, i - 1, modl) - 1, pow_mod(10LL, i, modl) - 1);
     }
+    /* 桁が同じ場合 */
     if(l_d == r_d) {
         ans += l_d * tousa_sum(l - 1, r);
-    } else {
+    }
+    /* 違う場合は[l, l_r+1), [l_r r]を計算 */
+    else {
         ans += l_d * tousa_sum(l - 1, pow_mod(10LL, l_d, modl) - 1);
         // cout << ans.val() << endl;
         ans += r_d * tousa_sum(pow_mod(10LL, r_d - 1, modl) - 1, r);

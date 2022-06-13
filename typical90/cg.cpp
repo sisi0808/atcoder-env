@@ -65,6 +65,30 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+// nの約数を列挙
+vector<long long> divisor(long long n) {
+    vector<long long> num;
+    for(long long i = 1; i * i <= n; ++i) {
+        if(n % i == 0) {
+            num.push_back(i);
+        }
+    }
+    return num;
+}
+
 int main(void) {
     fio();
+    ll k;
+    cin >> k;
+    ll ans = 0;
+    vector<ll> d = divisor(k);
+
+    sort(ALL(d));
+    /* 10^8 */
+    for(int i = 0; i < d.size() && d[i] * d[i] * d[i] <= k; i++) {
+        for(int j = i; j < d.size() && d[i] * d[j] * d[j] <= k; j++) {
+            if(k % (d[i] * d[j]) == 0) ans++;
+        }
+    }
+    pri(ans);
 }
