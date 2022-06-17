@@ -81,23 +81,14 @@ int main(void) {
     Graph t(n, vector<ll>(n, 0));
     rep(i, n) rep(j, n) cin >> t[i][j];
     ll ans = 0;
-
-    // ここからBFS(直前に訪れた番号、過去に訪れた番号、移動時間の合計)
-    queue<tuple<int, int, ll>> q;
-    q.push({0, 1, 0});
-    while(!q.empty()) {
-        auto [st, g, time] = q.front();
-        q.pop();
-        /* 全部探索し終わったか */
-        if(g == (1 << n) - 1 && time + t[st][0] == k) {
-            ans++;
-            continue;
-        }
-        rep(i, n) {
-            if((1 << i) & g) continue;
-            q.push({i, g | (1 << i), time + t[st][i]});
-        }
-    }
+    vector<int> a(n - 1);
+    iota(ALL(a), 1); // a == {0,1,2,3,4}
+    do {
+        ll time = t[0][a[0]];
+        rep(i, n - 2) time += t[a[i]][a[i + 1]];
+        time += t[a[n - 2]][0];
+        if(time == k) ans++;
+    } while(next_permutation(ALL(a)));
 
     pri(ans);
 }
