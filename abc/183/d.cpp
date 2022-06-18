@@ -76,7 +76,20 @@ using mint = modint1000000007;
 
 int main(void) {
     fio();
-    double sx, sy, gx, gy;
-    cin >> sx >> sy >> gx >> gy;
-    printf("%.10lf\n", (sx * gy + gx * sy) / (sy + gy));
+    int n, w;
+    cin >> n >> w;
+    lvec s(n), t(n), p(n);
+    rep(i, n) cin >> s[i] >> t[i] >> p[i];
+    multiset<pair<double, ll>> ms;
+    rep(i, n) {
+        ms.insert({s[i], p[i]});
+        ms.insert({t[i] - 0.5, -1 * p[i]});
+    }
+    ll water = 0;
+    bool ans = true;
+    for(auto [ss, pp] : ms) {
+        water += pp;
+        if(water > w) ans = false;
+    }
+    yn(ans);
 }
