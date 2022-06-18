@@ -78,9 +78,5 @@ int main(void) {
     fio();
     int n;
     cin >> n;
-    ll ans = 1;
-    rep(i, n) {
-        ans *= 2;
-    }
-    pri(ans);
+    pri((1 << n));
 }

@@ -80,20 +80,39 @@ int main(void) {
     cin >> n;
     lvec l(n), r(n);
     rep(i, n) cin >> l[i] >> r[i];
-    ivec a(200005, 0);
-
+    /* 区間スケジューリング */
+    vector<P> a;
     rep(i, n) {
-        a[l[i]]++;
-        a[r[i]]--;
+        a.pb({l[i], 0});
+        a.pb({r[i], 1});
     }
+    sort(ALL(a));
     int st = 0;
-    rep(i, 200005) a[i] += a[i - 1];
-    repp(i, 200005, 1) {
-        if(a[i - 1] == 0 && a[i] > 0) {
-            st = i;
-        }
-        if(a[i - 1] > 0 && a[i] == 0) {
-            cout << st << " " << i << endl;
+    int cnt = 0;
+    rep(i, 2 * n) {
+        if(a[i].second == 0) {
+            if(cnt == 0) st = a[i].first;
+            cnt++;
+        } else {
+            cnt--;
+            if(cnt == 0) cout << st << " " << a[i].first << endl;
         }
     }
+    /* いもす法 */
+    // ivec a(200005, 0);
+
+    // rep(i, n) {
+    //     a[l[i]]++;
+    //     a[r[i]]--;
+    // }
+    // int st = 0;
+    // rep(i, 200005) a[i] += a[i - 1];
+    // repp(i, 200005, 1) {
+    //     if(a[i - 1] == 0 && a[i] > 0) {
+    //         st = i;
+    //     }
+    //     if(a[i - 1] > 0 && a[i] == 0) {
+    //         cout << st << " " << i << endl;
+    //     }
+    // }
 }

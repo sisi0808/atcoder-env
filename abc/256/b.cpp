@@ -79,14 +79,15 @@ int main(void) {
     int n;
     cin >> n;
     ivec a(n);
-    ll p = 0;
     rep(i, n) cin >> a[i];
+    ll p = 0;
     rep(i, n) {
-        int x = 0;
+        ll x = 0;
         repp(j, n, i) {
             x += a[j];
         }
         if(x >= 4) p++;
     }
+
     pri(p);
 }
