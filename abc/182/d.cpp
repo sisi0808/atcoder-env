@@ -76,4 +76,23 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    lvec a(n), b(n + 1), c(n + 1);
+    rep(i, n) cin >> a[i];
+    rep(i, n) b[i + 1] = b[i] + a[i];
+
+    ll max_n = -1;
+    repp(i, n + 1, 1) {
+        chmax(max_n, b[i]);
+        c[i] = max_n;
+    }
+
+    ll ans = 0;
+    ll _ans = 0;
+    rep(i, n) {
+        chmax(ans, _ans + c[i + 1]);
+        _ans += b[i + 1];
+    }
+    pri(ans);
 }
