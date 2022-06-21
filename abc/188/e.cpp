@@ -65,6 +65,53 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+閉路は無し
+
+*/
+vector<bool> dist(200005);
+ll ans = -1 * INF;
+graph g(200005);
+vs a(200005);
+vector<P> vp;
+
+void bfs(int sti) {
+    queue<int> pp;
+    pp.push(vp[sti].second);
+
+    while(!pp.empty()) {
+        int st = pp.front();
+        pp.pop();
+        for(auto c : g[st]) {
+            if(dist[c] == false) {
+                dist[c] = true;
+                chmax(ans, a[c] - vp[sti].first);
+                pp.push(c);
+            }
+        }
+    }
+}
+
 int main(void) {
     fio();
+    int n, m;
+    cin >> n >> m;
+    rep(i, n) cin >> a[i];
+    rep(i, n) vp.push_back({a[i], i});
+    rep(i, m) {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        y--;
+        g[x].push_back(y);
+    }
+    sort(ALL(vp));
+
+    rep(i, n) {
+        if(dist[vp[i].second] == false) bfs(i);
+        // rep(i, n) cout << dist[i] << " ";
+        // cout << endl;
+    }
+
+    pri(ans);
 }
