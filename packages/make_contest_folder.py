@@ -14,7 +14,7 @@ class MakeContestFolder:
     contest_category = ""
     contest_num = ""
 
-    contest_category_dict = {"abc": 5, "typical90": 90, "dp": 26}
+    contest_category_dict = {"abc": 6, "typical90": 90, "dp": 26}
 
     def __init__(self, contest_name):
         self.contest_name = contest_name
