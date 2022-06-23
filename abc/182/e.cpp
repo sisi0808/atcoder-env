@@ -74,6 +74,103 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+光が当たるマスは以下の2種類
+* 電球が置かれているマス
+* 電球の直線状にあるマス
+
+光が当たらないマスは
+* 電球の直線状にないマス
+* 電球の直線状にあるが、間にブロックがあるマス
+
+
+HとWは独立して考えることが可能?d
+
+HWの状態
+-1:ブロック
+0: 初期
+1: 光が当たる場所
+*/
+
+int h, w, n, m;
+ivec a, b, c, d;
+graph g, gh, gw;
+
 int main(void) {
     fio();
+    cin >> h >> w >> n >> m;
+    a.resize(n);
+    b.resize(n);
+    c.resize(m);
+    d.resize(m);
+
+    g.resize(h, vector<int>(w, 0));
+    gh.resize(h, vector<int>(w, 0));
+    gw.resize(h, vector<int>(w, 0));
+
+    rep(i, n) cin >> a[i] >> b[i];
+    rep(i, m) cin >> c[i] >> d[i];
+    rep(i, n) {
+        a[i]--;
+        b[i]--;
+    }
+    rep(i, m) {
+        c[i]--;
+        d[i]--;
+    }
+
+    map<int, vector<int>> mh;
+    map<int, vector<int>> mw;
+    rep(i, n) {
+        mh[a[i]].pb(b[i]);
+        mw[b[i]].pb(a[i]);
+    }
+
+    /* まずはブロックを初期配置 */
+    rep(i, m) {
+        gh[c[i]][d[i]] = -1;
+        gw[c[i]][d[i]] = -1;
+    }
+
+    /* まずはx(横)方向*/
+    rep(i, h) {
+        for(auto d : mh[i]) {
+            repp(j, w, d) {
+                if(gh[i][j] != 0) break;
+                gh[i][j] = 1;
+            }
+            rrep(j, d - 1) {
+                if(gh[i][j] != 0) break;
+                gh[i][j] = 1;
+            }
+        }
+    }
+    // rep(i, h) {
+    //     rep(j, w) {
+    //         cout << gh[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    /* 次にy(縦)方向*/
+    rep(i, w) {
+        for(auto d : mw[i]) {
+            repp(j, h, d) {
+                if(gw[j][i] != 0) break;
+                gw[j][i] = 1;
+            }
+            rrep(j, d - 1) {
+                if(gw[j][i] != 0) break;
+                gw[j][i] = 1;
+            }
+        }
+    }
+
+    ll ans = 0;
+    rep(i, h) {
+        rep(j, w) {
+            if(gh[i][j] > 0 || gw[i][j] > 0) ans++;
+        }
+    }
+    pri(ans);
 }
