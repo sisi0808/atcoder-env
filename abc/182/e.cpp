@@ -94,7 +94,7 @@ HWの状態
 
 int h, w, n, m;
 ivec a, b, c, d;
-graph g, gh, gw;
+graph gh, gw;
 
 int main(void) {
     fio();
@@ -104,7 +104,6 @@ int main(void) {
     c.resize(m);
     d.resize(m);
 
-    g.resize(h, vector<int>(w, 0));
     gh.resize(h, vector<int>(w, 0));
     gw.resize(h, vector<int>(w, 0));
 
@@ -145,13 +144,6 @@ int main(void) {
             }
         }
     }
-    // rep(i, h) {
-    //     rep(j, w) {
-    //         cout << gh[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-
     /* 次にy(縦)方向*/
     rep(i, w) {
         for(auto d : mw[i]) {
