@@ -74,27 +74,12 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-int main(void) {
-    fio();
-    ll n, m;
-    cin >> n;
-    m = n * (n - 1);
-    lvec x(n), y(n), p(n);
-    rep(i, n) {
-        cin >> x[i] >> y[i] >> p[i];
-    }
+ll n, m;
+lvec x(201), y(201), p(201);
 
-    /* どんな二分探索でもここの書き方を変えずにできる！ */
-    /* okが最小値でも、最大値でも同じ書き方 */
-    ll left = -1;
-    ll right = INF;
-    while(right - left > 1) {
-        ll mid = left + (right - left) / 2;
-        if(f(mid)) right = mid;
-        else left = mid;
-    }
+ll f() {
+
     double dist[201][201];
-
     // 直接つながっているものはその辺のコストで初期化
     //、開始と終了の点が同じ場合、コストは0
     // それ以外はinfに設定
@@ -103,25 +88,35 @@ int main(void) {
     rep(i, n) {
         rep(j, n) {
             if(i == j) continue;
-            dist[i][j] = (abs(x[i] - x[j]) + abs(y[i] - y[j])) / p[i];
+            dist[i][j] = (abs(x[i] - x[j]) + abs(y[i] - y[j]) + p[i] - 1) / p[i];
         }
     }
 
-    rep(k, n) {
-        rep(i, n) {
-            rep(j, n) {
-                if(dist[i][j] > dist[i][k] + dist[k][j]) dist[i][j] = dist[i][k] + dist[k][j];
-            }
-        }
-    }
-    double ans = 1000000000;
+    rep(k, n) rep(i, n) rep(j, n) dist[i][j] = min(dist[i][j], max(dist[i][k], dist[k][j]));
+
+    ll ans = 1e15;
     rep(i, n) {
-        double _ans = 0;
+        ll _ans = 0;
         rep(j, n) {
             if(i == j) continue;
             if(_ans < dist[i][j]) _ans = dist[i][j];
         }
         if(ans > _ans) ans = _ans;
     }
-    pri(ceil(ans));
+    return ans;
+}
+
+/*
+ * 始点を全探索
+ */
+
+int main(void) {
+    fio();
+    cin >> n;
+    m = n * (n - 1);
+    rep(i, n) {
+        cin >> x[i] >> y[i] >> p[i];
+    }
+
+    pri(f());
 }

@@ -80,22 +80,13 @@ int main(void) {
     cin >> n >> k >> q;
     lvec a(k), l(q);
     rep(i, k) cin >> a[i];
-    rep(i, k) a[i]--;
     rep(i, q) cin >> l[i];
+    rep(i, k) a[i]--;
     rep(i, q) l[i]--;
-    a.push_back(INF);
+    a.push_back(n);
 
     rep(i, q) {
-        if(a[l[i]] + 1 != n) {
-            if(l[i] != k - 1 && a[l[i]] + 1 == a[l[i] + 1]) {
-                continue;
-            }
-            a[l[i]]++;
-        }
-        // rep(j, k) {
-        //     cout << a[j] + 1 << " ";
-        // }
-        // cout << endl;
+        if(a[l[i]] + 1 != a[l[i] + 1]) a[l[i]]++;
     }
 
     rep(i, k) {

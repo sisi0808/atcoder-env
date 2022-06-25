@@ -82,37 +82,31 @@ int main(void) {
     cin >> s;
     lvec w(n);
     rep(i, n) cin >> w[i];
-    int ad = 0;
-    int ch = 0;
-    rep(i, n) {
-        if(s[i] == '0') ch++;
-        else ad++;
-    }
 
-    vector<pair<ll, int>> vp(n);
+    vector<pair<ll, char>> vp(n);
     rep(i, n) {
-        vp[i] = {w[i], s[i] - '0'};
+        vp[i] = {w[i], s[i]};
     }
     sort(ALL(vp));
 
-    int a_cnt = 0;
-    ll ans = 0;
-    rep(i, n + 1) {
-        if(i > 0 && vp[i].first == vp[i - 1].first) {
-            if(i < n && vp[i].second == 0) {
-                a_cnt++;
-            }
+    /* 正しく認識出来ている大人の数 */
+    ll ad_cnt = 0;
+    rep(i, n) {
+        if(vp[i].second == '1') ad_cnt++;
+    }
+    /*
+    線を引くことを考える
+    */
+    ll ans = ad_cnt;
+    ll _ans = ad_cnt;
+    rep(i, n) {
+        if(vp[i].second == '0') _ans++;
+        else _ans--;
+        /* 体重が同じ場合 */
+        if(i < n - 1 && vp[i].first == vp[i + 1].first) {
             continue;
         }
-        ll _ans = a_cnt;
-        _ans += (n - i) - (ch - a_cnt);
-        // cout << n << ":" << i << ":" << ch << ":" << a_cnt << ":" << _ans << endl;
-
         chmax(ans, _ans);
-        if(i < n && vp[i].second == 0) {
-            a_cnt++;
-        }
     }
-
     pri(ans);
 }
