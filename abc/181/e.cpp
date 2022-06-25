@@ -90,7 +90,7 @@ int main(void) {
     rep(i, n) cin >> h[i];
     rep(i, m) cin >> w[i];
     sort(ALL(h));
-    vector<int> sum1((n + 1) / 2), sum2((n + 1) / 2);
+    vector<int> sum1((n + 1) / 2), sum2((n + 1) / 2); // 次のやつとの加算 && 前のやつとの加算
     for(int i = 0; i + 1 < n; i += 2) sum1[i / 2 + 1] = sum1[i / 2] + h[i + 1] - h[i];
     for(int i = n - 2; i > 0; i -= 2) sum2[i / 2] = sum2[i / 2 + 1] + h[i + 1] - h[i];
 
