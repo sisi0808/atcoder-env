@@ -106,15 +106,13 @@ int main(void) {
     rep(i, 9) chmin(min_c, c[i + 1]);
 
     // 操作の回数
-    // 上の桁の方から貪欲に決めていけばよい
+    // 上の桁から貪欲に決めていけばよい
     string ans = "";
-    // cout << n << ":" << min_c << endl;
     int max_cnt = (n / min_c);
     rep(i, max_cnt) {
         for(int j = 9; j > 0; j--) {
-            int rest_len = max_cnt - i - 1;
-            int rest_n = n - c[j];
-            if(0 <= rest_n && rest_len <= rest_n / min_c) {
+            int cost_total = (max_cnt - i - 1) * min_c; /* 最低限残さなければいけないお金 */
+            if(cost_total + c[j] <= n) {
                 ans += char('0' + j);
                 n -= c[j];
                 // cout << ans << ":" << j << endl;

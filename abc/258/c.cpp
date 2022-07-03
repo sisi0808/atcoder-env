@@ -88,7 +88,6 @@ int main(void) {
         cin >> q >> x;
         if(q == 1) {
             h += x;
-
         } else {
             x--;
             mint hh = x - h;
