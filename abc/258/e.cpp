@@ -85,60 +85,47 @@ using mint = modint1000000007;
 
 int main(void) {
     fio();
-    ll n, q;
+    int n, q;
     cin >> n >> q;
     ll x;
     cin >> x;
     lvec w(n);
     lvec a(2 * n + 1);
     rep(i, n) cin >> w[i];
-    rep(i, n) {
-        a[i + 1] = a[i] + w[i];
+    rep(i, 2 * n) {
+        a[i + 1] = a[i] + w[i % n];
     }
-    rep(i, n) {
-        a[n + i + 1] = a[n + i] + w[i];
-    }
+
+    ll weight_cnt = (x / a[n]) * n;
+    x %= a[n];
 
     // ループ地点を求める
-    ll st = n;
-    // i番目開始の時、yこ取れる
-    vector<pair<ll, ll>> box;
-    set<ll> t;
-    while(t.count(st) == 0) {
-        t.insert(st);
-        ll cnt = 0;
-        // cout << a[2 * n] << ":" << a[st] << endl;
-        if(a[2 * n] - a[st] < x) {
-            x -= a[2 * n] - a[st];
-            cnt += 2 * n - st;
-            cnt += (int)(x / a[2 * n]) * 2 * n;
-            x %= a[2 * n];
-        }
-        ll idx = lower_bound(a.begin() + st + 1, a.end(), x + a[st]) - a.begin();
-        cnt += idx - st;
-        box.pb({st, cnt});
-        st = idx % n;
+    int st = 0;
+    // i番目開始の時、y個取れる
+    vector<pair<int, ll>> box;
+    /* 何番目のidxがループの何番目に出てくるか*/
+    map<int, int> mp;
+    while(!mp.count(st)) {
+        mp[st] = box.size();
+        ll cnt = weight_cnt;
+        int idx = lower_bound(a.begin() + st, a.end(), x + a[st]) - a.begin();
+        cnt += idx - st;   //何個野じゃがいもを手に入れられるか
+        box.pb({st, cnt}); // st個目のジャガイモから見始めた時、何個ジャガイモが入るか
+        st = idx % n;      // 何個目のジャガイモまで見終わったか
     }
-    // for(auto p : box) {
-    //     cout << p.first << p.second << endl;
-    // }
 
-    ll loop;
-    for(ll i = 0; i < box.size(); i++) {
-        if(box[i].first == st) {
-            loop = i;
-            break;
-        }
-    }
+    int non_loop_length = mp[st];
+    int loop_length = (int)box.size() - non_loop_length;
 
     rep(i, q) {
         ll k;
         cin >> k;
-        if(k <= box.size()) {
-            cout << box[k - 1].second << endl;
+        k--;
+        if(k <= non_loop_length) {
+            cout << box[k].second << endl;
         } else {
-            // cout << (k - loop) % (box.size() - loop) << endl;
-            cout << box[(k - loop) % (box.size() - loop)].second << endl;
+            k = (k - non_loop_length) % loop_length;
+            cout << box[non_loop_length + k].second << endl;
         }
     }
 }
