@@ -74,22 +74,29 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+ * クエリ１：K回の移動で目標に到達出来るか
+ * クエリ２：到達した後、残りの移動回数が偶数回ならそこが答え
+ * クエリ３：奇数回ならば、min(abs(ans+d), abs(ans-d))が答え
+ */
+
 int main(void) {
     fio();
-    int n;
-    cin >> n;
-    ll x;
-    cin >> x;
-    lvec a(n), b(n);
-    rep(i, n) cin >> a[i] >> b[i];
+    ll x, k, d;
+    cin >> x >> k >> d;
 
-    ll sum_time = 0;
-    ll ans = INF;
-    vector<ll> dp(n);
-    rep(i, n) {
-        sum_time += a[i] + b[i];
-        ll _ans = sum_time + b[i] * max(0LL, x - i - 1);
-        chmin(ans, _ans);
+    x = abs(x);
+
+    // クエリ1を達成できるか
+    vector<ll> ans = {x % d, x % d - d};
+    ll cnt = (ll)(x / d);
+
+    // 到達できない場合
+    if(cnt > k) {
+        /* この場合、k*dがX以下であることが保障されるため、10^15以下*/
+        cout << x - k * d << endl;
+        return 0;
     }
-    pri(ans);
+    // クエリ2を達成できるか
+    cout << abs(ans[(k - cnt) % 2]) << endl;
 }
