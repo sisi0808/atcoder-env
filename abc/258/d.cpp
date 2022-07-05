@@ -81,4 +81,16 @@ int main(void) {
     ll x;
     cin >> x;
     lvec a(n), b(n);
+    rep(i, n) cin >> a[i] >> b[i];
+
+    ll sum_time = 0;
+    ll ans = INF;
+    vector<ll> dp(n);
+    rep(i, n) {
+        sum_time += a[i] + b[i];
+        ll _ans = sum_time + b[i] * max(0LL, x - i - 1);
+        // pri(ans);
+        chmin(ans, _ans);
+    }
+    pri(ans);
 }
