@@ -1,5 +1,6 @@
 .venv/
 .vscode/
+!.vscode/cpp.code-snippets
 main.cpp
 main.py
 __pycache__
