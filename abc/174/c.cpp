@@ -62,7 +62,7 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 // using mint = modint998244353;
-using mint = modint1000000007;
+// using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 /*
@@ -71,32 +71,19 @@ using mint = modint1000000007;
 まずは素因数分解してみる！
 */
 
-// nの約数を列挙
-vector<long long> divisor(long long n) {
-    vector<long long> num;
-    for(long long i = 1; i * i <= n; ++i) {
-        if(n % i == 0) {
-            num.push_back(i);
-            if(i * i != n)
-                num.push_back(n / i);
-        }
-    }
-    sort(ALL(num));
-    return num;
-}
-
 int main(void) {
     fio();
     ll k;
     cin >> k;
 
-    ll n = 7;
-    int ans = -1;
-    rep(i, 12) {
-        for(auto a : divisor(n)) {
-            if(a % k == 0 && ans == -1) ans = i + 1;
-        }
-        n = n * 10 + 7;
+    ll n = 7 % k;
+    set<ll> st;     // 余りがkの数列は今までに出現したか
+    vector<ll> box; // i番目の数列をkで割った時の数
+    while(n != 0 && !st.count(n)) {
+        box.pb(n);
+        st.insert(n);
+        n = (n * 10 + 7) % k;
     }
-    cout << ans << endl;
+
+    cout << (n == 0 ? (ll)box.size() + 1 : -1) << endl;
 }
