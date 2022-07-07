@@ -56,15 +56,6 @@ void YN(bool t) {
         No();
 }
 
-void pri(ll a) { cout << a << endl; }
-void spri(string a) { cout << a << endl; }
-void priV(vector<ll> &vec) {
-    for(size_t i = 0; i < vec.size(); i++) {
-        cout << vec[i] << ":";
-    }
-    cout << endl;
-}
-
 vector<int> dx = {1, 0, -1, 0};
 vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
@@ -74,6 +65,38 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+7の数列から初めてKの倍数が出てくるのはいつか
+
+まずは素因数分解してみる！
+*/
+
+// nの約数を列挙
+vector<long long> divisor(long long n) {
+    vector<long long> num;
+    for(long long i = 1; i * i <= n; ++i) {
+        if(n % i == 0) {
+            num.push_back(i);
+            if(i * i != n)
+                num.push_back(n / i);
+        }
+    }
+    sort(ALL(num));
+    return num;
+}
+
 int main(void) {
     fio();
+    ll k;
+    cin >> k;
+
+    ll n = 7;
+    int ans = -1;
+    rep(i, 12) {
+        for(auto a : divisor(n)) {
+            if(a % k == 0 && ans == -1) ans = i + 1;
+        }
+        n = n * 10 + 7;
+    }
+    cout << ans << endl;
 }

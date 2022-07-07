@@ -56,15 +56,6 @@ void YN(bool t) {
         No();
 }
 
-void pri(ll a) { cout << a << endl; }
-void spri(string a) { cout << a << endl; }
-void priV(vector<ll> &vec) {
-    for(size_t i = 0; i < vec.size(); i++) {
-        cout << vec[i] << ":";
-    }
-    cout << endl;
-}
-
 vector<int> dx = {1, 0, -1, 0};
 vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
@@ -74,6 +65,27 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+// 自分より左に赤石がある白石の個数
+// 自分より右にに赤石がある白石の個数
+
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vector<char> c(n);
+    rep(i, n) cin >> c[i];
+
+    int l = 0;
+    int r = n - 1;
+    int ans = 0;
+    while(l < r) {
+        if(c[l] == 'R') l++;
+        if(c[r] == 'W') r--;
+        if(c[l] == 'W' && c[r] == 'R') {
+            ans++;
+            l++;
+            r--;
+        }
+    }
+    cout << ans << endl;
 }
