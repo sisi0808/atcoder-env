@@ -56,15 +56,6 @@ void YN(bool t) {
         No();
 }
 
-void pri(ll a) { cout << a << endl; }
-void spri(string a) { cout << a << endl; }
-void priV(vector<ll> &vec) {
-    for(size_t i = 0; i < vec.size(); i++) {
-        cout << vec[i] << ":";
-    }
-    cout << endl;
-}
-
 vector<int> dx = {1, 0, -1, 0};
 vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
