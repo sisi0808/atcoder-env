@@ -69,18 +69,25 @@ int main(void) {
     fio();
     ll n, m, k;
     cin >> n >> m >> k;
-    vector<ll> a(n), b(n), c(n + 1), d(n + 1);
-    rep(i, n) cin >> a[i];
+    vector<ll> a(n + 1), b(m);
+    rep(i, n) cin >> a[i + 1];
     rep(i, m) cin >> b[i];
 
-    rep(i, n) c[i + 1] = c[i] + a[i];
-    rep(i, m) d[i + 1] = d[i] + b[i];
+    rep(i, n) a[i + 1] += a[i];
+    rep(i, m - 1) b[i + 1] += b[i];
+
+    // rep(i, n) cout << c[i + 1] << ":";
+    // cout << endl;
+    // rep(i, m) cout << d[i + 1] << ":";
+    // cout << endl;
 
     ll ans = 0;
     rep(i, n + 1) {
-        if(k - c[i] < 0) break;
-        int idx = lower_bound(ALL(d), k - c[i]) - d.begin();
+        if(k - a[i] < 0) break;
+        int idx = upper_bound(ALL(b), k - a[i]) - b.begin();
+        // if(idx != m) idx--;
         chmax(ans, i + idx);
+        // cout << ans << endl;
     }
     cout << ans << endl;
 }
