@@ -72,23 +72,29 @@ using mint = modint1000000007;
 // 深さ優先探索
 vector<bool> seen; // 既に見た頂点か
 bool ans = false;
-graph g;
+Graph g;
 
 int n;
 ll sx, sy, tx, ty;
 lvec x, y, r;
 
+// 座標上の点Pが指定したidxの円の円周上に位置しているか
+bool getCircleOn(int px, int py, int i) {
+    ll xx = (x[i] - px) * (x[i] - px);
+    ll yy = (y[i] - py) * (y[i] - py);
+    ll rr = r[i] * r[i];
+    if(xx + yy == rr) return true;
+    return false;
+}
+
 void dfs(int v) {
     seen[v] = true; // v を訪問済にする
+    if(getCircleOn(tx, ty, v)) ans = true;
 
     // v から行ける各頂点 next_v について
     for(auto next_v : g[v]) {
         if(seen[next_v]) continue; // next_v が探索済だったらスルー
-        ll xx = (x[next_v] - tx) * (x[next_v] - tx);
-        ll yy = (y[next_v] - ty) * (y[next_v] - ty);
-        ll rr = r[next_v] * r[next_v];
-        if(xx + yy == rr) ans = true;
-        dfs(next_v); // 再帰的に探索
+        dfs(next_v);               // 再帰的に探索
     }
 }
 
@@ -110,25 +116,21 @@ int main(void) {
         repp(j, n, i + 1) {
             ll xx = (x[i] - x[j]) * (x[i] - x[j]);
             ll yy = (y[i] - y[j]) * (y[i] - y[j]);
-            ll rr = (r[i] + r[j]) * (r[i] + r[j]);
+            ll r1 = (r[i] + r[j]) * (r[i] + r[j]);
+            ll r2 = (r[i] - r[j]) * (r[i] - r[j]);
 
-            if(!(xx + yy < (r[i] - r[j]) * (r[i] - r[j])) && !(xx + yy > rr)) {
-                g[i].pb(j);
-                g[j].pb(i);
-            }
+            // 円同士の接点があるとき
+            if(xx + yy > r1) continue; // 半径の合計よりも２つの円の中心間距離が離れている場合
+            if(xx + yy < r2) continue; // 半径の合計よりも２つの円の中心間距離が近い場合
+            g[i].pb(j);
+            g[j].pb(i);
         }
     }
-    // rep(i, n) {
-    //     for(auto gg : g[i]) cout << gg << " ";
-    //     cout << endl;
-    // }
     int st = -1;
     rep(i, n) {
-        ll xx = (x[i] - sx) * (x[i] - sx);
-        ll yy = (y[i] - sy) * (y[i] - sy);
-        ll rr = r[i] * r[i];
-        if(xx + yy == rr) st = i;
+        if(getCircleOn(sx, sy, i)) st = i;
     }
+
     if(st == -1) {
         no();
         return 0;

@@ -69,9 +69,9 @@ int main(void) {
     fio();
     int n, m, x, t, d;
     cin >> n >> m >> x >> t >> d;
-    vector<ll> a(102, 0);
-    a[0] = t - d * x;
-    rep(i, x) a[i + 1] = a[i] + d;
-    repp(i, n, x) a[i + 1] = a[i];
-    cout << a[m] << endl;
+
+    if(x <= m) cout << t << endl;
+    else {
+        cout << t - (x - m) * d << endl;
+    }
 }

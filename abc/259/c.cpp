@@ -69,30 +69,52 @@ int main(void) {
     fio();
     string s, t;
     cin >> s >> t;
-    // map<int, ll> mps;
-    // map<int, ll> mpt;
-    // rep(i,s.size()) {
 
-    // }
-    if(s.size() > t.size()) {
+    // ランレングス符号
+    vector<P> vs;
+    vector<P> vt;
+    int cnt = 0;
+    int c = s[0];
+    rep(i, s.size()) {
+        if(s[i] == c) cnt++;
+        else {
+            vs.pb({c, cnt});
+            c = s[i];
+            cnt = 1;
+        }
+        if(i == s.size() - 1) {
+            vs.pb({c, cnt});
+        }
+    }
+
+    cnt = 0;
+    c = t[0];
+    rep(i, t.size()) {
+        if(t[i] == c) cnt++;
+        else {
+            vt.pb({c, cnt});
+            c = t[i];
+            cnt = 1;
+        }
+        if(i == t.size() - 1) {
+            vt.pb({c, cnt});
+        }
+    }
+
+    if(vs.size() != vt.size()) {
         no();
         return 0;
     }
 
-    int i = 0;
-    int l = 0;
-    while(i < s.size() && l < t.size()) {
-        if(s[i] != t[l]) {
-            if(i >= 2 && s[i - 1] == s[i - 2] && s[i - 1] == t[l]) {
-                while(l < t.size() && s[i - 1] == t[l]) l++;
-            } else {
-                no();
-                return 0;
-            }
+    bool ans = true;
+    rep(i, vs.size()) {
+        if(vs[i].first != vt[i].first) {
+            ans = false;
         } else {
-            i++;
-            l++;
+            if((vs[i].second < vt[i].second && vs[i].second < 2) || vs[i].second > vt[i].second) {
+                ans = false;
+            }
         }
     }
-    yes();
+    yn(ans);
 }
