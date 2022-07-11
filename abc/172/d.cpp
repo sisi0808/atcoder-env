@@ -65,23 +65,27 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+その数x約数の個数
+*/
+
+ll dir[10000003];
+
+// nnの約数を列挙;
+void divisor(long long n) {
+    rep(i, n + 1) dir[i] = 0;
+    for(long long i = 1; i <= n; ++i) {
+        for(int j = i; j <= n; j += i) dir[j] += j;
+    }
+}
+
 int main(void) {
     fio();
-    ll n, m, k;
-    cin >> n >> m >> k;
-    vector<ll> a(n + 1), b(m);
-    rep(i, n) cin >> a[i + 1];
-    rep(i, m) cin >> b[i];
-
-    rep(i, n) a[i + 1] += a[i];
-    rep(i, m - 1) b[i + 1] += b[i];
+    int n;
+    cin >> n;
+    divisor(n);
 
     ll ans = 0;
-    rep(i, n + 1) {
-        if(k - a[i] < 0) break;
-        int idx = upper_bound(ALL(b), k - a[i]) - b.begin();
-        chmax(ans, i + idx);
-    }
-
+    rep(i, n) ans += dir[i + 1];
     cout << ans << endl;
 }
