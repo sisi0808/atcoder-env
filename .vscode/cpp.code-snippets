@@ -1,0 +1,116 @@
+{
+	// 入力
+	"cin": {
+		"prefix": "ci",
+		"body": [
+			"${1:int} ${2:n};",
+			"cin >> ${2:n};"
+		],
+		"description": "standard input"
+	},
+	// 入力２つ
+	"cin2": {
+		"prefix": "ci2",
+		"body": [
+			"ll $1, $2;",
+			"cin >> $1 >> $2;"
+		],
+		"description": "standard input"
+	},
+	// 入力３つ
+	"cin3": {
+		"prefix": "ci3",
+		"body": [
+			"ll $1, $2, $3;",
+			"cin >> $1 >> $2 >> $3;"
+		],
+		"description": "standard input"
+	},
+	// 配列入力
+	"cinv": {
+		"prefix": "cr",
+		"body": [
+			"vector<${1:ll}> ${2:a}(${3:n});",
+			"rep(i,${3:n}) cin>>${2:a}[i];"
+		],
+		"description": "Input vector"
+	},
+	// 配列２つ入力
+	"cinv2": {
+		"prefix": "cr2",
+		"body": [
+			"vector<${1:ll}> ${2:a}(${4:n}), ${3:b}(${4:n});",
+			"rep(i,${4:n}) cin>>${2:a}[i]>>${3:b}[i];"
+		],
+		"description": "Input vector2"
+	},
+	// 出力
+	"cout": {
+		"prefix": "co",
+		"body": [
+			"cout << ${1:ans} << endl;"
+		],
+		"description": "standard output"
+	},
+	// 出力二つ
+	"cout2": {
+		"prefix": "co2",
+		"body": [
+			"cout << ${1:ans}  << \" \" << ${2:_ans} << endl;"
+		],
+		"description": "standard output"
+	},
+	// 二重ループ
+	"double rep": {
+		"prefix": "rep2",
+		"body": [
+			"rep(i,n){",
+			"\trep(j,n){",
+			"\t\t$0",
+			"\t}",
+			"}"
+		],
+		"description": "double rep"
+	},
+	// 三重ループ
+	"triple rep": {
+		"prefix": "rep3",
+		"body": [
+			"rep(i,n){",
+			"\trep(j,n){",
+			"\t\trep(k,n){",
+			"\t\t\t$0",
+			"\t\t}",
+			"\t}",
+			"}"
+		],
+		"description": "triple rep"
+	},
+	//アルゴリズム
+	// 累積和
+	"cumulative_sum": {
+		"prefix": "cumulative_sum",
+		"body": [
+			"lvec cs${1:a}(n+1);",
+			"rep(i,n)  cs${1:a}[i + 1] = cs${1:a}[i] + ${1:a}[i];",
+		],
+		"description": "cumulative_sum",
+	},
+	//二分探索
+	"binary search": {
+		"prefix": "nibun",
+		"body": [
+			"/* どんな二分探索でもここの書き方を変えずにできる！ */",
+			"/* okが最小値でも、最大値でも同じ書き方 */",
+			"ll left = -1;",
+			"ll right = INF;",
+			"while (right - left > 1) {",
+			"\tll mid = left + (right - left) / 2;",
+			"\tif (f(mid)) right = mid;",
+			"\telse left = mid;",
+			"}",
+			"cout << right << endl;"
+		],
+		"description": "二分探索"
+	}
+}
