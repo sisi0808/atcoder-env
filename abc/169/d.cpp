@@ -66,11 +66,8 @@ using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 /*
-
 素数の累乗を羅列する
-
 まずは素因数分解
-
 */
 
 vector<ll> pfact(ll x) {
@@ -94,10 +91,13 @@ int main(void) {
         mp[x]++;
     }
 
-    ll ans = 0;
+    // [1, 3, 6, 10, 15, 21 ...]
     vector<int> aa(10);
     aa[0] = 1;
     rep(i, 9) aa[i + 1] = aa[i] + (i + 2);
+
+    // 因数毎に,p^1, p^2...で割っていく
+    ll ans = 0;
     for(auto [a, b] : mp) {
         int idx = upper_bound(ALL(aa), b) - aa.begin();
         ans += idx;

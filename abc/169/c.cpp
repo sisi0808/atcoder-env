@@ -70,7 +70,5 @@ int main(void) {
     ll a;
     double b;
     cin >> a >> b;
-    // cout << (a * (ll)(b * 100)) / 100 << endl;
-    // cout << (a * (ll)(b * 100)) << endl;
-    cout << ll(b * 100) << endl;
+    cout << (a * (ll)(b * 100 + 0.5)) / 100 << endl;
 }
