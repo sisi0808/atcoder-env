@@ -8,7 +8,7 @@
 		],
 		"description": "standard input"
 	},
-	// 入力２つ
+	// 入力2つ
 	"cin2": {
 		"prefix": "ci2",
 		"body": [
@@ -17,12 +17,21 @@
 		],
 		"description": "standard input"
 	},
-	// 入力３つ
+	// 入力3つ
 	"cin3": {
 		"prefix": "ci3",
 		"body": [
 			"ll $1, $2, $3;",
 			"cin >> $1 >> $2 >> $3;"
+		],
+		"description": "standard input"
+	},
+	// 入力4つ
+	"cin4": {
+		"prefix": "ci4",
+		"body": [
+			"ll $1, $2, $3, $4;",
+			"cin >> $1 >> $2 >> $3 >> $4;"
 		],
 		"description": "standard input"
 	},
