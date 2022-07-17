@@ -37,7 +37,7 @@
 	},
 	// 配列入力
 	"cinv": {
-		"prefix": "cr",
+		"prefix": "ir",
 		"body": [
 			"vector<${1:ll}> ${2:a}(${3:n});",
 			"rep(i,${3:n}) cin>>${2:a}[i];"
@@ -46,10 +46,19 @@
 	},
 	// 配列２つ入力
 	"cinv2": {
-		"prefix": "cr2",
+		"prefix": "ir2",
 		"body": [
 			"vector<${1:ll}> ${2:a}(${4:n}), ${3:b}(${4:n});",
 			"rep(i,${4:n}) cin>>${2:a}[i]>>${3:b}[i];"
+		],
+		"description": "Input vector2"
+	},
+	// 二重配列(グラフ)入力
+	"cing2": {
+		"prefix": "ig",
+		"body": [
+			"Graph g(${1:h}, vector<ll> (${2:W});",
+			"rep(i,${1:h}) rep(j,${2:w}) cin>>g[i][j];"
 		],
 		"description": "Input vector2"
 	},
