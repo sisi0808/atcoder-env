@@ -53,14 +53,30 @@
 		],
 		"description": "Input vector2"
 	},
-	// 二重配列(グラフ)入力
-	"cing2": {
-		"prefix": "ig",
+	// 二重配列(升目）入力
+	"cinmasu": {
+		"prefix": "imasu",
 		"body": [
 			"Graph g(${1:h}, vector<ll> (${2:W});",
 			"rep(i,${1:h}) rep(j,${2:w}) cin>>g[i][j];"
 		],
-		"description": "Input vector2"
+		"description": "Input masu"
+	},
+	// 無向グラフ入力
+	"cing": {
+		"prefix": "ig",
+		"body": [
+			"graph g(${1:n});",
+			"rep(i,${2:m}) {",
+			"  int a,b; ",
+			"  cin>>a>>b;",
+			"  a--;",
+			"  b--;",
+			"  g[a].pb(b);",
+			"  g[b].pb(a);",
+			"}"
+		],
+		"description": "Input Graph"
 	},
 	// 出力
 	"cout": {
