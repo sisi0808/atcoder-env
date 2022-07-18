@@ -37,7 +37,7 @@
 	},
 	// 配列入力
 	"cinv": {
-		"prefix": "ir",
+		"prefix": "cr",
 		"body": [
 			"vector<${1:ll}> ${2:a}(${3:n});",
 			"rep(i,${3:n}) cin>>${2:a}[i];"
@@ -46,7 +46,7 @@
 	},
 	// 配列２つ入力
 	"cinv2": {
-		"prefix": "ir2",
+		"prefix": "cr2",
 		"body": [
 			"vector<${1:ll}> ${2:a}(${4:n}), ${3:b}(${4:n});",
 			"rep(i,${4:n}) cin>>${2:a}[i]>>${3:b}[i];"
@@ -55,7 +55,7 @@
 	},
 	// 二重配列(升目）入力
 	"cinmasu": {
-		"prefix": "imasu",
+		"prefix": "cmasu",
 		"body": [
 			"Graph g(${1:h}, vector<ll> (${2:W});",
 			"rep(i,${1:h}) rep(j,${2:w}) cin>>g[i][j];"
@@ -68,12 +68,12 @@
 		"body": [
 			"graph g(${1:n});",
 			"rep(i,${2:m}) {",
-			"  int a,b; ",
-			"  cin>>a>>b;",
-			"  a--;",
-			"  b--;",
-			"  g[a].pb(b);",
-			"  g[b].pb(a);",
+			"    int a,b; ",
+			"    cin>>a>>b;",
+			"    a--;",
+			"    b--;",
+			"    g[a].pb(b);",
+			"    g[b].pb(a);",
 			"}"
 		],
 		"description": "Input Graph"
