@@ -14,7 +14,7 @@ class PushUpdatedFiles:
     updated_dict = {}
     commit_message = ""
 
-    contest_name_dict = {"abc": 5, "typical90": 90, "dp": 26}
+    contest_name_dict = {"abc": 6, "arc": 4, "typical90": 90, "dp": 26}
 
     def __init__(self):
         self.execute_git_status()
