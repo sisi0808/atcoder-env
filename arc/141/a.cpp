@@ -83,14 +83,10 @@ int main(void) {
     rep(i, 10) st.insert('1' + string(i, '0'));
 
     for(string n : nn) {
-        // string n;
-        // cin >> n;
         ll max_ans = 0;
         for(int i = 9; i > 0; i--) {
             string ans = "";
             if(n.size() % i == 0 && n.size() != i) {
-                // cout << n.size() << ":" << i << endl;
-                // cout << n.substr(0, i) << ":" << n.substr(i, i) << endl;
                 bool isOk = true;
                 rep(j, n.size() / i - 1) {
                     if(stoll(n.substr(0, i)) > stoll(n.substr(i * (j + 1), i))) {
@@ -101,7 +97,6 @@ int main(void) {
                         isOk = true;
                         break;
                     }
-                    // cout << stoll(n.substr(0, i)) << ":" << stoll(n.substr(i * (j+1), i)) << endl;
                 }
                 // 左辺が小さいとき
                 if(isOk) {
@@ -120,8 +115,6 @@ int main(void) {
             }
         }
         chmax(max_ans, stoll(string(n.size() - 1, '9')));
-        // for(auto w : ans_st) cout << w << endl;
-        // cout << endl;
         cout << max_ans << endl;
     }
 }
