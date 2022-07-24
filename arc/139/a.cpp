@@ -78,14 +78,8 @@ int main(void) {
     rep(i, n) cin >> t[i];
 
     ll ans = 0;
-    // bitset<50> ans('0');
     rep(i, n) {
-        /* 0を指定数敷き詰めたものが正解の時 */
-        // if(ans < (1LL << t[i])) ans = (1LL << t[i]);
-        // else {
-        //     /* 桁上がりがない場合 */
         ans = (((ans >> t[i]) + 1) << t[i]) | (1LL << t[i]);
-        // }
     }
     cout << ans << endl;
 }
