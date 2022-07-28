@@ -65,8 +65,6 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-ビットごとに操作
-
 int main(void) {
     fio();
     ll n, c;
@@ -75,12 +73,18 @@ int main(void) {
     vector<ll> t(n), a(n);
     rep(i, n) cin >> t[i] >> a[i];
 
+    vector<int> f(2);
+    f[1] = ~0;
+
+    /* 計算 */
     rep(i, n) {
-        if(t[i] == 1) { // and
+        /* 関数更新 */
+        rep(j, 2) {
+            if(t[i] == 1) f[j] &= a[i];
+            if(t[i] == 2) f[j] |= a[i];
+            if(t[i] == 3) f[j] ^= a[i];
         }
-        if(t[i] == 2) { // or
-        }
-        if(t[i] == 3) { // xor
-        }
+        c = (c & f[1]) | (~c & f[0]);
+        cout << c << endl;
     }
 }
