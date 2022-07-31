@@ -65,15 +65,43 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-ll x;
-ll r(ll n) {
-    if(n < x) return r((ll)(n + n / 100)) + 1;
-    else return 0;
-}
+// 片方が決まったら、もう片方は確定
+
+// 自分より大きい所で自分
+
+// 交差するかどうかだけなので楽
 
 int main(void) {
     fio();
-    cin >> x;
+    int n;
+    cin >> n;
+    vector<ll> a(n), b(n + 1);
+    rep(i, n) cin >> a[i];
+    rep(i, n) a[i]--;
+    rrep(i, n - 1) {
+        b[i] = b[i + 1];
+        if(a[i] == i) b[i]++;
+    }
+    // rep(i, n + 1) cout << b[i] << endl;
 
-    cout << r(100) << endl;
+    ll ans = 0;
+    rep(i, n) {
+        if(a[i] != i) {
+            if(a[a[i]] == i && a[i] > i) ans++;
+
+        } else {
+            ans += b[i + 1];
+        }
+        // cout << ans << endl;
+    }
+    cout << ans << endl;
+
+    /* 自分より大きい数、自分より小さい数の個数を記録  */
+    // sort(ALL(B));
+    // rep(i, n) {
+    //     auto mn = lowert_bound(ALL(), b[i]);
+    //     auto mx = upper_bound(ALL(b), b[i]);
+
+    //     mp[]
+    // }
 }

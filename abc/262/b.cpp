@@ -65,15 +65,28 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-ll x;
-ll r(ll n) {
-    if(n < x) return r((ll)(n + n / 100)) + 1;
-    else return 0;
-}
-
 int main(void) {
     fio();
-    cin >> x;
+    ll n, m;
+    cin >> n >> m;
+    vector<ll> u(m), v(m);
+    rep(i, m) cin >> u[i] >> v[i];
 
-    cout << r(100) << endl;
+    vector<set<int>> g(n);
+    rep(i, m) {
+        u[i]--;
+        v[i]--;
+        g[u[i]].insert(v[i]);
+        g[v[i]].insert(u[i]);
+    }
+
+    ll ans = 0;
+    rep(i, n) {
+        repp(j, n, i + 1) {
+            repp(k, n, j + 1) {
+                if(g[i].count(j) != 0 && g[j].count(k) != 0 && g[k].count(i) != 0) ans++;
+            }
+        }
+    }
+    cout << ans << endl;
 }

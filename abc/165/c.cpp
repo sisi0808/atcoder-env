@@ -65,15 +65,49 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-ll x;
-ll r(ll n) {
-    if(n < x) return r((ll)(n + n / 100)) + 1;
-    else return 0;
-}
+/*
+全通り試せるかも？
+とりあえず試してみる！
+*/
 
 int main(void) {
     fio();
-    cin >> x;
+    int n, m, Q;
+    cin >> n >> m >> Q;
+    vector<int> a(Q), b(Q), c(Q), d(Q);
+    rep(i, Q) {
+        cin >> a[i] >> b[i] >> c[i] >> d[i];
+        a[i]--;
+        b[i]--;
+    }
 
-    cout << r(100) << endl;
+    vector<vector<int>> t;
+
+    queue<vector<int>> q;
+    rep(i, m) {
+        q.push({i + 1});
+    }
+
+    while(!q.empty()) {
+        auto r = q.front();
+        q.pop();
+        for(int i = r[r.size() - 1]; i <= m; i++) {
+            vector<int> qq = {ALL(r)};
+            qq.pb(i);
+            if(r.size() + 1 == n) t.pb(qq);
+            else q.push(qq);
+        }
+    }
+
+    ll ans = 0;
+    /* eは選んだ数列 */
+    for(auto e : t) {
+        ll _ans = 0;
+        rep(i, Q) {
+            if(e[b[i]] - e[a[i]] == c[i]) _ans += d[i];
+        }
+        chmax(ans, _ans);
+    }
+
+    cout << ans << endl;
 }

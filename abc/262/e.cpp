@@ -65,15 +65,17 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-ll x;
-ll r(ll n) {
-    if(n < x) return r((ll)(n + n / 100)) + 1;
-    else return 0;
-}
-
 int main(void) {
     fio();
-    cin >> x;
-
-    cout << r(100) << endl;
+    ll n, m, k;
+    cin >> n >> m >> k;
+    graph g(n);
+    rep(i, n) {
+        int u, v;
+        cin >> u >> v;
+        u--;
+        v--;
+        g[u].pb(v);
+        g[v].pb(u);
+    }
 }

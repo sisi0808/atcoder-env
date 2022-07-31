@@ -65,15 +65,11 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-ll x;
-ll r(ll n) {
-    if(n < x) return r((ll)(n + n / 100)) + 1;
-    else return 0;
-}
-
 int main(void) {
     fio();
-    cin >> x;
-
-    cout << r(100) << endl;
+    int y;
+    cin >> y;
+    int ans = ((int)(y / 4) * 4) + 2;
+    if(y % 4 > 2) ans = ((int)(y / 4) * 4) + 6;
+    cout << ans << endl;
 }
