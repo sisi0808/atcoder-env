@@ -99,7 +99,7 @@
 		"prefix": "rep2",
 		"body": [
 			"rep(i,n){",
-			"\trep(j,n){",
+			"\trepp(j,n,i+1){",
 			"\t\t$0",
 			"\t}",
 			"}"
@@ -111,8 +111,8 @@
 		"prefix": "rep3",
 		"body": [
 			"rep(i,n){",
-			"\trep(j,n){",
-			"\t\trep(k,n){",
+			"\trepp(j,n,i+1){",
+			"\t\trepp(k,n,j+1){",
 			"\t\t\t$0",
 			"\t\t}",
 			"\t}",
