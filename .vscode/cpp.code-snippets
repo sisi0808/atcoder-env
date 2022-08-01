@@ -64,7 +64,7 @@
 	},
 	// 無向グラフ入力
 	"cing": {
-		"prefix": "ig",
+		"prefix": "cg",
 		"body": [
 			"graph g(${1:n});",
 			"rep(i,${2:m}) {",
