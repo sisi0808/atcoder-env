@@ -69,22 +69,20 @@ int main(void) {
     fio();
     ll n, m;
     cin >> n >> m;
-    vector<ll> u(m), v(m);
-    rep(i, m) cin >> u[i] >> v[i];
-
-    vector<set<int>> g(n);
+    vector<vector<bool>> g(n, vector<bool>(n));
     rep(i, m) {
-        u[i]--;
-        v[i]--;
-        g[u[i]].insert(v[i]);
-        g[v[i]].insert(u[i]);
+        int a, b;
+        cin >> a >> b;
+        a--;
+        b--;
+        g[a][b] = true;
+        g[b][a] = true;
     }
-
     ll ans = 0;
     rep(i, n) {
         repp(j, n, i + 1) {
             repp(k, n, j + 1) {
-                if(g[i].count(j) != 0 && g[j].count(k) != 0 && g[k].count(i) != 0) ans++;
+                if(g[i][j] && g[j][k] && g[k][i]) ans++;
             }
         }
     }

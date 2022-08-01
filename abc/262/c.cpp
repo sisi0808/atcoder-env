@@ -82,26 +82,11 @@ int main(void) {
         b[i] = b[i + 1];
         if(a[i] == i) b[i]++;
     }
-    // rep(i, n + 1) cout << b[i] << endl;
 
     ll ans = 0;
     rep(i, n) {
-        if(a[i] != i) {
-            if(a[a[i]] == i && a[i] > i) ans++;
-
-        } else {
-            ans += b[i + 1];
-        }
-        // cout << ans << endl;
+        if(a[a[i]] == i && a[i] > i) ans++;
+        if(a[i] == i) ans += b[i + 1];
     }
     cout << ans << endl;
-
-    /* 自分より大きい数、自分より小さい数の個数を記録  */
-    // sort(ALL(B));
-    // rep(i, n) {
-    //     auto mn = lowert_bound(ALL(), b[i]);
-    //     auto mx = upper_bound(ALL(b), b[i]);
-
-    //     mp[]
-    // }
 }

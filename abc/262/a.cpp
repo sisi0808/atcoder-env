@@ -69,7 +69,5 @@ int main(void) {
     fio();
     int y;
     cin >> y;
-    int ans = ((int)(y / 4) * 4) + 2;
-    if(y % 4 > 2) ans = ((int)(y / 4) * 4) + 6;
-    cout << ans << endl;
+    cout << (y + 1) / 4 * 4 + 2 << endl;
 }

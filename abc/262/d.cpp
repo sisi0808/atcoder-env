@@ -68,6 +68,7 @@ using mint = modint998244353;
 /*
 n個選んだ時に、その合計 % n == 0になる組み合わせの数
 
+dp[j][k][l] = 先頭j個の中からk個を選んだ時の合計の余りl
 
 */
 int main(void) {
@@ -77,29 +78,32 @@ int main(void) {
     vector<ll> a(n);
     rep(i, n) cin >> a[i];
 
-    // vector<vector<int>> m(101, vector<int>(101));
-    // rep(i, n) {
-    //     rep(j, 100) {
-    //         m[j + 1][a[i] % (j + 1)]++;
-    //     }
-    // }
+    mint ans = 0;
+    /* いくつ選んだかで場合分け */
+    repp(i, n + 1, 1) {
+        /* 先頭j個の中からk個を選んだ時の合計の余りl */
+        // vector dp(n + 1, vector(i + 1, vector<mint>(i)));
+        // vector dp(N + 1, vector(i + 1, vector<mint>(i, 0)));
+        vector<vector<vector<mint>>> dp(n + 1, vector<vector<mint>>(i + 1, vector<mint>(i, 0)));
+        dp[0][0][0] = 1;
+        /* 先頭n個 */
+        rep(j, n) {
+            /* k個選んだ時 */
+            rep(k, i + 1) {
+                /* 余りがl */
+                rep(l, i) {
+                    /* j個目を選ぶ場合 */
+                    if(k != i) dp[j + 1][k + 1][(l + a[j]) % i] += dp[j][k][l];
+                    /* j個目を選ばない場合 */
+                    dp[j + 1][k][l] += dp[j][k][l];
 
-    /* どれかを選ぶ際に、それが何個目で、余りはいくつ */
-    // vector<vector<vector<mint>>> dp(n + 1, vector<vectro<mint>>(n + 1, vector<mint>(101)));
-    // dp[0][0][0] = 1;
-
-    // /* いくつ選んだかで場合分け */
-    // rep(i, n) {
-    //     rep(j, n) {
-    //         rep(k, 100) {
-    //             if(dp[i][j][k] == 0) continue;
-    //             /* i個目を選ぶ場合 */
-    //             dp[i+1][j+1][() % n]++;
-    //             /* i個眼を選ばない場合 */
-    //         }
-    //     }
-    // }
-    // mint ans = 0;
-    // repp(i, n + 1, 1) ans += dp[][][0];
+                    /*
+                    if文がないと、先頭からn項見て, k個選択した時が反映されない
+                    */
+                }
+            }
+        }
+        ans += dp[n][i][0];
+    }
     cout << ans.val() << endl;
 }
