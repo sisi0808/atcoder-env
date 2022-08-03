@@ -65,12 +65,20 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-/*
-3 * 673
-mod計算のDPて感じ
-*/
+ll f(ll a, ll b, ll x) {
+    return (a * x) / b - a * (x / b);
+}
+
 int main(void) {
     fio();
-    string s;
-    cin >> s;
+    ll a, b, n;
+    cin >> a >> b >> n;
+
+    ll ans = 0;
+    /* nが正解の時 */
+    chmax(ans, f(a, b, n));
+    /* b-1が正解の時 */
+    if(b - 1 <= n) chmax(ans, f(a, b, b - 1));
+
+    cout << ans << endl;
 }
