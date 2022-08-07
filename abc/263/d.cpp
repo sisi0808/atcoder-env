@@ -101,7 +101,6 @@ int main(void) {
         d += a[n - i - 1];
         c_mx[i + 1] = min(c_mx[i], c - b);
         e_mx[n - i - 1] = min(e_mx[n - i], e - d);
-        // cout << c - b << ':' << e - d << endl;
 
         c += l;
         e += r;
@@ -112,12 +111,4 @@ int main(void) {
         chmin(ans, _ans + c_mx[i] + e_mx[i]);
     }
     cout << ans << endl;
-    // rep(i, n + 1) {
-    //     cout << c_mx[i] << " ";
-    // }
-    // cout << endl;
-    // rep(i, n + 1) {
-    //     cout << e_mx[i] << " ";
-    // }
-    // cout << endl;
 }

@@ -69,12 +69,13 @@ int main(void) {
     fio();
     int n;
     cin >> n;
-    vector<ll> p(n);
-    rep(i, n - 1) cin >> p[i];
     map<int, int> mp;
     rep(i, n - 1) {
-        mp[i + 1] = p[i] - 1;
+        int p;
+        cin >> p;
+        mp[i + 1] = p - 1;
     }
+    /* おおもとの親(idx0)にたどり着くまで繰り返し */
     ll ans = 0;
     int a = n - 1;
     while(mp[a] != 0) {

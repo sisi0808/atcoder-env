@@ -71,6 +71,7 @@ int main(void) {
     rep(i, 5) cin >> a[i];
     map<int, int> mp;
     rep(i, 5) mp[a[i]]++;
+
     ll ans = 0;
     for(auto [k, v] : mp) {
         if(v == 3) ans += 1;
