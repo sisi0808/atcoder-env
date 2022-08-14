@@ -57,7 +57,7 @@
 	"cinmasu": {
 		"prefix": "cmasu",
 		"body": [
-			"Graph g(${1:h}, vector<ll> (${2:W}));",
+			"Graph g(${1:h}, vector<ll> (${2:w}));",
 			"rep(i,${1:h}) rep(j,${2:w}) cin>>g[i][j];"
 		],
 		"description": "Input masu"
