@@ -87,12 +87,12 @@ int main(void) {
         rep(j, w) {
             if(c[i][j] != '.') continue;
 
-            int a = 31;
-            a -= judge_masu(a, i - 1, j);
-            a -= judge_masu(a, i + 1, j);
-            a -= judge_masu(a, i, j - 1);
-            a -= judge_masu(a, i, j + 1);
-            // cout << a << endl;
+            int a = 0;
+            a |= judge_masu(a, i - 1, j);
+            a |= judge_masu(a, i + 1, j);
+            a |= judge_masu(a, i, j - 1);
+            a |= judge_masu(a, i, j + 1);
+            a = ~a;
 
             rep(k, 5) {
                 if(a & (1 << k)) {
