@@ -83,14 +83,13 @@ int main(void) {
     rep(i, x) d.pb(p[i]);
     rep(i, y) d.pb(q[i]);
     sort(ALL(d));
-    ll ans = accumulate(ALL(d), 0LL);
 
     int dr = 0;
     int cr = 0;
-    while(dr < d.size() && cr < r.size() && d[dr] < r[cr]) {
-        ans += r[cr] - d[dr];
+    while(dr < d.size() && cr < r.size()) {
+        chmax(r[cr], d[dr]);
         dr++;
         cr++;
     }
-    cout << ans << endl;
+    cout << accumulate(ALL(d), 0LL) << endl;
 }
