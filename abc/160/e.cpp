@@ -69,9 +69,7 @@ int main(void) {
     fio();
     ll x, y, a, b, c;
     cin >> x >> y >> a >> b >> c;
-    vector<ll> p(a);
-    vector<ll> q(b);
-    vector<ll> r(c);
+    vector<ll> p(a), q(b), r(c);
     rep(i, a) cin >> p[i];
     rep(i, b) cin >> q[i];
     rep(i, c) cin >> r[i];
@@ -84,12 +82,8 @@ int main(void) {
     rep(i, y) d.pb(q[i]);
     sort(ALL(d));
 
-    int dr = 0;
-    int cr = 0;
-    while(dr < d.size() && cr < r.size()) {
-        chmax(r[cr], d[dr]);
-        dr++;
-        cr++;
+    rep(i, min(d.size(), r.size())) {
+        chmax(d[i], r[i]);
     }
     cout << accumulate(ALL(d), 0LL) << endl;
 }
