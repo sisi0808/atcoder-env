@@ -82,4 +82,34 @@ int main(void) {
     cin >> a_x >> a_y >> b_x >> b_y >> c_x >> c_y;
     vector<ll> x(m), y(m);
     rep(i, m) cin >> x[i] >> y[i];
+    set<P> st;
+    rep(i, m) st.insert({x[i], y[i]});
+
+    // a, b, cのワープをそれぞれ何回行ったかでDP
+    vector<vector<vector<mint>>> g(n + 1, vector<vector<mint>>(n + 1, vector<mint>(n + 1)));
+    g[0][0][0] = 1;
+
+    /*
+    遷移は以下
+    g[i][j][k] = g[i-1][j][k] + g[i][j-1][k] + g[i][j][k-1]
+
+    */
+
+    mint ans = 0;
+    rep(i, n + 1) {
+        rep(j, n + 1) {
+            rep(k, n + 1) {
+                if(i + j + k > n) continue;
+                ll xx = i * a_x + j * b_x + k * c_x;
+                ll yy = i * a_y + j * b_y + k * c_y;
+                /* 障害物に当たる場合スキップ */
+                if(st.find({xx, yy}) != st.end()) continue;
+                if(i != 0) g[i][j][k] += g[i - 1][j][k];
+                if(j != 0) g[i][j][k] += g[i][j - 1][k];
+                if(k != 0) g[i][j][k] += g[i][j][k - 1];
+                if(i + j + k == n) ans += g[i][j][k];
+            }
+        }
+    }
+    cout << ans.val() << endl;
 }

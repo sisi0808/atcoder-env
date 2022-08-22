@@ -70,7 +70,7 @@ int main(void) {
     ll x, y, n;
     cin >> x >> y >> n;
     ll ans = 0;
-    if((double)x < (double)(y / 3)) {
+    if(x < (y / 3)) {
         ans = n * x;
     } else {
         ans = (int)(n / 3) * y + x * (n % 3);

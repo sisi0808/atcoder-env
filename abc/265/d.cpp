@@ -76,13 +76,10 @@ int main(void) {
 
     bool ans = false;
     rep(i, n) {
-        auto it1 = lower_bound(ALL(asv), asv[i] + p);
-        if(it1 == asv.end() || *it1 != asv[i] + p) continue;
-        auto it2 = lower_bound(ALL(asv), asv[i] + p + q);
-        if(it2 == asv.end() || *it2 != asv[i] + p + q) continue;
-        auto it3 = lower_bound(ALL(asv), asv[i] + p + q + r);
-        if(it3 == asv.end() || *it3 != asv[i] + p + q + r) continue;
-        ans = true;
+        auto it1 = binary_search(ALL(asv), asv[i] + p);
+        auto it2 = binary_search(ALL(asv), asv[i] + p + q);
+        auto it3 = binary_search(ALL(asv), asv[i] + p + q + r);
+        if(it1 && it2 && it3) ans = true;
     }
     yn(ans);
 }

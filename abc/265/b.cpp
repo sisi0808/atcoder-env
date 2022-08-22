@@ -73,13 +73,13 @@ int main(void) {
     rep(i, n - 1) cin >> a[i];
     vector<ll> x(m), y(m);
     rep(i, m) cin >> x[i] >> y[i];
-    map<int, ll> mp;
-    rep(i, n) mp[i] = 0;
-    rep(i, m) mp[x[i] - 1] = y[i];
+
+    vector<ll> bounus(n);
+    rep(i, m) bounus[x[i] - 1] = y[i];
 
     bool ans = true;
     rep(i, n - 1) {
-        t += mp[i];
+        t += bounus[i];
         t -= a[i];
         if(t <= 0) ans = false;
     }
