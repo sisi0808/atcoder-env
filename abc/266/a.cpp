@@ -65,27 +65,9 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-vector<ll> ans;
-
-void dfs(string s) {
-    if(stoll(s) > 3234566667) return;
-    char r = s[s.size() - 1];
-    dfs(s + r);
-    if(r != '0') dfs(s + char(r - 1));
-    if(r != '9') dfs(s + char(r + 1));
-    ans.pb(stoll(s));
-}
-
 int main(void) {
     fio();
-    int k;
-    cin >> k;
-
-    /* 一番左の数 */
-    repp(i, 10, 1) {
-        dfs(to_string(i));
-    }
-    sort(ALL(ans));
-
-    cout << ans[k - 1] << endl;
+    string s;
+    cin >> s;
+    cout << s[int(s.size() - 1) / 2] << endl;
 }

@@ -65,27 +65,40 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-vector<ll> ans;
-
-void dfs(string s) {
-    if(stoll(s) > 3234566667) return;
-    char r = s[s.size() - 1];
-    dfs(s + r);
-    if(r != '0') dfs(s + char(r - 1));
-    if(r != '9') dfs(s + char(r + 1));
-    ans.pb(stoll(s));
-}
+/*
+時刻Tに座標xにいる際に捕まえることが出来る最大数のdp
+*/
 
 int main(void) {
     fio();
-    int k;
-    cin >> k;
+    int n;
+    cin >> n;
+    vector<ll> t(n), x(n), a(n);
+    rep(i, n) cin >> t[i] >> x[i] >> a[i];
+    // map<int, P> mp;
+    ll T = 100004;
+    vector<vector<ll>> mp(T, vector<ll>(5));
+    rep(i, n) mp[t[i]][x[i]] = a[i];
 
-    /* 一番左の数 */
-    repp(i, 10, 1) {
-        dfs(to_string(i));
+    vector<vector<ll>> dp(T, vector<ll>(5, -1));
+    dp[0][0] = 0;
+
+    repp(i, T, 1) {
+        rep(j, 5) {
+            dp[i][j] = dp[i - 1][j];
+            if(j != 0) chmax(dp[i][j], dp[i - 1][j - 1]);
+            if(j != 4) chmax(dp[i][j], dp[i - 1][j + 1]);
+            if(dp[i][j] >= 0) dp[i][j] += mp[i][j];
+        }
     }
-    sort(ALL(ans));
+    ll ans = 0;
+    rep(i, 4) chmax(ans, dp[T - 1][i]);
+    // rep(i, 4) {
+    //     rep(j, 4) {
+    //         cout << dp[T - 1 - i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
 
-    cout << ans[k - 1] << endl;
+    cout << ans << endl;
 }

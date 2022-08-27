@@ -61,31 +61,20 @@ vector<int> dy = {0, 1, 0, -1};
 const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-// using mint = modint998244353;
-using mint = modint1000000007;
+using mint = modint998244353;
+// using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-vector<ll> ans;
-
-void dfs(string s) {
-    if(stoll(s) > 3234566667) return;
-    char r = s[s.size() - 1];
-    dfs(s + r);
-    if(r != '0') dfs(s + char(r - 1));
-    if(r != '9') dfs(s + char(r + 1));
-    ans.pb(stoll(s));
+bool f(ll a) {
+    return 0 <= a && a < 998244353;
 }
 
 int main(void) {
     fio();
-    int k;
-    cin >> k;
+    ll n;
+    cin >> n;
+    // mint a = 998244353;
+    mint a = n;
 
-    /* 一番左の数 */
-    repp(i, 10, 1) {
-        dfs(to_string(i));
-    }
-    sort(ALL(ans));
-
-    cout << ans[k - 1] << endl;
+    cout << a.val() << endl;
 }
