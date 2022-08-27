@@ -70,16 +70,12 @@ int main(void) {
     int n;
     cin >> n;
 
-    double a = 3.5;
-    vector<double> dp(102);
+    double a = 0;
     rep(i, n) {
         double b = 0;
-        repp(j, 6 + 1, 1) {
-            if(dp[i] < j) b += j;
-            else b += dp[i];
-        }
-        dp[i + 1] = b / 6;
+        repp(j, 6 + 1, 1) b += max(a, (double)j);
+        a = b / 6;
     }
     cout << fixed << setprecision(12);
-    cout << dp[n] << endl;
+    cout << a << endl;
 }
