@@ -75,7 +75,7 @@ int main(void) {
     cin >> n;
     vector<ll> t(n), x(n), a(n);
     rep(i, n) cin >> t[i] >> x[i] >> a[i];
-    // map<int, P> mp;
+
     ll T = 100004;
     vector<vector<ll>> mp(T, vector<ll>(5));
     rep(i, n) mp[t[i]][x[i]] = a[i];
@@ -83,22 +83,15 @@ int main(void) {
     vector<vector<ll>> dp(T, vector<ll>(5, -1));
     dp[0][0] = 0;
 
+    ll ans = 0;
     repp(i, T, 1) {
         rep(j, 5) {
             dp[i][j] = dp[i - 1][j];
             if(j != 0) chmax(dp[i][j], dp[i - 1][j - 1]);
             if(j != 4) chmax(dp[i][j], dp[i - 1][j + 1]);
             if(dp[i][j] >= 0) dp[i][j] += mp[i][j];
+            chmax(ans, dp[i][j]);
         }
     }
-    ll ans = 0;
-    rep(i, 4) chmax(ans, dp[T - 1][i]);
-    // rep(i, 4) {
-    //     rep(j, 4) {
-    //         cout << dp[T - 1 - i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-
     cout << ans << endl;
 }

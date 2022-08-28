@@ -73,7 +73,6 @@ int main(void) {
     fio();
     ll n;
     cin >> n;
-    // mint a = 998244353;
     mint a = n;
 
     cout << a.val() << endl;
