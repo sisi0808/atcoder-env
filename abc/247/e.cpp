@@ -16,6 +16,12 @@ using namespace std;
 #define chmin(a, b) a = min((ll)a, (ll)b)
 #define chmax(a, b) a = max((ll)a, (ll)b)
 
+#define pb push_back
+#define pf push_front
+
+#define fi first
+#define se second
+
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
@@ -65,6 +71,43 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+数列の中の数を以下に分け、符号化
+* X未満
+* X
+* X超過Y未満
+* Y
+* Y超過
+
+一定範囲内にX未満、又はY超過が存在するか
+*/
+
 int main(void) {
     fio();
+    ll n, x, y;
+    cin >> n >> x >> y;
+
+    vector<int> a(n);
+    rep(i, n) cin >> a[i];
+
+    vector<int> xx;
+    vector<int> yy;
+    vector<int> zz;
+
+    rep(i, n) {
+        if(a[i] == x) xx.pb(i);
+        if(a[i] == y) yy.pb(i);
+        if(a[i] < y || x < a[i]) zz.pb(i);
+    }
+    zz.pb(n);
+
+    ll ans = 0;
+    rep(i, n) {
+        auto it1 = lower_bound(ALL(xx), i);
+        auto it2 = lower_bound(ALL(yy), i);
+        auto it3 = lower_bound(ALL(zz), i);
+        if(it1 == xx.end() || it2 == yy.end()) continue;
+        ans += *it3 - min(*it3, max(*it1, *it2));
+    }
+    cout << ans << endl;
 }
