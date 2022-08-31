@@ -16,6 +16,12 @@ using namespace std;
 #define chmin(a, b) a = min((ll)a, (ll)b)
 #define chmax(a, b) a = max((ll)a, (ll)b)
 
+#define pb push_back
+#define pf push_front
+
+#define fi first
+#define se second
+
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
@@ -24,7 +30,7 @@ using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
-const int inf = 1000000000;
+// const int inf = 1000000000;
 const int modi = 1000000007;
 const long long INF = 1000000000000000;
 const long long modl = 1000000007LL;
@@ -65,6 +71,35 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+直線自体は、2点があれば定まる
+つまり、2点以上通る直線(定まった直線)を全探索して、k点以上通るか判定
+*/
+
 int main(void) {
     fio();
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> x(n), y(n);
+    rep(i, n) cin >> x[i] >> y[i];
+
+    if(k == 1) {
+        cout << "Infinity" << endl;
+        return 0;
+    }
+
+    map<pair<double, double>, int> mp;
+    rep(i, n) {
+        repp(j, n, i + 1) {
+            double a = (y[j] - y[i]) / (x[j] - x[i]);
+            if(isinf(a)) a = std::numeric_limits<float>::infinity();
+            if(a == 0) mp[{0, 0}]++, continue;
+
+            double b = (y[i] / x[i] - a) * x[i];
+            mp[{a, b}]++;
+        }
+    }
+    for(auto [k, v] : mp) {
+        cout << k.first << " " << k.second << " " << v << endl;
+    }
 }
