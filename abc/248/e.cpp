@@ -82,24 +82,34 @@ int main(void) {
     cin >> n >> k;
     vector<ll> x(n), y(n);
     rep(i, n) cin >> x[i] >> y[i];
+    vector<vector<bool>> flag(n + 1, vector<bool>(n + 1, true));
+    // bool flag[300][300];
+    // for(int i = 0; i < n; i++)
+    //     for(int j = i + 1; j < n; j++) flag[i][j] = true;
 
-    if(k == 1) {
+    if(k == 1LL) {
         cout << "Infinity" << endl;
         return 0;
     }
 
-    map<pair<double, double>, int> mp;
+    ll ans = 0;
     rep(i, n) {
         repp(j, n, i + 1) {
-            double a = (y[j] - y[i]) / (x[j] - x[i]);
-            if(isinf(a)) a = std::numeric_limits<float>::infinity();
-            if(a == 0) mp[{0, 0}]++, continue;
-
-            double b = (y[i] / x[i] - a) * x[i];
-            mp[{a, b}]++;
+            if(flag[i][j]) {
+                ll pnt_cnt = 2;
+                vector<int> pv;
+                pv.pb(i);
+                pv.pb(j);
+                repp(ii, n, j + 1) {
+                    if((x[i] - x[j]) * (y[i] - y[ii]) == (x[i] - x[ii]) * (y[i] - y[j])) {
+                        pnt_cnt++;
+                        pv.pb(ii);
+                    }
+                }
+                rep(ii, pv.size()) rep(jj, pv.size()) flag[pv[ii]][pv[jj]] = false;
+                if(pnt_cnt >= k) ans++;
+            }
         }
     }
-    for(auto [k, v] : mp) {
-        cout << k.first << " " << k.second << " " << v << endl;
-    }
+    cout << ans << endl;
 }
