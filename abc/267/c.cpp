@@ -83,10 +83,8 @@ int main(void) {
 
     repp(i, n, m) {
         sum_a += a[i] * m;
-        // sum_a -= a[i - m];
         sum_a -= (csa[i] - csa[i - m]);
         chmax(ans, sum_a);
-        // cout << sum_a << endl;
     }
 
     cout << ans << endl;

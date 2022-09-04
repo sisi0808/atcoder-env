@@ -74,8 +74,6 @@ int main(void) {
         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
     rep(i, 5) {
-        if(st[i] == s) {
-            cout << 5 - i << endl;
-        }
+        if(st[i] == s) cout << 5 - i << endl;
     }
 }
