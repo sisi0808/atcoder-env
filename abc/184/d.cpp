@@ -74,6 +74,31 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+貰うDP前提かな
+
+確率と解すは分けて管理？
+*/
+
 int main(void) {
     fio();
+    int a, b, c;
+    cin >> a >> b >> c;
+
+    vector<vector<vector<double>>> dp(101, vector<vector<double>>(101, vector<double>(101)));
+
+    for(int i = 99; i >= a; i--) {
+        for(int j = 99; j >= b; j--) {
+            for(int k = 99; k >= c; k--) {
+                dp[i][j][k] =
+                    dp[i + 1][j][k] * i +
+                    dp[i][j + 1][k] * j +
+                    dp[i][j][k + 1] * k;
+                dp[i][j][k] = dp[i][j][k] / (i + j + k) + 1;
+            }
+        }
+    }
+
+    cout << fixed << setprecision(10);
+    cout << dp[a][b][c] << endl;
 }
