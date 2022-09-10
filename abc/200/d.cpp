@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -61,8 +61,74 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 using mint = modint998244353;
-//using mint = modint1000000007;
+// using mint = modint1000000007;
 
-int main(void){
+/*
+ * 同じ数字が２つ以上存在するのなら、正解は存在する
+ * DPですね
+ * 多分DPの復元を絡めれば行ける
+ */
+
+int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vector<ll> a(n);
+    vector<vector<ll>> dp(n + 1, vector<ll>(201, 0));
+    rep(i, n) cin >> a[i];
+
+    // 遷移は以下
+    // i番目まで見た時、合計がjになるのは何通り
+
+    dp[0][0] = 1;
+
+    int idx = -1;
+    int nn = n;
+    rep(i, n) {
+        rep(j, 200) {
+            dp[i + 1][j] += dp[i][j];
+            dp[i + 1][(a[i] + j) % 200] += dp[i][j];
+        }
+        rep(j, 200) {
+            if(j != 0 && dp[i + 1][j] > 1) idx = j;
+            if(dp[i + 1][j] > 2) idx = j;
+        }
+        if(idx != -1) {
+            nn = i + 1;
+            break;
+        }
+    }
+
+    if(idx == -1) {
+        no();
+        return 0;
+    } else yes();
+
+    vector<int> b;
+    vector<int> c;
+    int idx_b = idx;
+    int idx_c = idx;
+
+    rrep(i, nn - 1) {
+        // 引いた場合
+        if(dp[i + 1][idx_b] != dp[i][idx_b]) {
+            if(!dp[i][idx_b] || b.size() != c.size()) {
+                b.push_back(i);
+                idx_b = (((idx_b - a[i]) % 200) + 200) % 200;
+            }
+        }
+        if(dp[i + 1][idx_c] != dp[i][idx_c]) {
+            c.push_back(i);
+            idx_c = (((idx_c - a[i]) % 200) + 200) % 200;
+        }
+    }
+
+    sort(ALL(b));
+    sort(ALL(c));
+    cout << b.size() << " ";
+    for(auto bb : b) cout << bb + 1 << " ";
+    cout << endl;
+    cout << c.size() << " ";
+    for(auto cc : c) cout << cc + 1 << " ";
+    cout << endl;
 }
