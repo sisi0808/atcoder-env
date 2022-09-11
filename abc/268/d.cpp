@@ -75,10 +75,9 @@ void dfs(string c, int idx) {
     repp(i, 16 - c.size() + 1, 1) {
         if(idx + 1 < n && c.size() + i + s[idx + 1].size() <= 16) dfs(c + string(i, '_') + s[idx + 1], idx + 1);
     }
-    if(!flag && c.size() >= 3 && idx + 1 == n && !st.count(c)) {
+    if(c.size() >= 3 && idx + 1 == n && !st.count(c)) {
         cout << c << endl;
-        flag = true;
-        return;
+        exit(0);
     }
 }
 
@@ -94,9 +93,6 @@ int main(void) {
 
     do {
         dfs(s[0], 0);
-        if(flag) {
-            return 0;
-        }
     } while(next_permutation(ALL(s)));
     cout << -1 << endl;
 }

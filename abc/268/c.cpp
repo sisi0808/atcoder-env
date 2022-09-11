@@ -65,25 +65,25 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+ * 料理iから見て、何回すると人を喜ばせることが出来るかカウント
+ */
+
 int main(void) {
     fio();
     int n;
     cin >> n;
     vector<ll> p(n);
     rep(i, n) cin >> p[i];
-    rep(i, n) p[i] = (((p[i] - i) % n) + n) % n;
 
-    vector<int> a(n);
+    /* i回転したら、何人が喜ぶか*/
+    vector<int> v(n);
     rep(i, n) {
-        a[(p[i] + 1) % n]++;
-        a[p[i]]++;
-        a[(((p[i] - 1) % n) + n) % n]++;
-        // cout << (p[i] + 1) % n << " " << p[i] << " " << (((p[i] - 1) % n) + n) % n << endl;
+        repp(j, 2, -1) {
+            v[(((p[i] - i + j) % n) + n) % n]++;
+        }
     }
     ll ans = 0;
-    rep(i, n) {
-        chmax(ans, a[i]);
-        // cout << a[i] << endl;
-    }
+    rep(i, n) chmax(ans, v[i]);
     cout << ans << endl;
 }
