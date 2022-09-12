@@ -95,22 +95,12 @@ int main(void) {
     vector<ll> a(n);
     rep(i, n) cin >> a[i];
     sort(ALL(a));
-    ll min_d = 1000000000000;
+
+    ll g = 0;
     rep(i, n - 1) {
-        if(a[i] == a[i + 1]) continue;
-        chmin(min_d, a[i + 1] - a[i]);
+        g = __gcd(g, a[i + 1] - a[i]);
     }
-    vector<ll> v = pfact(min_d);
-    rep(i, n - 1) {
-        ll b = a[i + 1] - a[i];
-        bool ans = false;
-        for(auto vv : v) {
-            if(b % vv == 0) ans = true;
-        }
-        if(!ans) {
-            cout << 2 << endl;
-            return 0;
-        }
-    }
-    cout << 1 << endl;
+    if(g == 1LL) cout << 2 << endl;
+    else cout << 1 << endl;
+    // cout << 1 << endl;
 }
