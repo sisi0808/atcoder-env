@@ -8,7 +8,7 @@ using namespace atcoder;
     ios::sync_with_stdio(false);
 using namespace std;
 #define rep(i, n) for(int i = 0; i < int(n); ++i)
-#define rrep(i, n) for(int i = n; i >= 0; --i)
+#define rrep(i, n, m) for(int i = n; i >= m; --i)
 #define repp(i, n, m) for(int i = m; i < int(n); ++i)
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
