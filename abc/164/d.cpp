@@ -68,9 +68,40 @@ using mint = modint1000000007;
 /*
 3 * 673
 mod計算のDPて感じ
+
+
 */
 int main(void) {
     fio();
     string s;
     cin >> s;
+
+    // int mo = 2019;
+    // int m = 0;
+    // vector<ll> v(2019, 0);
+    // v[0] = 1;
+    // rep(i, s.size()) {
+    //     int a = s[i] - '0';
+    //     m = (m * 10 + a) % mo;
+    //     v[m]++;
+    //     cout << m << endl;
+    // }
+    // ll ans = 0;
+    // rep(i, mo) ans += v[i] * (v[i] - 1) / 2;
+    // rep(i, mo) if(v[i] > 0) cout << v[i] << endl;
+    // cout << ans << endl;
+
+    int mo = 2019;
+    int m = 0;
+    int p = 1;
+    vector<ll> v(2019, 0);
+    v[0] = 1;
+    rrep(i, s.size() - 1) {
+        m = (m + p * (s[i] - '0')) % mo;
+        p = 10 * p % mo;
+        v[m]++;
+    }
+    ll ans = 0;
+    rep(i, mo) ans += v[i] * (v[i] - 1) / 2;
+    cout << ans << endl;
 }
