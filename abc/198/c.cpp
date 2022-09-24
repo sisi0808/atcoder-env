@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -61,19 +61,22 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 using mint = modint998244353;
-//using mint = modint1000000007;
-
-int main(void){
-    fio();
-    ll r,x,y; cin >> r >> x >> y;
-    double rr = sqrt((x*x) + (y*y));
-    if(rr < r) cout << 2 << endl;
-    else cout << ceil(rr/r) << endl;
-}
+// using mint = modint1000000007;
 
 /*
-eucrid = u
-
-if(u % r) u/r;
-else
+z % r == 0 : z / r
+z% r != 0 : (z+1)/r
 */
+
+int main(void) {
+    fio();
+    double r, x, y;
+    cin >> r >> x >> y;
+
+    double z = sqrt(x * x + y * y);
+    if(z < r) cout << 2 << endl;
+    else {
+        ll ans = ceil(z / r);
+        cout << ans << endl;
+    }
+}

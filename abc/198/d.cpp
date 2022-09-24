@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -61,8 +61,49 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 using mint = modint998244353;
-//using mint = modint1000000007;
+// using mint = modint1000000007;
 
-int main(void){
+int main(void) {
     fio();
+    vector<string> s(3);
+    rep(i, 3) cin >> s[i];
+    set<char> st;
+    rep(i, 3) {
+        rep(j, s[i].size()) st.insert(s[i][j]);
+    }
+
+    if(st.size() > 10) {
+        cout << "UNSOLVABLE" << endl;
+        return 0;
+    }
+
+    vector<char> v;
+    for(auto c : st) v.push_back(c);
+    vector<int> o(10);
+    iota(ALL(o), 0);
+
+    do {
+        map<char, int> mp;
+        rep(i, v.size()) mp[v[i]] = o[i];
+
+        vector<ll> t(3);
+        rep(i, 3) {
+            for(auto c : s[i]) {
+                t[i] *= 10;
+                t[i] += mp[c];
+            }
+        }
+        if(t[0] + t[1] == t[2]) {
+            if(to_string(t[0]).size() != s[0].size()) continue;
+            if(to_string(t[1]).size() != s[1].size()) continue;
+            if(to_string(t[2]).size() != s[2].size()) continue;
+            if(t[0] == 0 || t[1] == 0 || t[2] == 0) continue;
+            cout << t[0] << endl;
+            cout << t[1] << endl;
+            cout << t[2] << endl;
+            return 0;
+        }
+    } while(next_permutation(ALL(o)));
+    cout << "UNSOLVABLE" << endl;
+    return 0;
 }

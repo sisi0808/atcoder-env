@@ -63,44 +63,6 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 
-vector<vector<int>> g;
-vector<int> ans;
-vector<int> c;
-vector<int> color(100000, 0);
-int n;
-
-void dfs(int cur, int par) {
-    if(color[c[cur]] == 0) {
-        ans.push_back(cur + 1);
-    }
-    color[c[cur]]++;
-    // cout << cur << ":" << par << ":" << color[c[cur]] << endl;
-
-    for(auto &to : g[cur]) {
-        if(to == par)
-            continue;
-        dfs(to, cur);
-    }
-    color[c[cur]]--;
-}
-
 int main(void) {
     fio();
-    cin >> n;
-    c.resize(n);
-    g.resize(n);
-    rep(i, n) cin >> c[i];
-    rep(i, n - 1) {
-        int a, b;
-        cin >> a >> b;
-        g[a - 1].push_back(b - 1);
-        g[b - 1].push_back(a - 1);
-    }
-
-    dfs(0, -1);
-    sort(ALL(ans));
-
-    for(auto a : ans) {
-        cout << a << endl;
-    }
 }
