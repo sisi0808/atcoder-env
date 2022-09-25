@@ -65,34 +65,53 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+
+二分探索か？
+周回する回数を二分探索で求めればいけるかも
+
+*/
+
+ll n, k;
+lvec a;
+lvec b;
+lvec csa;
+/* m週回った時、リンゴはK個数食べられるか */
+bool f(ll m) {
+    int it = lower_bound(ALL(b), m) - b.begin();
+    return csa[it] + (n - it) * m >= k;
+}
+
 int main(void) {
     fio();
-    ll n, k;
     cin >> n >> k;
-    vector<ll> a(n);
-    vector<ll> b(n);
+    a.resize(n);
+    b.resize(n);
+    csa.resize(n + 1);
     rep(i, n) cin >> a[i];
     rep(i, n) b[i] = a[i];
     sort(ALL(b));
-
-    lvec csa(n + 1);
     rep(i, n) csa[i + 1] = csa[i] + b[i];
 
-    ll rt = 0;
+    ll left = -1;
+    ll right = k + 1;
+    while(right - left > 1) {
+        ll mid = left + (right - left) / 2;
+        if(f(mid)) right = mid;
+        else left = mid;
+    }
+    /* rightが周回数 */
     ll zan = k;
     rep(i, n) {
-        if(csa[i] + b[i] * (n - i) > k) break;
-        rt = b[i];
-        zan = csa[n] - (csa[i] + b[i] * (n - i));
+        zan -= min(a[i], right);
+        a[i] -= min(a[i], right);
     }
-    // cout << rt << " " << zan << endl;
     rep(i, n) {
-        a[i] = max(0LL, a[i] - rt);
         if(zan > 0 && a[i] > 0) {
-            a[i]--;
             zan--;
+            a[i]--;
         }
     }
-    rep(i, n) cout << a[i] << ' ';
+    rep(i, n) cout << a[i] << " ";
     cout << endl;
 }
