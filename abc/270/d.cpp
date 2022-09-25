@@ -76,24 +76,14 @@ int main(void) {
     vector<ll> a(k);
     rep(i, k) cin >> a[i];
 
-    /* 残りがN個の時、何個取るのが良いか */
     /* 残りがp個数の時、何個取ることが出来るか */
-    /* 次の相手が取れる個数を最小化する */
     vector<ll> dp(n + 1);
 
-    /* 残り個数がp個なら、後x個取ることが出来る */
-
     repp(i, n + 1, 1) {
-        ll mn = 5000000;
         rep(j, k) {
             if(i < a[j]) break;
-            // chmin(dp[i], i - dp[i - a[j]]);
-            if(dp[i - a[j]] <= mn) {
-                chmin(mn, dp[i - a[j]]);
-                dp[i] = i - dp[i - a[j]];
-            }
+            chmax(dp[i], i - dp[i - a[j]]);
         }
     }
-    // rep(i, n + 1) cout << dp[i] << endl;
     cout << dp[n] << endl;
 }

@@ -76,6 +76,7 @@ ll n, k;
 lvec a;
 lvec b;
 lvec csa;
+
 /* m週回った時、リンゴはK個数食べられるか */
 bool f(ll m) {
     int it = lower_bound(ALL(b), m) - b.begin();
@@ -93,22 +94,24 @@ int main(void) {
     sort(ALL(b));
     rep(i, n) csa[i + 1] = csa[i] + b[i];
 
-    ll left = -1;
-    ll right = k + 1;
+    /* 回ることのできる原回数を記録 */
+    /* この後に一周に満たない分の処理を行う */
+    ll left = 0;
+    ll right = 1e12 + 2;
     while(right - left > 1) {
         ll mid = left + (right - left) / 2;
         if(f(mid)) right = mid;
         else left = mid;
     }
-    /* rightが周回数 */
-    ll zan = k;
+
+    /* leftが周回数 */
     rep(i, n) {
-        zan -= min(a[i], right);
-        a[i] -= min(a[i], right);
+        k -= min(a[i], left);
+        a[i] -= min(a[i], left);
     }
     rep(i, n) {
-        if(zan > 0 && a[i] > 0) {
-            zan--;
+        if(k > 0 && a[i] > 0) {
+            k--;
             a[i]--;
         }
     }
