@@ -58,7 +58,7 @@ void YN(bool t) {
 
 vector<int> dx = {1, 0, -1, 0};
 vector<int> dy = {0, 1, 0, -1};
-const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
+const string ALP = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 // using mint = modint998244353;
