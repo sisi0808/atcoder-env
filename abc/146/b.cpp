@@ -72,7 +72,8 @@ int main(void) {
     string s;
     cin >> s;
 
-    rep(i, n) {
-        cout << ALP.find(s[i]) << endl;
+    for(auto c : s) {
+        cout << ALP[(ALP.find(c) + n) % 26];
     }
+    cout << endl;
 }

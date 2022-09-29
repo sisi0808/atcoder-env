@@ -65,6 +65,23 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+ll a, b, x;
+bool f(ll m) {
+    return m * a + to_string(m).size() * b <= x;
+}
+
 int main(void) {
     fio();
+    cin >> a >> b >> x;
+
+    /* どんな二分探索でもここの書き方を変えずにできる！ */
+    /* okが最小値でも、最大値でも同じ書き方 */
+    ll ok = 0LL;
+    ll ng = 1000000001;
+    while(ok + 1 != ng) {
+        ll mid = (ok + ng) / 2;
+        if(f(mid)) ok = mid;
+        else ng = mid;
+    }
+    cout << ok << endl;
 }
