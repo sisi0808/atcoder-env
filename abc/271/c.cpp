@@ -69,16 +69,24 @@ int main(void) {
     fio();
     int n;
     cin >> n;
-    vector<ll> x(n), y(n);
-    rep(i, n) cin >> x[i] >> y[i];
+    vector<ll> a(n);
+    rep(i, n) cin >> a[i];
+    rep(i, n) a[i]--;
+    sort(ALL(a));
 
-    double ans = 0;
+    ll now = 0;
+    ll c = n;
+    ll ans = 0;
     rep(i, n) {
-        rep(j, n) {
-            if(i == j) continue;
-            ans += sqrt((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j]));
-        }
+        auto it = lower_bound(ALL(a), i);
+        /* 存在しない場合*/
+        if(*it != i) {
+            c -= 2;
+        } else if(c >= 1LL) {
+            c--;
+        } else c = -1;
+
+        if(c >= 0LL) ans++;
     }
-    cout << fixed << setprecision(12);
-    cout << ans / (n) << endl;
+    cout << ans << endl;
 }

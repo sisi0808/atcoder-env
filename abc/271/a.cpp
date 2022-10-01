@@ -69,16 +69,10 @@ int main(void) {
     fio();
     int n;
     cin >> n;
-    vector<ll> x(n), y(n);
-    rep(i, n) cin >> x[i] >> y[i];
 
-    double ans = 0;
-    rep(i, n) {
-        rep(j, n) {
-            if(i == j) continue;
-            ans += sqrt((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j]));
-        }
-    }
-    cout << fixed << setprecision(12);
-    cout << ans / (n) << endl;
+    string s = "0123456789ABCDEF";
+    string ans = {s[int(n / 16)], s[int(n % 16)]};
+
+    cout << ans << endl;
+    // cout << s[int(n / 16)] + s[n % 16] << endl;
 }

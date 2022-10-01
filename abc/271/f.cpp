@@ -65,20 +65,25 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+ * そのマスに着いた時、何でなくてはならないか計算
+ */
+
 int main(void) {
     fio();
+
     int n;
     cin >> n;
-    vector<ll> x(n), y(n);
-    rep(i, n) cin >> x[i] >> y[i];
+    Graph g(20, vector<ll>(20));
+    Graph dp(20, vector<ll>(20));
+    rep(i, 20) rep(j, 20) cin >> g[i][j];
+    rep(i, 20) rep(j, 20) cin >> g[i][j];
 
-    double ans = 0;
     rep(i, n) {
         rep(j, n) {
-            if(i == j) continue;
-            ans += sqrt((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j]));
+            if(i != 0)
+                if(j != 0)
         }
     }
-    cout << fixed << setprecision(12);
-    cout << ans / (n) << endl;
+    cout << dp[n - 1][n - 1] << endl;
 }

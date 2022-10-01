@@ -67,18 +67,31 @@ using mint = modint1000000007;
 
 int main(void) {
     fio();
-    int n;
-    cin >> n;
-    vector<ll> x(n), y(n);
-    rep(i, n) cin >> x[i] >> y[i];
+    ll n, m, k;
+    cin >> n >> m >> k;
+    vector<ll> a(m), b(m), c(m);
+    rep(i, m) cin >> a[i] >> b[i] >> c[i];
+    rep(i, m) a[i]--, b[i]--;
 
-    double ans = 0;
-    rep(i, n) {
-        rep(j, n) {
-            if(i == j) continue;
-            ans += sqrt((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j]));
-        }
+    vector<ll> e(k);
+    rep(i, k) cin >> e[i];
+    rep(i, k) e[i]--;
+
+    reverse(ALL(e));
+
+    ll big = 1000000000000000LL;
+    // vector<vector<ll>> dp(k+1, vector<ll> (n+1, 100000000000000000LL));
+    vector<ll> dp(n, big);
+    dp[n - 1] = 0;
+    rep(i, k) {
+        // rrep(j, n, 0) {
+        chmin(dp[a[e[i]]], dp[b[e[i]]] + c[e[i]]);
+        // cout << dp[a[e[i]]] << ' ';
+        // cout << dp[b[e[i]]] + c[e[i]] << endl;
+        // }
     }
-    cout << fixed << setprecision(12);
-    cout << ans / (n) << endl;
+    // rep(i, n + 1) cout << dp[i] << ' ';
+    // cout << endl;
+    if(dp[0] == big) cout << -1 << endl;
+    else cout << dp[0] << endl;
 }

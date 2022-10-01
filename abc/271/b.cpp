@@ -67,18 +67,21 @@ using mint = modint1000000007;
 
 int main(void) {
     fio();
-    int n;
-    cin >> n;
-    vector<ll> x(n), y(n);
-    rep(i, n) cin >> x[i] >> y[i];
-
-    double ans = 0;
+    ll n, q;
+    cin >> n >> q;
+    vector<vector<ll>> a(n);
     rep(i, n) {
-        rep(j, n) {
-            if(i == j) continue;
-            ans += sqrt((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j]));
+        int l;
+        cin >> l;
+        rep(j, l) {
+            ll b;
+            cin >> b;
+            a[i].pb(b);
         }
     }
-    cout << fixed << setprecision(12);
-    cout << ans / (n) << endl;
+    rep(i, q) {
+        int s, t;
+        cin >> s >> t;
+        cout << a[s - 1][t - 1] << endl;
+    }
 }
