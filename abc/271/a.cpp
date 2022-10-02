@@ -74,5 +74,4 @@ int main(void) {
     string ans = {s[int(n / 16)], s[int(n % 16)]};
 
     cout << ans << endl;
-    // cout << s[int(n / 16)] + s[n % 16] << endl;
 }

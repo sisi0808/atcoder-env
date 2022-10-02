@@ -74,19 +74,36 @@ int main(void) {
     rep(i, n) a[i]--;
     sort(ALL(a));
 
-    ll now = 0;
-    ll c = n;
+    ll add = 0;
+    deque<ll> dq;
+    dq.pb(a[0]);
+    repp(i, n, 1) {
+        if(dq.back() != a[i]) dq.pb(a[i]);
+        else add++;
+    }
+    rep(i, add) dq.pb(n);
+
     ll ans = 0;
     rep(i, n) {
-        auto it = lower_bound(ALL(a), i);
-        /* 存在しない場合*/
-        if(*it != i) {
-            c -= 2;
-        } else if(c >= 1LL) {
-            c--;
-        } else c = -1;
-
-        if(c >= 0LL) ans++;
+        if(dq.size() > 0 && dq.front() == i) dq.pop_front();
+        else if(dq.size() >= 2) dq.pop_back(), dq.pop_back();
+        else break;
+        ans++;
     }
+
+    // ll now = 0;
+    // ll c = n;
+    // ll ans = 0;
+    // rep(i, n) {
+    //     auto it = lower_bound(ALL(a), i);
+    //     /* 存在しない場合*/
+    //     if(*it != i) {
+    //         c -= 2;
+    //     } else if(c >= 1LL) {
+    //         c--;
+    //     } else c = -1;
+
+    //     if(c >= 0LL) ans++;
+    // }
     cout << ans << endl;
 }

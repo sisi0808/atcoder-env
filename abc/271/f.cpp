@@ -67,6 +67,7 @@ using mint = modint1000000007;
 
 /*
  * そのマスに着いた時、何でなくてはならないか計算
+ * やっぱりゴールから逆算するのが楽そう？
  */
 
 int main(void) {
@@ -83,6 +84,7 @@ int main(void) {
         rep(j, n) {
             if(i != 0)
                 if(j != 0)
+                    dp[i][j] = dp[i][j] ^ dp[i][j - 1];
         }
     }
     cout << dp[n - 1][n - 1] << endl;

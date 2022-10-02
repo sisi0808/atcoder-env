@@ -80,18 +80,11 @@ int main(void) {
     reverse(ALL(e));
 
     ll big = 1000000000000000LL;
-    // vector<vector<ll>> dp(k+1, vector<ll> (n+1, 100000000000000000LL));
     vector<ll> dp(n, big);
     dp[n - 1] = 0;
     rep(i, k) {
-        // rrep(j, n, 0) {
         chmin(dp[a[e[i]]], dp[b[e[i]]] + c[e[i]]);
-        // cout << dp[a[e[i]]] << ' ';
-        // cout << dp[b[e[i]]] + c[e[i]] << endl;
-        // }
     }
-    // rep(i, n + 1) cout << dp[i] << ' ';
-    // cout << endl;
     if(dp[0] == big) cout << -1 << endl;
     else cout << dp[0] << endl;
 }
