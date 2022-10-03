@@ -65,6 +65,27 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+
+* ポイントは必ず昇順にできるという点
+* 操作１，２では両脇の数が変化しない
+* そのため、数列を円形に並べて開始点を適切に決めたらループしていることになる
+*/
+
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vector<ll> p(n);
+    rep(i, n) cin >> p[i];
+
+    ll ans = 0;
+    rep(i, n) {
+        if(p[i] == 1) {
+            if(p[i] + 1 != p[(i + 1) % n]) ans = min(i + 2, n - i);
+            else ans = min(i, n - i + 2);
+            cout << ans << endl;
+            return 0;
+        }
+    }
 }
