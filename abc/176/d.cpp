@@ -65,6 +65,73 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+ * 多分,BFSで行ける
+ * 探索の際は、徒歩とワープを別の配列に入れる
+ */
+
+ll h, w;
+ll sty, stx, edy, edx;
+vector<string> s;
+vector<vector<int>> g;
+
+bool judge_masu(int y, int x) {
+    if(y < 0 || x < 0) return false;
+    if(y >= h || x >= w) return false;
+    if(s[y][x] == '#') return false;
+    return true;
+}
+
+/* st = 始点 */
+int load_map() {
+    g[sty][stx] = 0;
+    queue<P> pp;
+    pp.push({sty, stx});
+
+    while(!pp.empty()) {
+        sty = pp.front().first;
+        stx = pp.front().second;
+        pp.pop();
+
+        /* 徒歩移動出来るか */
+        rep(i, 4) {
+            int y = sty + dy[i];
+            int x = stx + dx[i];
+            cout << sty << " " << stx << endl;
+            cout << y << " " << x << endl;
+            cout << endl;
+            if(judge_masu(y, x)) {
+                if(g[sty][stx] < g[y][x] && g[y][x] == -1) {
+                    g[y][x] = g[sty][stx];
+                    pp.push({y, x});
+                }
+            }
+        }
+
+        // for(auto c : g[st]) {
+        //     if(dist[c] == -1) {
+        //         dist[c] = dist[st] + 1;
+        //         pp.push(c);
+        //     }
+        // }
+    }
+    return g[edy][edx];
+}
+
 int main(void) {
     fio();
+    cin >> h >> w;
+    cin >> sty >> stx >> edy >> edx;
+    s.resize(h);
+    g.resize(h, vector<int>(w, -1)); // 最短ワープ回数
+    rep(i, h) cin >> s[i];
+
+    cout << load_map() << endl;
+
+    rep(i, h) {
+        rep(j, w) {
+            cout << g[i][j];
+        }
+        cout << endl;
+    }
 }
