@@ -85,35 +85,37 @@ bool judge_masu(int y, int x) {
 /* st = 始点 */
 int load_map() {
     g[sty][stx] = 0;
-    queue<P> pp;
-    pp.push({sty, stx});
+    deque<P> pp;
+    pp.push_front({sty, stx});
 
     while(!pp.empty()) {
         sty = pp.front().first;
         stx = pp.front().second;
-        pp.pop();
+        pp.pop_front();
 
         /* 徒歩移動出来るか */
         rep(i, 4) {
             int y = sty + dy[i];
             int x = stx + dx[i];
-            cout << sty << " " << stx << endl;
-            cout << y << " " << x << endl;
-            cout << endl;
             if(judge_masu(y, x)) {
-                if(g[sty][stx] < g[y][x] && g[y][x] == -1) {
+                if(g[sty][stx] < g[y][x] || g[y][x] == -1) {
                     g[y][x] = g[sty][stx];
-                    pp.push({y, x});
+                    pp.push_front({y, x});
                 }
             }
         }
-
-        // for(auto c : g[st]) {
-        //     if(dist[c] == -1) {
-        //         dist[c] = dist[st] + 1;
-        //         pp.push(c);
-        //     }
-        // }
+        repp(i, 3, -2) {
+            repp(j, 3, -2) {
+                int y = sty + i;
+                int x = stx + j;
+                if(judge_masu(y, x)) {
+                    if(g[sty][stx] + 1 < g[y][x] || g[y][x] == -1) {
+                        g[y][x] = g[sty][stx] + 1;
+                        pp.push_back({y, x});
+                    }
+                }
+            }
+        }
     }
     return g[edy][edx];
 }
@@ -122,16 +124,20 @@ int main(void) {
     fio();
     cin >> h >> w;
     cin >> sty >> stx >> edy >> edx;
+    sty--;
+    stx--;
+    edy--;
+    edx--;
     s.resize(h);
     g.resize(h, vector<int>(w, -1)); // 最短ワープ回数
     rep(i, h) cin >> s[i];
 
     cout << load_map() << endl;
 
-    rep(i, h) {
-        rep(j, w) {
-            cout << g[i][j];
-        }
-        cout << endl;
-    }
+    // rep(i, h) {
+    //     rep(j, w) {
+    //         cout << g[i][j];
+    //     }
+    //     cout << endl;
+    // }
 }
