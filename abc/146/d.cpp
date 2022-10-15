@@ -65,6 +65,63 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+* 与えられるグラフが木である以上、閉路や自己経路は存在しない
+* つまり、使う色数は一つの頂点につながる辺数の最大値
+
+* おそらく答えはDFS
+* 最もつながっている辺が多い頂点を出発点として、色を当てはめていけばいい
+*/
+int n;
+int col_num = 0;
+vector<vector<P>> G;
+int col[100005]; // 色の番号
+
+/* st は現在いる頂点, colorは現在の色*/
+void dfs(int st, int color) {
+
+    int i = 0;
+    int j = 0;
+    while(i < col_num && j < G[st].size()) {
+        if(color == i) {
+            i++;
+            continue;
+        }
+
+        /* その辺がまだ塗られていない時 */
+        if(col[G[st][j].second] == -1) {
+            col[G[st][j].second] = i;
+            dfs(G[st][j].first, i);
+            i++;
+        }
+        j++;
+    }
+}
+
 int main(void) {
     fio();
+    cin >> n;
+    G.resize(n);
+    rep(i, n - 1) col[i] = -1;
+    rep(i, n - 1) {
+        int a, b;
+        cin >> a >> b;
+        a--;
+        b--;
+        G[a].push_back({b, i});
+        G[b].push_back({a, i});
+    }
+
+    int st = 0;
+    rep(i, n) {
+        if(G[i].size() > col_num) {
+            col_num = G[i].size();
+            st = i;
+        }
+    }
+
+    dfs(st, -1);
+
+    cout << col_num << endl;
+    rep(i, n - 1) cout << col[i] + 1 << endl;
 }
