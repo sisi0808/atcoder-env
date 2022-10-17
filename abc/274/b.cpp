@@ -74,9 +74,7 @@ int main(void) {
 
     rep(j, w) {
         ll a = 0;
-        rep(i, h) {
-            if(c[i][j] == '#') a++;
-        }
+        rep(i, h) if(c[i][j] == '#') a++;
         cout << a << ' ';
     }
     cout << endl;

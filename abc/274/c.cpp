@@ -73,14 +73,11 @@ int main(void) {
     rep(i, n) cin >> a[i + 1];
     ll k = 2 * n + 1;
     vector<ll> b(k + 1);
-    b[1] = 0;
 
     repp(i, n + 1, 1) {
         b[2 * i] = b[a[i]] + 1;
         b[2 * i + 1] = b[a[i]] + 1;
     }
 
-    rep(i, k) {
-        cout << b[i + 1] << endl;
-    }
+    rep(i, k) cout << b[i + 1] << endl;
 }

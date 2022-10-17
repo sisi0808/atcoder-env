@@ -80,29 +80,51 @@ int main(void) {
     vector<ll> a(n);
     rep(i, n) cin >> a[i];
 
-    vector<vector<ll>> dp_x(n + 1, vector<ll>(n * 10));
-    vector<vector<ll>> dp_y(n + 1, vector<ll>(n * 10));
-    dp_x[0][0] = 1;
-    dp_y[0][0] = 1;
-    // dp_y[1][0] = 1;
+    /* 解1 */
+    vector<vector<ll>> dp_x(n + 1, vector<ll>(2 * (n * 10) + 1));
+    vector<vector<ll>> dp_y(n + 1, vector<ll>(2 * (n * 10) + 1));
+    dp_x[1][a[0] + (n * 10)] = 1;
+    dp_y[1][(n * 10)] = 1;
 
-    /* まずはx */
-    rep(i, n) {
-        rep(j, n * 10) {
-            if(i == 0) {
-                dp_y[i + 1][j] = dp_y[i][j];
-                dp_x[i + 1][j] = dp_x[i][j];
-            } else if(i % 2 == 0) {
+    repp(i, n, 1) {
+        rep(j, 2 * (n * 10) + 1) {
+            if(i % 2 == 0) {
                 dp_x[i + 1][j + a[i]] += dp_x[i][j];
-                dp_x[i + 1][abs(j - a[i])] += dp_x[i][j];
+                if(j - a[i] >= 0) dp_x[i + 1][j - a[i]] += dp_x[i][j];
                 dp_y[i + 1][j] = dp_y[i][j];
             } else {
                 dp_y[i + 1][j + a[i]] += dp_y[i][j];
-                dp_y[i + 1][abs(j - a[i])] += dp_y[i][j];
+                if(j - a[i] >= 0) dp_y[i + 1][j - a[i]] += dp_y[i][j];
                 dp_x[i + 1][j] = dp_x[i][j];
             }
         }
     }
-    yn(dp_x[n][abs(x - a[0])] && dp_y[n][abs(y)]);
-    // cout << dp_x[n][abs(x - a[0])] << " " << dp_y[n][abs(y)] << endl;
+
+    yn(dp_x[n][x + (n * 10)] && dp_y[n][y + (n * 10)]);
+
+    /* 解2 */
+    // vector<vector<ll>> dp_x(n + 1, vector<ll>(n * 10));
+    // vector<vector<ll>> dp_y(n + 1, vector<ll>(n * 10));
+    // dp_x[0][0] = 1;
+    // dp_y[0][0] = 1;
+
+    // /* まずはx */
+    // rep(i, n) {
+    //     rep(j, n * 10) {
+    //         if(i == 0) {
+    //             dp_y[i + 1][j] = dp_y[i][j];
+    //             dp_x[i + 1][j] = dp_x[i][j];
+    //         } else if(i % 2 == 0) {
+    //             dp_x[i + 1][j + a[i]] += dp_x[i][j];
+    //             dp_x[i + 1][abs(j - a[i])] += dp_x[i][j];
+    //             dp_y[i + 1][j] = dp_y[i][j];
+    //         } else {
+    //             dp_y[i + 1][j + a[i]] += dp_y[i][j];
+    //             dp_y[i + 1][abs(j - a[i])] += dp_y[i][j];
+    //             dp_x[i + 1][j] = dp_x[i][j];
+    //         }
+    //     }
+    // }
+    // cout << endl;
+    // yn(dp_x[n][abs(x - a[0])] && dp_y[n][abs(y)]);
 }
