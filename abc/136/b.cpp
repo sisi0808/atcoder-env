@@ -8,7 +8,7 @@ using namespace atcoder;
     ios::sync_with_stdio(false);
 using namespace std;
 #define rep(i, n) for(int i = 0; i < int(n); ++i)
-#define rrep(i, n) for(int i = n; i >= 0; --i)
+#define rrep(i, n, m) for(int i = n; i >= m; --i)
 #define repp(i, n, m) for(int i = m; i < int(n); ++i)
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
@@ -58,65 +58,24 @@ void YN(bool t) {
 
 vector<int> dx = {1, 0, -1, 0};
 vector<int> dy = {0, 1, 0, -1};
-const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
+const string ALP = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 // using mint = modint998244353;
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-/*
-上限と下限は比較的簡単に求めることが可能
-上限:接する辺のコストが最大の頂点を削除した時
-下限：
-
-削除コストが最も軽い頂点の内、最もコストが重い辺を削除
-1: 1 + 2 + 4
-2: 3
-3: 3
-4: 3
-
-こういうのは、逆順に構築していくのが楽なはず
-削除コストが最も重い頂点の内、最もコストが軽い辺を追加
-
-*/
-
 int main(void) {
     fio();
-    ll n, m;
-    cin >> n >> m;
-    vector<ll> a(n);
-    rep(i, n) cin >> a[i];
-
-    vector<ll> b(n); // 頂点の削除コスト
-    Graph g(n);      // 頂点の繋がり(グラフ)
-    rep(i, m) {
-        int u, v;
-        cin >> u >> v;
-        u--;
-        v--;
-        b[u] += a[v];
-        b[v] += a[u];
-        g[u].pb(v);
-        g[v].pb(u);
-    }
-
-    priority_queue<P, vector<P>, greater<P>> pq;
-    rep(i, n) pq.push({b[i], i});
-    vector<bool> erased(n);
+    int n;
+    cin >> n;
 
     ll ans = 0;
-    while(!pq.empty()) {
-        auto [cost, i] = pq.top();
-        pq.pop();
-        if(erased[i]) continue;
-        erased[i] = true;
-        ans = max(ans, cost);
-        for(auto v : g[i]) {
-            if(erased[v]) continue;
-            b[v] -= a[i];
-            pq.push({b[v], v});
-        }
+    rep(i, n) {
+        int j = i + 1;
+        int cnt = 0;
+        while(j > 0) j /= 10, cnt++;
+        if(cnt % 2) ans++;
     }
     cout << ans << endl;
 }
