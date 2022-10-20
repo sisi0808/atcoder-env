@@ -77,7 +77,7 @@ int main(void) {
     }
 
     rep(i, n) {
-        if(mp.rbegin()->first == a[i] && mp.rbegin()->second == 1LL) cout << prev(mp.rbegin()->first) << endl;
+        if(mp.rbegin()->first == a[i] && mp.rbegin()->second == 1LL) cout << next(mp.rbegin())->first << endl;
         else cout << mp.rbegin()->first << endl;
     }
 }
