@@ -74,6 +74,44 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+どう見てもDP!
+*/
+
 int main(void) {
     fio();
+    ll h, w;
+    cin >> h >> w;
+    vector<string> s(h);
+    rep(i, h) cin >> s[i];
+
+    vector<vector<mint>> a(h, vector<mint>(w));
+
+    vector<vector<mint>> add_h(h, vector<mint>(w));
+    vector<vector<mint>> add_w(h, vector<mint>(w));
+    vector<vector<mint>> add_cross(h, vector<mint>(w));
+    add_h[0][0] = 1;
+    add_w[0][0] = 1;
+    add_cross[0][0] = 1;
+
+    rep(i, h) {
+        rep(j, w) {
+            if(i == 0 && j == 0) continue;
+            if(s[i][j] == '#') continue;
+
+            if(i != 0) add_h[i][j] += a[i - 1][j] + add_h[i - 1][j];
+            if(j != 0) add_w[i][j] += a[i][j - 1] + add_w[i][j - 1];
+            if(i != 0 && j != 0) add_cross[i][j] += a[i - 1][j - 1] + add_cross[i - 1][j - 1];
+
+            a[i][j] = add_h[i][j] + add_w[i][j] + add_cross[i][j];
+        }
+    }
+
+    // rep(i, h) {
+    //     rep(j, w) {
+    //         cout << a[i][j].val() << ' ';
+    //     }
+    //     cout << endl;
+    // }
+    cout << a[h - 1][w - 1].val() << endl;
 }
