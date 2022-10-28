@@ -65,34 +65,31 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+rが1増えると、答えがr-l-1個増える
+lが1減ると、答えがr-l-1個増える
+
+*/
+
 int main(void) {
     fio();
-    ll l, r;
-    cin >> l >> r;
-    // int ans = 2018;
-    // for(ll i = l; i < r; i++) {
-    //     for(ll j = l + 1; j <= r; j++) {
-    //         chmin(ans, (int)(i % 2019) * (j % 2019) % 2019);
-    //         if(ans == 0) break;
-    //     }
-    //     if(ans == 0) break;
-    // }
+    int t;
+    cin >> t;
+    while(t--) {
+        ll l, r;
+        cin >> l >> r;
+        if(r - l >= l) {
+            cout << (r - l - l + 1) * (r - l - l + 2) / 2 << endl;
 
-    vector<ll> a(2019);
-    for(ll i = l; i <= r; i++) {
-        a[i % 2019]++;
-        if(a[i % 2019] > 2) break;
-    }
-
-    ll ans = 2018;
-    rep(i, 2019) {
-        if(a[i] == 0LL) continue;
-        a[i]--;
-        rep(j, 2019) {
-            if(a[j] == 0LL) continue;
-            chmin(ans, (i * j) % 2019);
+        } else {
+            cout << 0 << endl;
         }
-        a[i]++;
+
+        // if(r - l >= l){
+
+        // }
+        // else{
+        //     cout << 0 << endl;
+        // }
     }
-    cout << ans << endl;
 }
