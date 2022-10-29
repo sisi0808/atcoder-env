@@ -136,12 +136,12 @@
 		"body": [
 			"/* どんな二分探索でもここの書き方を変えずにできる！ */",
 			"/* okが最小値でも、最大値でも同じ書き方 */",
-			"ll left = -1;",
-			"ll right = INF;",
-			"while (right - left > 1) {",
-			"\tll mid = left + (right - left) / 2;",
-			"\tif (f(mid)) right = mid;",
-			"\telse left = mid;",
+			"ll ok = 0LL;",
+			"ll ng = 1000000000LL;",
+			"while (ok + 1 != ng) {",
+			"\tll mid =  (ok + ng) / 2;",
+			"\tif (f(mid)) ok = mid;",
+			"\telse ng = mid;",
 			"}",
 			"cout << right << endl;"
 		],
