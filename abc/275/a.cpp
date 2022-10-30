@@ -71,14 +71,15 @@ int main(void) {
     cin >> n;
     vector<ll> h(n);
     rep(i, n) cin >> h[i];
+    cout << max_element(ALL(h)) - h.begin() + 1 << endl;
 
-    ll mx = 0;
-    ll idx = 0;
-    rep(i, n) {
-        if(h[i] > mx) {
-            idx = i;
-            mx = h[i];
-        }
-    }
-    cout << idx + 1 << endl;
+    // ll mx = 0;
+    // ll idx = 0;
+    // rep(i, n) {
+    //     if(h[i] > mx) {
+    //         idx = i;
+    //         mx = h[i];
+    //     }
+    // }
+    // cout << idx + 1 << endl;
 }

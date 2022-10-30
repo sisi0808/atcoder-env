@@ -67,12 +67,10 @@ using mint = modint998244353;
 
 int main(void) {
     fio();
-    ll aa, bb, cc;
-    mint a, b, c;
-    cin >> aa >> bb >> cc;
-    ll dd, ee, ff;
-    mint d, e, f;
-    cin >> dd >> ee >> ff;
+    ll aa, bb, cc, dd, ee, ff;
+    cin >> aa >> bb >> cc >> dd >> ee >> ff;
+
+    mint a, b, c, d, e, f;
     a = aa;
     b = bb;
     c = cc;
