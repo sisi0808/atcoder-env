@@ -78,12 +78,10 @@ int main(void) {
     sort(ALL(p));
 
     ll now = 0;
+    bool ans = true;
     rep(i, n) {
         now += p[i].second;
-        if(p[i].first < now) {
-            no();
-            return 0;
-        }
+        if(p[i].first < now) ans = false;
     }
-    yes();
+    yn(ans);
 }
