@@ -77,6 +77,6 @@ int main(void) {
     cin >> x >> y;
     cout << fixed << setprecision(12);
     cout << w * h / 2.0 << " ";
-    if(2 * x == w && 2 * y == h) cout << 1 << endl;
+    if(2 * x == w and 2 * y == h) cout << 1 << endl;
     else cout << 0 << endl;
 }
