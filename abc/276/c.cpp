@@ -72,26 +72,28 @@ int main(void) {
     vector<ll> p(n);
     rep(i, n) cin >> p[i];
 
-    ll mn = p[n - 1];
-    vector<ll> q;
-    q.pb(p[n - 1]);
-    rrep(i, n - 2, 0) {
-        if(p[i] > mn) {
-            rep(j, i) cout << p[j] << " ";
-            sort(ALL(q));
-            int itr = upper_bound(ALL(q), p[i]) - q.begin() - 1;
-            cout << q[itr] << " ";
-            itr = q[itr];
-            q.pb(p[i]);
-            sort(RALL(q));
-            rep(j, q.size()) {
-                if(q[j] == itr) continue;
-                cout << q[j] << " ";
-            }
-            cout << endl;
-            return 0;
-        }
-        chmin(mn, p[i]);
-        q.pb(p[i]);
-    }
+    prev_permutation(ALL(p));
+    rep(i, n) cout << p[i] << " ";
+    cout << endl;
+
+    // ll mn = p[n - 1];
+    // vector<ll> q;
+    // q.pb(p[n - 1]);
+    // rrep(i, n - 2, 0) {
+    //     if(p[i] > mn) {
+    //         int bd = p[i];
+    //         sort(p.begin() + i, p.end());
+    //         int itr = *(prev(lower_bound(p.begin() + i, p.end(), bd)));
+
+    //         sort(p.begin() + i, p.end(), greater<int>());
+    //         rep(j, n) {
+    //             if(j == i) cout << itr << " ";
+    //             if(p[j] != itr) cout << p[j] << " ";
+    //         }
+    //         cout << endl;
+    //         return 0;
+    //     }
+    //     chmin(mn, p[i]);
+    //     q.pb(p[i]);
+    // }
 }
