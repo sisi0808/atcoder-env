@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -62,8 +62,50 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 Graph g;
 using mint = modint998244353;
-//using mint = modint1000000007;
+// using mint = modint1000000007;
 
-int main(void){
+/*
+* ゲーム終了は右下
+* ゴールから始めると計算可能？
+
+* ゴール及び端から始める野が良さそう
+*/
+
+int main(void) {
     fio();
+    ll h, w;
+    cin >> h >> w;
+    vector<string> a(h);
+    rep(i, h) cin >> a[i];
+
+    /* そのマスに入った時の、残りの行動による(自分の得点 - 相手の特典)の最大値 */
+    vector<vector<ll>> c(h, vector<ll>(w, -6000000));
+    c[h - 1][w - 1] = 0;
+
+    /* 最大を最小化 */
+
+    rrep(i, h - 1) {
+        rrep(j, w - 1) {
+            if(i == h - 1 && j == w - 1) continue;
+            if(i + 1 < h) {
+                ll b = 1;
+                if(a[i + 1][j] == '-') b = -1;
+                chmax(c[i][j], -c[i + 1][j] + b);
+            }
+            if(j + 1 < w) {
+                ll b = 1;
+                if(a[i][j + 1] == '-') b = -1;
+                chmax(c[i][j], -c[i][j + 1] + b);
+            }
+        }
+    }
+    // rep(i, h) {
+    //     rep(j, w) {
+    //         cout << c[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    if(c[0][0] > 0) cout << "Takahashi" << endl;
+    else if(c[0][0] < 0) cout << "Aoki" << endl;
+    else cout << "Draw" << endl;
 }
