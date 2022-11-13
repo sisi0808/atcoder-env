@@ -65,50 +65,6 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-// struct edge {
-//     int u, v;
-//     ll cost;
-// };
-
-// bool comp(const edge &e1, const edge &e2) {
-//     return e1.cost < e2.cost;
-// }
-
-// edge es[1000000];
-// int n, m;
-
-// // 最小全域木のコストを求める
-// ll kruskal() {
-//     sort(es, es + m, comp);
-//     dsu d(n);
-//     ll res = 0;
-//     rep(i, m) {
-//         edge e = es[i];
-//         if(!d.same(e.u, e.v)) {
-//             d.merge(e.u, e.v);
-//             res += e.cost;
-//         } else if(e.cost < 0) {
-//             res += e.cost;
-//         }
-//     }
-//     return res;
-// }
-
-// 深さ優先探索
-
-// map<ll, ll> seen;
-// void dfs(ll v) {
-//     // seen[v] = true; // v を訪問済にする
-
-//     // v から行ける各頂点 next_v について
-//     for(auto next_v : g[v]) {
-//         if(seen[next_v]) continue; // next_v が探索済だったらスルー
-//         dfs(next_v);               // 再帰的に探索
-//     }
-
-//     seen[v] = ;
-// }
-
 int main(void) {
     fio();
     ll n, m;
@@ -117,9 +73,10 @@ int main(void) {
 
     rep(i, n) cin >> a[i];
     sort(ALL(a));
+    a.pb(0);
 
     vector<ll> ans;
-    rep(i, n - 1) {
+    rep(i, n) {
         ll _ans = a[i];
         // int j = 0;
         while(i < n) {
@@ -130,7 +87,7 @@ int main(void) {
         }
         ans.pb(_ans);
     }
-    if(ans.size() == 0 || ans[0] == accumulate(ALL(a), 0ll)) {
+    if(ans.size() == 1 || ans[0] == accumulate(ALL(a), 0LL)) {
         cout << 0 << endl;
         return 0;
     }

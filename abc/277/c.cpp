@@ -65,54 +65,33 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-ll ans = 0;
-int n;
-graph g;
-set<ll> st;
-vector<ll> c;
-map<ll, ll> mp;
-
-// 深さ優先探索
-vector<bool> seen; // 既に見た頂点か
-void dfs(int v) {
-    seen[v] = true; // v を訪問済にする
-
-    // v から行ける各頂点 next_v について
-    for(auto next_v : g[v]) {
-        if(seen[next_v]) continue; // next_v が探索済だったらスルー
-        chmax(ans, c[next_v]);
-        dfs(next_v); // 再帰的に探索
-    }
-}
-
 int main(void) {
     fio();
+    int n;
     cin >> n;
-    g.resize(2 * n);
-    seen.resize(2 * n);
     vector<ll> a(n), b(n);
     rep(i, n) cin >> a[i] >> b[i];
+
+    map<ll, vector<ll>> mp;
     rep(i, n) {
-        st.insert(a[i]);
-        st.insert(b[i]);
+        mp[a[i] - 1].pb(b[i] - 1);
+        mp[b[i] - 1].pb(a[i] - 1);
     }
 
-    for(auto cc : st) {
-        c.pb(cc);
-        mp[cc] = c.size() - 1;
-    }
-    if(c[0] != 1LL) {
-        cout << 1 << endl;
-        return 0;
-    }
+    set<ll> st;
+    queue<ll> pp;
+    pp.push(0);
+    st.insert(0);
 
-    rep(i, n) {
-        // cout << a[i] << " " << b[i] << endl;
-        g[mp[a[i]]].pb(mp[b[i]]);
-        g[mp[b[i]]].pb(mp[a[i]]);
+    while(!pp.empty()) {
+        ll fr = pp.front();
+        pp.pop();
+        for(auto c : mp[fr]) {
+            if(!st.count(c)) {
+                st.insert(c);
+                pp.push(c);
+            }
+        }
     }
-
-    dfs(0);
-
-    cout << ans << endl;
+    cout << *st.rbegin() + 1 << endl;
 }

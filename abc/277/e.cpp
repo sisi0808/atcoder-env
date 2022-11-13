@@ -65,49 +65,74 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-// struct edge { int u, v; ll cost;};
+/*
+* 同じ道を二度通る事はない
 
-// bool comp(const edge& e1, const edge& e2){
-//     return e1.cost < e2.cost;
-// }
+* unionfindを使えば、通れるかは判定可能
+* 回数は
 
-// edge es[1000000];
-// int n,m;
+* 特殊な最短経路探索
 
-// // 最小全域木のコストを求める
-// ll kruskal(){
-//     sort(es, es + m, comp);
-//     dsu d(n);
-//     ll res = 0;
-//     rep(i,m){
-//         edge e = es[i];
-//         if(!d.same(e.u, e.v)){
-//             d.merge(e.u, e.v);
-//             res += e.cost;
-//         }
-//         else if(e.cost < 0){
-//             res += e.cost;
-//         }
-//     }
-//     return res;
-// }
+
+頂点0から行ける頂点で合って、
+*/
+
+int n, m, k;
+vector<int> dist; // 各頂点が探索済みか
+vector<vector<int>> g;
+
+void load_map(int st) {
+    dist.resize(2 * n, inf);
+    deque<int> pp;
+    pp.push_back(st);
+    dist[st] = 0;
+
+    while(!pp.empty()) {
+        st = pp.front();
+        pp.pop_front();
+        for(auto c : g[st]) {
+            if(dist[c] == inf) {
+                if(abs(c - st) == n) {
+                    dist[c] = dist[st];
+                    pp.push_front(c);
+                } else {
+                    dist[c] = dist[st] + 1;
+                    pp.push_back(c);
+                }
+            }
+        }
+    }
+}
 
 int main(void) {
     fio();
-    ll n, m;
-    cin >> n >> m;
-    vector<ll> a(n);
-    rep(i, n) cin >> a[i];
-    sort(ALL(a));
+    cin >> n >> m >> k;
 
-    rep(i, n) {
-        cout << a[i] << endl;
+    /* g[0] == 反転 、g[1] = 通常 */
+    g.resize(n * 2);
+
+    rep(i, m) {
+        ll u, v, a;
+        cin >> u >> v >> a;
+        u--;
+        v--;
+        g[a * n + u].pb(a * n + v);
+        g[a * n + v].pb(a * n + u);
     }
 
-    // rep(i,m){
-    //     cin >> es[i].u >> es[i].v >> es[i].cost;
-    //     es[i].u --;
-    //     es[i].v --;
-    // }
-    // cout << kruskal() << endl;
+    rep(i, k) {
+        int s;
+        cin >> s;
+        s--;
+        /* 別のグラフへの移動 */
+        g[s].push_back(n + s);
+        g[n + s].push_back(s);
+    }
+
+    load_map(n); // 頂点とどちらのグラフにいるか
+    // cout << dist[n - 1] << endl;
+    // cout << dist[n * 2 - 1] << endl;
+
+    if(dist[n - 1] == dist[2 * n - 1] && dist[n - 1] == inf) cout << -1 << endl;
+    else cout << min(dist[n - 1], dist[2 * n - 1]) << endl;
 }
