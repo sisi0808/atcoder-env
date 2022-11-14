@@ -67,7 +67,7 @@ using mint = modint1000000007;
 
 /*
 * 恐らくxy独立に計算が可能
-* まずは一次元年て考えてみる
+* まずは一次元で考えてみる
 
 
 ある点xに絞って考えると、
@@ -88,20 +88,9 @@ int main(void) {
     cin >> h >> w >> k;
 
     mint ans = 0;
-    // repp(i, w, 1) ans += i * (w - 1) * (h * h);
-    // repp(i, h, 1) ans += i * (h - 1) * (w * w);
-    // repp(i, w, 1) ans += (mint)i * (w - 1) * (h * h);
-    // repp(i, h, 1) ans += (mint)i * (h - 1) * (w * w);
-    // repp(i, w, 1) ans += (w - i) * (h * h);
-    // repp(i, h, 1) ans += (h - i) * (w * w);
-    repp(i, w, 1) ans += (mint)i * (mint)(w - i) * (mint)(h * h);
-    repp(i, h, 1) ans += (mint)i * (mint)(h - i) * (mint)(w * w);
+    repp(i, w, 1) ans = ans + i * (w - i) * (h * h);
+    repp(i, h, 1) ans = ans + i * (h - i) * (w * w);
 
-    // rep(i,h){
-    //     rep(j,m){
-
-    //     }
-    // }
     ans *= nCr(h * w - 2, k - 2);
     cout << ans.val() << endl;
 }
