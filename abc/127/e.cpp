@@ -74,8 +74,34 @@ using mint = modint1000000007;
     それが計算に関与する回数
 */
 
+mint nCr(ll n, ll r) {
+    mint num = 1;
+    for(int i = 1; i <= r; i++) {
+        num = num * (n - i + 1) / i;
+    }
+    return num;
+}
+
 int main(void) {
     fio();
     ll h, w, k;
     cin >> h >> w >> k;
+
+    mint ans = 0;
+    // repp(i, w, 1) ans += i * (w - 1) * (h * h);
+    // repp(i, h, 1) ans += i * (h - 1) * (w * w);
+    // repp(i, w, 1) ans += (mint)i * (w - 1) * (h * h);
+    // repp(i, h, 1) ans += (mint)i * (h - 1) * (w * w);
+    // repp(i, w, 1) ans += (w - i) * (h * h);
+    // repp(i, h, 1) ans += (h - i) * (w * w);
+    repp(i, w, 1) ans += (mint)i * (mint)(w - i) * (mint)(h * h);
+    repp(i, h, 1) ans += (mint)i * (mint)(h - i) * (mint)(w * w);
+
+    // rep(i,h){
+    //     rep(j,m){
+
+    //     }
+    // }
+    ans *= nCr(h * w - 2, k - 2);
+    cout << ans.val() << endl;
 }
