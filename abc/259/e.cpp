@@ -65,6 +65,45 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+ * Σm1 < n
+ */
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+
+    map<ll, priority_queue<ll>> mp;
+    vector<ll> m(n);
+    vector<vector<ll>> p(n), e(n);
+
+    rep(i, n) {
+        cin >> m[i];
+        rep(j, m[i]) {
+            ll pp, ee;
+            cin >> pp >> ee;
+            p[i].pb(pp);
+            e[i].pb(ee);
+            mp[pp].push(ee);
+        }
+    }
+
+    set<set<ll>> st;
+    rep(i, n) {
+        set<ll> tmp;
+        rep(j, m[i]) {
+            if(mp[p[i][j]].top() == e[i][j]) {
+                ll mx = mp[p[i][j]].top();
+                mp[p[i][j]].pop();
+                if(mp[p[i][j]].empty() || mp[p[i][j]].top() != mx) {
+                    tmp.insert(p[i][j]);
+                }
+                mp[p[i][j]].push(mx);
+            }
+        }
+        st.insert(tmp);
+    }
+
+    // cout << ans << endl;
+    cout << st.size() << endl;
 }
