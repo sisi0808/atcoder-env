@@ -73,7 +73,35 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 // using mint = modint998244353;
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
+ll n, k;
+vector<ll> a;
+
+/*
+ * 全ての丸太の長さをm以下にできるか
+ * 出力が切り上げた値であることに注意
+ */
+
+bool f(ll m) {
+    ll cnt = 0;
+    rep(i, n) cnt += (a[i] - 1) / m;
+    return cnt <= k;
+}
 
 int main(void) {
     fio();
+    cin >> n >> k;
+    a.resize(n);
+    rep(i, n) cin >> a[i];
+    // sort(ALL(a));
+
+    // 別の実装
+    // fは条件を満たすか判定
+    ll ok = 0LL;
+    ll ng = 1000000001;
+    while(ok + 1 != ng) {
+        ll mid = (ok + ng) / 2;
+        if(f(mid)) ng = mid;
+        else ok = mid;
+    }
+    cout << ok + 1 << endl;
 }
