@@ -67,31 +67,36 @@ using mint = modint1000000007;
 
 int main(void) {
     fio();
-    ll n, k;
-    cin >> n >> k;
-    vector<ll> a(n);
-    rep(i, n) cin >> a[i];
+    ll n, m;
+    cin >> n >> m;
 
-    rep(i, k) {
-        a.erase(a.begin());
-        a.pb(0);
+    // 各スイッチで、関連する電球
+    vector<vector<int>> s(n);
+    rep(i, m) {
+        int k;
+        cin >> k;
+        rep(j, k) {
+            int ss;
+            cin >> ss;
+            s[ss - 1].pb(i);
+        }
     }
-    rep(i, n) cout << a[i] << " ";
-    cout << endl;
 
-    // queue<ll> q;
-    // deque<ll> b;
-    // rep(i, n) b.push_back(a[i]);
+    vector<ll> p(m);
+    rep(i, m) cin >> p[i];
 
-    // rep(i, k) {
-    //     b.pop_front();
-    //     b.push_back(0);
-    // }
-    // ll ans;
-    // rep(i, n) {
-    //     ans = b.front();
-    //     b.pop_front();
-    //     cout << ans << " ";
-    // }
-    // cout << endl;
+    ll ans = 0;
+    rep(i, (1 << n)) {
+        /* 各電球で、関連するスイッチが何個ついているか */
+        vector<ll> t(m, 0);
+        rep(j, n) {
+            if(i & (1 << j)) {
+                for(auto vv : s[j]) t[vv]++;
+            }
+        }
+        ll tmp = 1;
+        rep(j, m) if(t[j] % 2 != p[j]) tmp = 0;
+        ans += tmp;
+    }
+    cout << ans << endl;
 }

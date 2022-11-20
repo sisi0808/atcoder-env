@@ -75,14 +75,8 @@ int main(void) {
     while(q--) {
         ll t, a, b;
         cin >> t >> a >> b;
-        if(t == 1) {
-            mp[a].insert(b);
-        }
-        if(t == 2) {
-            mp[a].erase(b);
-        }
-        if(t == 3) {
-            yn(mp[a].count(b) && mp[b].count(a));
-        }
+        if(t == 1) mp[a].insert(b);
+        if(t == 2) mp[a].erase(b);
+        if(t == 3) yn(mp[a].count(b) && mp[b].count(a));
     }
 }
