@@ -91,14 +91,12 @@ int main(void) {
     for(auto [k, v] : mp) {
         ll cnt = 1;
         ll summ = 1;
-        ll idx = 1;
         while(summ < v) {
-            int ii = idx;
-            while(ii % v == 0) {
+            int ii = cnt + 1;
+            while(ii % k == 0LL) {
                 summ++;
-                ii /= v;
+                ii /= k;
             }
-            idx++;
             cnt++;
             summ++;
         }
