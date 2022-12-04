@@ -70,21 +70,13 @@ int main(void) {
     ll n, p;
     cin >> n >> p;
 
-    // vector<mint> dp(n + 3);
-    // dp[0] = 1;
+    vector<mint> dp(n + 3);
 
-    // /* 渡すDP */
-    // rep(i, n) {
-    //     dp[i + 1] += (1 - (mint)p / 100) * dp[i];
-    //     dp[i + 2] += ((mint)p / 100) * dp[i];
-    // }
-    // cout << dp[n].val() << endl;
-    vector<double> dp(n + 3);
-
-    /* 渡すDP */
-    rep(i, n) {
-        dp[i + 1] += (1 - (double)p / 100) * dp[i];
-        dp[max(0, i - 2)] += ((double)p / 100) * dp[i];
+    /* 貰うDP */
+    repp(i, n + 1, 1) {
+        dp[i] += ((mint)p / 100) * dp[max(0, i - 2)];
+        dp[i] += (1 - (mint)p / 100) * dp[i - 1];
+        dp[i] += 1;
     }
-    cout << dp[0] << endl;
+    cout << dp[n].val() << endl;
 }

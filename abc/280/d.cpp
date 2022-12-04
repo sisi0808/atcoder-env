@@ -89,18 +89,14 @@ int main(void) {
 
     ll ans = 0;
     for(auto [k, v] : mp) {
-        ll cnt = 1;
-        ll summ = 1;
-        while(summ < v) {
-            int ii = cnt + 1;
-            while(ii % k == 0LL) {
-                summ++;
-                ii /= k;
-            }
-            cnt++;
-            summ++;
+        ll n = 0; // 答え
+        ll x;     // temp
+        while(v > 0) {
+            n += k;
+            x = n;
+            while(x % k == 0LL) x /= k, v--;
         }
-        chmax(ans, k * cnt);
+        chmax(ans, n);
     }
     cout << ans << endl;
 }

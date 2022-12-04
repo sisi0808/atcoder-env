@@ -73,6 +73,7 @@ int main(void) {
     rep(i, h) cin >> s[i];
 
     ll ans = 0;
-    rep(i, h) rep(j, w) if(s[i][j] == '#') ans++;
+    // rep(i, h) rep(j, w) if(s[i][j] == '#') ans++;
+    rep(i, h) ans += count(ALL(s[i]), '#');
     cout << ans << endl;
 }

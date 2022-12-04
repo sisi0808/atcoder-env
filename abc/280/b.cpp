@@ -69,16 +69,12 @@ int main(void) {
     fio();
     int n;
     cin >> n;
-    vector<ll> s(n);
-    rep(i, n) cin >> s[i];
+    vector<ll> s(n + 1);
+    rep(i, n) cin >> s[i + 1];
 
-    vector<ll> b(n);
-    ll cnt = 0;
-    rep(i, n) {
-        b[i] = s[i] - cnt;
-        cnt += b[i];
-    }
+    vector<ll> a(n);
+    rep(i, n) a[i] = s[i + 1] - s[i];
 
-    rep(i, n) cout << b[i] << " ";
+    rep(i, n) cout << a[i] << " ";
     cout << endl;
 }
