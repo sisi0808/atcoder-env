@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -61,8 +61,57 @@ const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 using mint = modint998244353;
-//using mint = modint1000000007;
+// using mint = modint1000000007;
 
-int main(void){
+/*
+* HW <= 16
+* a <= 8
+* b <= 16
+
+* どの順番、どの向きに入れるかを全探索すればよい？
+*/
+
+ll h, w;
+bool used[16][16];
+
+// (x,y,a) = (今見ている列, 今見ている行, 残りの長方形のタイルの数)
+int dfs(int x, int y, int a) {
+
+    // 最後まで探索して、長方形のタイルを使い切っているなら、組合せを+1する
+    if(h == y) return a == 0;
+
+    // 横の端まで行ったら次の行へ
+    if(w == x) return dfs(0, y + 1, a);
+
+    // 既に置かれているなら何もできないので、次のマスへ
+    if(used[y][x]) return dfs(x + 1, y, a);
+
+    int res = 0;
+
+    // 縦置き
+    if(y + 1 < h && !used[y + 1][x] && 0 < a) {
+        used[y][x] = used[y + 1][x] = true;
+        res += dfs(x + 1, y, a - 1);
+        used[y][x] = used[y + 1][x] = false;
+    }
+
+    // 横置き
+    if(x + 1 < w && !used[y][x + 1] && 0 < a) {
+        used[y][x] = used[y][x + 1] = true;
+        res += dfs(x + 1, y, a - 1);
+        used[y][x] = used[y][x + 1] = false;
+    }
+
+    // 何も置かない
+    res += dfs(x + 1, y, a);
+
+    return res;
+}
+int main(void) {
     fio();
+    cin >> h >> w;
+    ll a, b;
+    cin >> a >> b;
+
+    cout << dfs(0, 0, a) << endl;
 }
