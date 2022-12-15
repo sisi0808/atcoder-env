@@ -80,13 +80,21 @@ int main(void) {
     mp1[0] = 0LL;
     mp2[0] = 0LL;
 
-    ll mx1 = mp1.rbegin()->second;
-    ll _mx1 = next(mp1.rbegin())->second;
-    ll mx2 = mp2.rbegin()->second;
-    ll _mx2 = next(mp2.rbegin())->second;
+    vector<P> v1;
+    vector<P> v2;
+
+    for(auto [k, v] : mp1) v1.pb({v, k});
+    for(auto [k, v] : mp2) v2.pb({v, k});
+    sort(RALL(v1));
+    sort(RALL(v2));
+
+    ll mx1 = v1[0].first;
+    ll _mx1 = v1[1].first;
+    ll mx2 = v2[0].first;
+    ll _mx2 = v2[1].first;
 
     ll ans = n;
-    if(mp1.rbegin()->first != mp2.rbegin()->first) chmin(ans, n - mx1 - mx2);
+    if(v1[0].second != v2[0].second) chmin(ans, n - mx1 - mx2);
     else {
         chmin(ans, n - mx1 - _mx2);
         chmin(ans, n - _mx1 - mx2);
