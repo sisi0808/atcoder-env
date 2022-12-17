@@ -65,42 +65,16 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
-/*
-* アルファベットすべての対応表を作り、
-    ある文字について複数の変換先があってはいけない
-    ある文字について複数の変換元があってはいけない
-* という２つの条件を満たせればOK
-*/
-
 int main(void) {
     fio();
-    string S, T;
-    cin >> S >> T;
-    int N = S.length();
-    vector<vector<int>> f(26, vector<int>(26));
+    ll n, X;
+    cin >> n >> X;
+    vector<ll> x(n);
+    rep(i, n) cin >> x[i];
 
-    rep(i, N) {
-        int a = S[i] - 'a';
-        int b = T[i] - 'a';
-
-        f[a][b] = 1;
+    ll ans = abs(x[0] - X);
+    rep(i, n) {
+        ans = __gcd(ans, abs(x[i] - X));
     }
-
-    rep(i, 26) {
-        int cn = 0;
-        rep(j, 26) if(f[i][j]) cn++;
-        if(2 <= cn) {
-            no();
-            return 0;
-        }
-    }
-    rep(j, 26) {
-        int cn = 0;
-        rep(i, 26) if(f[i][j]) cn++;
-        if(2 <= cn) {
-            no();
-            return 0;
-        }
-    }
-    yes();
+    cout << ans << endl;
 }
