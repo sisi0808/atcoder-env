@@ -66,7 +66,9 @@ using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 /*
- * 理論上の最大値はsum(a) - n
+ * 理論上の最大値はsum(m) - n
+ * mの値には上限がないため、最適を選択することが可能？
+ * 最適を達成するためには、mを全ての数の積-1にすれば良い
  */
 
 int main(void) {
