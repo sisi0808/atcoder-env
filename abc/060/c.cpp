@@ -19,7 +19,7 @@ using namespace std;
 #define pb push_back
 #define pf push_front
 
-#define fi first
+#define fi first/contests/abc060/custom_test
 #define se second
 
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
