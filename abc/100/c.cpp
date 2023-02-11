@@ -67,4 +67,17 @@ using mint = modint1000000007;
 
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vector<ll> a(n);
+    rep(i, n) cin >> a[i];
+
+    ll ans = 0;
+    rep(i, n) {
+        while(a[i] % 2 == 0) {
+            a[i] /= 2;
+            ans++;
+        }
+    }
+    cout << ans << endl;
 }
