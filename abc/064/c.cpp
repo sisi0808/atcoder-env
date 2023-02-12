@@ -72,27 +72,15 @@ int main(void) {
     vector<ll> a(n);
     rep(i, n) cin >> a[i];
 
-    vector<int> c(9);
+    vector<ll> c(9);
     rep(i, n) {
         c[min(8ll, (ll)(a[i] / 400))]++;
     }
-    // rep(i, 9) {
-    //     cout << c[i] << endl;
-    // }
-
-    ll ans = 0;
-
+    ll mn_ans = 0;
     rep(i, 8) {
-        if(c[i] == 0ll) {
-            if(c[8] > 0) {
-                c[8]--;
-                c[i]++;
-            }
-        } else ans++;
+        if(c[i] > 0) mn_ans++;
     }
-    cout << max(1ll, ans) << " ";
-
-    ans = 0;
-    rep(i, 9) if(c[i] > 0) ans++;
-    cout << ans << endl;
+    ll mx_ans = mn_ans + c[8];
+    chmax(mn_ans, 1ll);
+    cout << mn_ans << " " << mx_ans << endl;
 }
