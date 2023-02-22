@@ -67,15 +67,19 @@ using mint = modint1000000007;
 
 int main(void) {
     fio();
-    ll a, b, c;
-    cin >> a >> b >> c;
-    ll sd = 0;
-    sd += max({a, b, c}) - a;
-    sd += max({a, b, c}) - b;
-    sd += max({a, b, c}) - c;
+    int n;
+    cin >> n;
+    vector<ll> a(n + 2);
+    rep(i, n) cin >> a[i + 1];
 
-    ll ans = 0;
-    if(sd % 2 == 0) ans = sd / 2;
-    else ans = (sd + 3) / 2;
-    cout << ans << endl;
+    ll total = 0;
+    rep(i, n + 1) total += abs(a[i + 1] - a[i]);
+
+    rep(i, n) {
+        ll ans = total;
+        ans += abs(a[i] - a[i + 2]);
+        ans -= abs(a[i] - a[i + 1]);
+        ans -= abs(a[i + 1] - a[i + 2]);
+        cout << ans << endl;
+    }
 }
