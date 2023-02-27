@@ -74,18 +74,26 @@ int main(void) {
     fio();
     int n;
     cin >> n;
-    vector<ll> a(n + 1), b(n + 1);
-    rep(i, n) cin >> a[i + 1] >> b[i + 1];
+    // vector<ll> a(n + 1), b(n + 1);
+    // rep(i, n) cin >> a[i + 1] >> b[i + 1];
+    vector<vector<ll>> a(n + 1, vector<ll>(2));
+    rep(i, n) cin >> a[i + 1][0] >> a[i + 1][1];
     vector<vector<mint>> dp(n + 1, vector<mint>(2));
     dp[0][0] = 1;
 
     rep(i, n) {
-        // 裏返さない場合
-        if(a[i] != a[i + 1]) dp[i + 1][0] += dp[i][0];
-        if(b[i] != a[i + 1]) dp[i + 1][0] += dp[i][1];
-        // 裏返す場合
-        if(a[i] != b[i + 1]) dp[i + 1][1] += dp[i][0];
-        if(b[i] != b[i + 1]) dp[i + 1][1] += dp[i][1];
+        // // 裏返さない場合
+        // if(a[i] != a[i + 1]) dp[i + 1][0] += dp[i][0];
+        // if(b[i] != a[i + 1]) dp[i + 1][0] += dp[i][1];
+        // // 裏返す場合
+        // if(a[i] != b[i + 1]) dp[i + 1][1] += dp[i][0];
+        // if(b[i] != b[i + 1]) dp[i + 1][1] += dp[i][1];
+
+        rep(j1, 2) {
+            rep(j2, 2) {
+                if(a[i + 1][j2] != a[i][j1]) dp[i + 1][j2] += dp[i][j1];
+            }
+        }
     }
     cout << (dp[n][0] + dp[n][1]).val() << endl;
 }

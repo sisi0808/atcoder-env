@@ -75,60 +75,58 @@ using mint = modint1000000007;
 6. 5を繰り返して頂点数が1か0になったら終了
 */
 
-ll n, m;
-vector<set<int>> g;
-vector<set<int>> in;
-vector<set<int>> out;
+int N, M;              // 頂点と辺の数
+vector<vector<int>> G; // グラフ
+vector<int> h;         // 入次数
+vector<int> ans;       // 答えを格納
+ll cnt = 0;
 
-vector<int> ans;
+void topoBFS() {
+    // queue<int> unchecked;
+    priority_queue<int, vector<int>, greater<int>> unchecked;
+    for(int i = 0; i < N; i++) {
+        if(h[i] == 0) {
+            unchecked.push(i); // 入次数が0の頂点をキューに入れる
+        }
+    }
+    while(!unchecked.empty()) {
+        if(unchecked.size() != 1) {
+            no();
+            exit(0);
+        }
+        int current = unchecked.top();
+        unchecked.pop();
+        ans[current] = cnt++;
+
+        for(int next : G[current]) { // 「行ける」頂点について
+            h[next]--;               // 入次数を減らす
+            if(h[next] == 0) {       // 入次数0になったらキューに追加
+                unchecked.push(next);
+            }
+        }
+    }
+
+    yes();
+    for(int x : ans) {
+        cout << x + 1 << " "; // 1始まりで出力するときはx+1とする
+    }
+    cout << endl;
+}
 
 int main(void) {
     fio();
-    cin >> n >> m;
-
-    g.resize(n);
-    in.resize(n);
-    out.resize(n);
-    ans.resize(n);
-
-    rep(i, m) {
-        int a, b;
-        cin >> a >> b;
-        a--;
-        b--;
-        g[a].insert(b); // 小さい方から大きい方への有向グラフ
-        in[b].insert(a);
-        out[a].insert(b);
+    cin >> N >> M;
+    G.resize(N);
+    h.resize(N, 0); // 入次数0初期化
+    ans.resize(N);
+    int f, t;
+    for(int i = 0; i < M; i++) {
+        cin >> f >> t;
+        f--;
+        t--;               // 1始まりで辺の情報を入れるならデクリメントする
+        G[f].push_back(t); // fからtに行ける
+        h[t]++;            // tの入次数を増やす
     }
 
-    set<int> st;
-    rep(i, n) st.insert(i);
-    ll cnt = 0;
-    while(st.size() > 1) {
-        ll in_cnt = 0, out_cnt = 0;
-        ll in_num = 0, out_num = 0;
-        for(auto i : st) {
-            if(out[i].size() == 0) in_cnt++, in_num = i;
-            if(in[i].size() == 0) out_cnt++, out_num = i;
-        }
-        if(in_cnt == 1 && out_cnt == 1) {
-            // 削除
-            st.erase(in_num);
-            st.erase(out_num);
-            for(auto it : in[in_num]) out[it].erase(in_num);
-            for(auto it : out[out_num]) in[it].erase(out_num);
-            ans[in_num] = n - cnt;
-            ans[out_num] = cnt + 1;
-        } else {
-            no();
-            return 0;
-        }
-        cnt++;
-    }
-    if(st.size() == 1) {
-        for(auto i : st) ans[i] = cnt + 1;
-    }
-    yes();
-    rep(i, n) cout << ans[i] << " ";
-    cout << endl;
+    topoBFS();
 }
