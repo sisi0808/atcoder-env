@@ -72,20 +72,17 @@ int main(void) {
     vector<ll> c(n - 1), s(n - 1), f(n - 1);
     rep(i, n - 1) cin >> c[i] >> s[i] >> f[i];
 
-    vector<ll> ans(n);
-
     rep(i, n - 1) {
-        ll st = 0;
+        ll ans = 0;
         repp(j, n - 1, i) {
             // 始発寄り到着時刻が早い場合
-            chmax(st, s[j]);
+            chmax(ans, s[j]);
             // 次の乗車時刻
-            if(st % f[j]) st = (ll)(st / f[j]) * (f[j] + 1);
+            if(ans % f[j]) ans = (ll)(ans / f[j] + 1) * f[j];
             // 電車に乗っている時間
-            st += c[j];
+            ans += c[j];
         }
-        ans[i] = st;
+        cout << ans << endl;
     }
-
-    rep(i, n) cout << ans[i] << endl;
+    cout << 0 << endl;
 }
