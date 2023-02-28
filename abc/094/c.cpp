@@ -79,7 +79,7 @@ int main(void) {
 
     rep(i, n) {
         ll ans = 0;
-        if(x[i] < l) ans = r;
+        if(x[i] <= l) ans = r;
         else ans = l;
         cout << ans << endl;
     }
