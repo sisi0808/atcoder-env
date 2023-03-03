@@ -66,7 +66,7 @@ using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 /*
- * dfsを状態を5つまで辿る？
+ * dfsの状態を5つまで辿る？
  */
 
 string s;
