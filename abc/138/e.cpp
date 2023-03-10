@@ -66,42 +66,35 @@ using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 /*
-* h or wが3で割れるのなら、答えは0
-* 最大公約数などの問題になりそう？
-
-* あり得るパターン
-    全部を縦 or 横一列
-    一つが縦、他が横
-    一つが横、他が縦
-
-* 一つ場所が確定したら、他の二つも決まる？
+DPぽい？
+s'の長さは最悪で|s|x|t|(tがすべて同じ文字でsの中にその文字が一つだけ)
 */
 
-ll h, w;
 int main(void) {
     fio();
-    cin >> h >> w;
+    string s, t;
+    cin >> s >> t;
 
-    ll ans = INF;
-
-    /* 縦3の場合 */
-    chmin(ans, min(1ll, h % 3) * w);
-    /* 横3の場合 */
-    chmin(ans, min(1ll, w % 3) * h);
-
-    repp(i, h, 1) {
-        /* 縦1, 横2の場合 */
-        ll s1 = i * w;
-        ll s2 = (h - i) * (ll)((w + 1) / 2);
-        ll s3 = (h - i) * (ll)(w / 2);
-        chmin(ans, max({abs(s1 - s2), abs(s2 - s3), abs(s3 - s1)}));
+    // 自分寄り後のアルファベットの位置を管理
+    vector<map<char, int>> vm(s.size() + 1);
+    rrep(i, s.size() - 1, 0) {
+        vm[i + 1] = vm[0];
+        vm[0][s[i]] = i + 1;
     }
-    repp(i, w, 1) {
-        /* 縦2, 横1の場合 */
-        ll s1 = i * h;
-        ll s2 = (w - i) * (ll)((h + 1) / 2);
-        ll s3 = (w - i) * (ll)(h / 2);
-        chmin(ans, max({abs(s1 - s2), abs(s2 - s3), abs(s3 - s1)}));
+
+    ll ans = 0;
+    ll idx = 0;
+    for(auto c : t) {
+        if(vm[idx].count(c)) { // その周で行ける
+            ans += vm[idx][c] - idx;
+            idx = vm[idx][c];
+        } else if(vm[0].count(c)) { // 1周が必要
+            ans += s.size() + vm[0][c] - idx;
+            idx = vm[0][c];
+        } else {
+            cout << -1 << endl;
+            return 0;
+        }
     }
     cout << ans << endl;
 }
