@@ -8,13 +8,19 @@ using namespace atcoder;
     ios::sync_with_stdio(false);
 using namespace std;
 #define rep(i, n) for(int i = 0; i < int(n); ++i)
-#define rrep(i, n) for(int i = n; i >= 0; --i)
+#define rrep(i, n, m) for(int i = n; i >= m; --i)
 #define repp(i, n, m) for(int i = m; i < int(n); ++i)
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
 #define RALL(v) (v).rbegin(), (v).rend()
 #define chmin(a, b) a = min((ll)a, (ll)b)
 #define chmax(a, b) a = max((ll)a, (ll)b)
+
+#define pb push_back
+#define pf push_front
+
+#define fi first
+#define se second
 
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
@@ -25,9 +31,11 @@ using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
-const int inf = 1000000000;
+const int inf = 1 << 30;
+const int _inf = 1000000000;
 const int modi = 1000000007;
-const long long INF = 1000000000000000000;
+const long long INF = 1LL << 62;
+const long long _INF = 1000000000000000000LL;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -48,53 +56,44 @@ void YN(bool t) {
         No();
 }
 
-void pri(ll a) { cout << a << endl; }
-void spri(string a) { cout << a << endl; }
-void priV(vector<ll> &vec) {
-    for(size_t i = 0; i < vec.size(); i++) {
-        cout << vec[i] << ":";
-    }
-    cout << endl;
-}
-
 vector<int> dx = {1, 0, -1, 0};
 vector<int> dy = {0, 1, 0, -1};
-const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
+const string ALP = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
-using mint = modint998244353;
-// using mint = modint1000000007;
+// using mint = modint998244353;
+using mint = modint1000000007;
 // cout << fixed << setprecision(12);
+
+ll h, w;
+Graph g;
+ll ans = 0;
+set<ll> st;
+
+void dfs(int y, int x) {
+    st.insert(g[y][x]);
+
+    if(y + 1 < h && st.find(g[y + 1][x]) == st.end()) {
+        dfs(y + 1, x);
+        st.erase(g[y + 1][x]);
+    }
+    // if(x + 1 < w) {
+    if(x + 1 < w && st.find(g[y][x + 1]) == st.end()) {
+        dfs(y, x + 1);
+        st.erase(g[y][x + 1]);
+    }
+    if(y + 1 == h && x + 1 == w) {
+        // if(st.size() == h + w - 1) ans++;
+        ans++;
+    }
+}
 
 int main(void) {
     fio();
-    int n;
-    cin >> n;
-    lvec a(n), b(n);
-    rep(i, n) cin >> a[i];
-    rep(i, n) cin >> b[i];
+    cin >> h >> w;
+    g.resize(h, vector<ll>(w));
+    rep(i, h) rep(j, w) cin >> g[i][j];
 
-    /* a[i=1..n], b[i=1..n]における数字の種類数を記録 */
-    ivec as(n), bs(n);
-    set<ll> sta, stb;
-    vector<set<ll>> st(n + 2);
-    rep(i, n) {
-        sta.insert(a[i]);
-        as[i] = sta.size();
-        stb.insert(b[i]);
-        bs[i] = stb.size();
-    }
-
-    int q;
-    cin >> q;
-    rep(i, q) {
-        int x, y;
-        cin >> x >> y;
-        x--;
-        y--;
-        if(as[x] == bs[y] && st[as[x]].size() == 0) yes();
-        else no();
-        // cout << as[x] << ':' << bs[y] << ':' << bm[y] << endl;
-        yn(as[x] == bs[y] && as[x] == bm[y]);
-    }
+    dfs(0, 0);
+    cout << ans << endl;
 }
