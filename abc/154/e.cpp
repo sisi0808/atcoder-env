@@ -65,6 +65,48 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+* DP?
+* i桁目まで見た時、0でない数がちょうどN個の数
+
+* 答えは最大でも 7*10^8 (100C3 * 9 * 9 * 9)
+* dfsでギリギリ構築可能？
+
+*/
+string n;
+int k;
+ll ans = 0;
+
+// 組み合わせの数nCrを計算
+ll calcNumOfCombination(int n, int r) {
+    if(n < r) return 0;
+    ll num = 1;
+    for(int i = 1; i <= r; i++) {
+        num = num * (n - i + 1) / i;
+    }
+    return num;
+}
+
 int main(void) {
     fio();
+    cin >> n;
+    cin >> k;
+
+    ll ans = 0;
+    ll cnt = k;
+    /* 左から何桁目までを見ているか */
+    rep(i, n.size()) {
+        /* 必ず小さくなる数*/
+        rep(j, n[i] - '0') {
+            if(j == 0) ans += calcNumOfCombination(n.size() - i - 1, cnt) * pow(9, cnt);
+            else ans += calcNumOfCombination(n.size() - i - 1, cnt - 1) * pow(9, cnt - 1);
+        }
+        /* 桁が同じ */
+        if(n[i] != '0') cnt--;
+        if(!cnt) {
+            ans++;
+            break;
+        }
+    }
+    cout << ans << endl;
 }
