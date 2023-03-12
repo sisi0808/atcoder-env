@@ -72,10 +72,10 @@ int main(void) {
     vector<ll> a(n);
     rep(i, n) cin >> a[i];
 
+    /* i番目の人が名前を呼ばれたか管理 */
     vector<bool> b(n, false);
-    rep(i, n) {
-        if(!b[i]) b[a[i] - 1] = true;
-    }
+    rep(i, n) if(!b[i]) b[a[i] - 1] = true;
+
     ll ans = 0;
     vector<ll> v;
     rep(i, n) {
@@ -86,7 +86,5 @@ int main(void) {
     }
     cout << ans << endl;
     for(auto w : v) cout << w << " ";
-    //     if(!b[i]) cout << i + 1 << " ";
-    // }
     cout << endl;
 }
