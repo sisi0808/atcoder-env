@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -62,14 +62,52 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 graph G;
 using mint = modint998244353;
-//using mint = modint1000000007
+// using mint = modint1000000007
 
-int main(void){
+/*
+* 回分である以上、0~|s|/2までが確定すれば後半も自動的に求まる
+
+* 考え方としては桁DPが最も近い
+
+満たすべき条件
+
+* 前半がS以下か
+* 後半がS以下か
+* 回分か
+
+* 前半で<Sであることが確定した場合、後半は何でも良い
+* ==である場合、後半に気を使う
+*/
+
+int main(void) {
     fio();
-    int t; cin >> t;
-    rep(i,t){
-        int n; cin >> n;
-        string s; cin >> s;
+    int t;
+    cin >> t;
+    vector<vector<mint>> dp;
 
+    vector<mint> cnt(2000000);
+    cnt[0] = 1;
+    rep(i, 2000000) cnt[i + 1] = cnt[i] * 26;
+
+    rep(i, t) {
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        mint ans = 0;
+        /* 左から何桁目までを見ているか */
+        rep(i, (int)((n + 1) / 2)) {
+            /* 必ず小さくなる数*/
+            rep(j, s[i] - 'A') {
+                ans += cnt[(int)((n + 1) / 2) - i - 1];
+            }
+        }
+
+        // Sの前半 + 前半の反転がSより小さかったら、+1
+        string sr = s.substr((ll)((n + 1) / 2));
+        string sl = s.substr(0, (ll)(n / 2));
+        reverse(ALL(sl));
+        if(sl <= sr) ans++;
+        cout << ans.val() << endl;
     }
 }
