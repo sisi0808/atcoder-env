@@ -8,7 +8,7 @@ using namespace atcoder;
     ios::sync_with_stdio(false);
 using namespace std;
 #define rep(i, n) for(int i = 0; i < int(n); ++i)
-#define rrep(i, n) for(int i = n; i >= 0; --i)
+#define rrep(i, n, m) for(int i = n; i >= m; --i)
 #define repp(i, n, m) for(int i = m; i < int(n); ++i)
 #define fore(i_in, a) for(auto &i_in : a)
 #define ALL(v) (v).begin(), (v).end()
@@ -31,7 +31,7 @@ using graph = vector<vector<int>>;
 using Graph = vector<vector<ll>>;
 using P = pair<ll, ll>;
 const int SIZE = 100005;
-const int inf = 1 << 31;
+const int inf = 1 << 30;
 const int _inf = 1000000000;
 const int modi = 1000000007;
 const long long INF = 1LL << 62;
@@ -58,7 +58,7 @@ void YN(bool t) {
 
 vector<int> dx = {1, 0, -1, 0};
 vector<int> dy = {0, 1, 0, -1};
-const string ALP = "ABCDEFGHIkkKLMNOPQRSTUVWXYZ";
+const string ALP = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const string alp = "abcdefghijklmnopqrstuvwxyz";
 
 // using mint = modint998244353;
@@ -66,33 +66,16 @@ using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
 /*
-* 区間処理か
-* ソートした時の中央値付近の数しか答えに影響しない
-* ２つの中央値の範囲を探索できれば良い
-    * x_(n/2)
-    * x_(n/2 + 1)
-* A以下で中央値になりうるか？で二分探索ができそう
-
-
-* Aが中央地になるためには、それ以下の数がn/2個必要になるが、達成可能か
-*/
+ * 最終的に1で統一される
+ */
 
 int main(void) {
     fio();
-    int n;
-    cin >> n;
-    vector<ll> a(n), b(n);
-    rep(i, n) cin >> a[i] >> b[i];
-    sort(ALL(a));
-    sort(ALL(b));
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> a(n);
+    rep(i, n) cin >> a[i];
 
-    if(n % 2 == 0ll) { // 中央値が実数
-        ll ax = a[n / 2 - 1] + a[n / 2];
-        ll bx = b[n / 2 - 1] + b[n / 2];
-        cout << bx - ax + 1 << endl;
-    } else { // 中央値が整数
-        ll ax = a[n / 2];
-        ll bx = b[n / 2];
-        cout << bx - ax + 1 << endl;
-    }
+    ll ans = 1 + (n - 2) / (k - 1);
+    cout << ans << endl;
 }
