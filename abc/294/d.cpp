@@ -76,7 +76,6 @@ int main(void) {
         int e;
         cin >> e;
         if(e == 1) {
-            // cout << *st.begin() << endl;
             ts.insert(*st.begin());
             st.erase(st.begin());
         } else if(e == 2) {

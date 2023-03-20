@@ -78,16 +78,12 @@ int main(void) {
     rep(i, m) c.pb({b[i], i + n + 1});
     sort(ALL(c));
 
-    vector<int> ac(n), bc(m);
+    vector<int> ans(n + m);
     rep(i, c.size()) {
-        if(c[i].second <= n) {
-            ac[c[i].second - 1] = i + 1;
-        } else {
-            bc[c[i].second - 1 - n] = i + 1;
-        }
+        ans[c[i].second - 1] = i + 1;
     }
-    rep(i, n) cout << ac[i] << " ";
+    rep(i, n) cout << ans[i] << " ";
     cout << endl;
-    rep(i, m) cout << bc[i] << " ";
+    rep(i, m) cout << ans[n + i] << " ";
     cout << endl;
 }
