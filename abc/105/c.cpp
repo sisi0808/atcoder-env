@@ -70,93 +70,25 @@ using mint = modint1000000007;
 2^(N+1) - 2^N = 2^N
 */
 
-string convert_2(ll x) {
-    // 答え(2進数への変換)
-    string res;
-    while(x) {
-        res = to_string(x % 2) + res;
-        x /= 2;
-    }
-    return res;
-}
-
-string convert_n(string t) {
-    // 答え(2進数への変換)
-    // bitset<40> s(t);
-    string res = "";
-    int cnt = 0;
-    reverse(ALL(t));
-    rep(i, t.size()) {
-        char c = t[i];
-        // 普通に加算
-        if(i % 2 == 0) {
-            if(cnt > 0) {
-                if(c == '0') {
-                    cnt--;
-                    c = '1';
-                } else c = '0';
-            }
-        } else { // 減算の場合
-            if(c == '0' && cnt != 0) c = '1';
-            else if(c == '1') {
-                if(cnt > 0) c = '0';
-                else cnt++;
-            }
-        }
-        res += c;
-    }
-
-    if(cnt) {
-        if(t.size() % 2 == 0) res += '1';
-        else res += "11";
-    }
-    reverse(ALL(res));
-
-    return res;
-}
-
-string convert_m(string t) {
-    // 答え(2進数への変換)
-    // bitset<40> s(t);
-    string res = "";
-    int cnt = 0;
-    reverse(ALL(t));
-    rep(i, t.size()) {
-        char c = t[i];
-        // 普通に加算
-        if(i % 2 == 1) {
-            if(cnt > 0) {
-                if(c == '0') {
-                    cnt--;
-                    c = '1';
-                } else c = '0';
-            }
-        } else { // 減算の場合
-            if(c == '0' && cnt != 0) c = '1';
-            else if(c == '1') {
-                if(cnt > 0) c = '0';
-                else cnt++;
-            }
-        }
-        res += c;
-    }
-    if(cnt) {
-        if(t.size() % 2 == 1) res += '1';
-        else res += "11";
-    }
-    reverse(ALL(res));
-
-    return res;
-}
-
 int main(void) {
     fio();
     ll n;
     cin >> n;
     // -2進数への変換
-    string t = "";
-    if(n > 0) t = convert_n(convert_2(abs(n)));
-    else if(n < 0) t = convert_m(convert_2(abs(n)));
-    else t = '0';
-    cout << t << endl;
+    string s = "";
+    if(n == 0) s = '0';
+    else {
+        while(n != 0) {
+            int c = abs(n % 2);
+            if(c == 0) {
+                s.push_back('0');
+            } else {
+                s.push_back('1');
+            }
+            n -= c;
+            n /= -2;
+        }
+        reverse(ALL(s));
+    }
+    cout << s << endl;
 }
