@@ -70,62 +70,39 @@ using mint = modint1000000007;
  * 水が必ず多めになるように考える事により、溶け残りをなくす
  */
 
-ll a, b, c, d, e, f;
-// 砂糖、水
-bool judge(int i, int j) {
-    // 水が超えたら
-    if(j > 30 || i > 30) return false;
-    // 質量が超えたら
-    if(j * 100 + i > f) return false;
-    // 濃度が超えたら
-    if(i > j * e) return false;
-    return true;
-}
-
+int dp[3030][3030];
+int A, B, C, D, E, F;
+//---------------------------------------------------------------------------------------------------
 int main(void) {
-    fio();
-    cin >> a >> b >> c >> d >> e >> f;
+    cin >> A >> B >> C >> D >> E >> F;
 
-    vector<vector<bool>> dp(31, vector<bool>(31, false));
-    dp[0][0] = true;
+    double ma = 0;
+    int ans1 = 100 * A, ans2 = 0;
+    dp[0][0] = 1;
+    repp(i, F + 1, 1) {
+        rep(j, i + 1) {
+            int water = i - j;
+            int suger = j;
 
-    ll ans_a = 1; // 水
-    ll ans_b = 0; // 砂糖水
-    // 砂糖
-    rep(i, 31) {
-        // 水(100刻み)
-        rep(j, 31) {
-            if(!dp[i][j]) continue;
-            // 操作
-            if(judge(i, j + a)) {
-                // dp[i][j + a] != dp[i][j];
-                dp[i][j + a] != true;
-            }
-            if(judge(i, j + b)) {
-                // dp[i][j + b] != dp[i][j];
-                dp[i][j + b] != true;
-            }
-            if(judge(i + c, j)) {
-                // dp[i + c][j] != dp[i][j];
-                dp[i + c][j] != true;
-            }
-            if(judge(i + d, j)) {
-                // dp[i + d][j] != dp[i][j];
-                dp[i + d][j] != true;
-            }
+            if(100 * A <= i)
+                if(dp[i - 100 * A][j]) dp[i][j] = 1;
+            if(100 * B <= i)
+                if(dp[i - 100 * B][j]) dp[i][j] = 1;
+            if(C <= i && C <= j)
+                if(dp[i - C][j - C]) dp[i][j] = 1;
+            if(D <= i && D <= j)
+                if(dp[i - D][j - D]) dp[i][j] = 1;
 
-            // 濃度の比較
-            if((100 * ans_b) * 100 * (j + i) < (100 * i) * 100 * (ans_a + ans_b)) {
-                ans_a = j;
-                ans_b = i;
+            if(suger * 100 <= water * E && dp[i][j] && 0 < j) {
+                double e = 1.0 * 100 * j / i;
+                if(ma < e) {
+                    ma = e;
+                    ans1 = i;
+                    ans2 = j;
+                }
             }
         }
     }
-    rep(i, 31) {
-        rep(j, 31) {
-            cout << dp[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << ans_a + ans_b << " " << ans_b << endl;
+
+    printf("%d %d\n", ans1, ans2);
 }
