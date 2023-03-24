@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 /* ACLのライブラリを追加*/
-#include<atcoder/all>
+#include <atcoder/all>
 using namespace atcoder;
 
 #define fio()         \
@@ -63,6 +63,50 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 graph G;
 using mint = modint998244353;
 
-int main(void){
+/*
+* 閉路は必須
+* 同じ所を通っても良い
+
+* 頂点jで終わる、長さkの道
+
+* あり得るすべての組み合わせから、除外する頂点を使う経路を引けば良い?
+
+
+* 道a,bが使えない時の答え
+* = すべての道が使える時 - (道aを使う時 + 道bを使う時) + 道abを使う時
+*/
+
+int main(void) {
     fio();
+    ll n, m, k;
+    cin >> n >> m >> k;
+
+    vector<vector<mint>> dp(2, vector<mint>(n));
+    dp[0][0] = 1;
+
+    graph g(n);
+    rep(i, m) {
+        int a, b;
+        cin >> a >> b;
+        a--;
+        b--;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+
+    // 経路の長さ
+    rep(i, k) {
+        // 頂点番号
+        mint sum_a = 0;
+        rep(j, n) sum_a += dp[0][j];
+        rep(j, n) dp[1][j] = sum_a - dp[0][j];
+        rep(j, n) {
+            for(auto h : g[j]) {
+                dp[1][h] -= dp[0][j];
+            }
+        }
+
+        rep(j, n) dp[0][j] = dp[1][j];
+    }
+    cout << dp[0][0].val() << endl;
 }
