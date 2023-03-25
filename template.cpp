@@ -35,7 +35,7 @@ const int inf = 1 << 30;
 const int _inf = 1000000000;
 const int modi = 1000000007;
 const long long INF = 1LL << 62;
-const long long _INF = 1000000000000000000LL;
+const long long _INF = 1000000000000000LL;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
