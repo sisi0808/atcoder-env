@@ -63,6 +63,53 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint998244353;
 // using mint = modint1000000007;
 
+/*
+ * 最後の操作を「座標0に数字N+1が書かれていると設定」
+ * 一つの数字が複数地点ある時、その左端と右端だけ管理していれば良い
+ */
+
 int main(void) {
     fio();
+    int n;
+    cin >> n;
+    vector<ll> x(n), c(n);
+    rep(i, n) cin >> x[i] >> c[i];
+
+    // 色iが存在する座標の左端と右端
+    // 一つもない場合は
+    vector<vector<ll>> g(n + 1, vector<ll>(2));
+    rep(i, n + 1) g[i][0] = INF;
+    rep(i, n + 1) g[i][1] = -INF;
+    g[0][0] = 0;
+    g[0][1] = 0;
+    rep(i, n) {
+        chmin(g[c[i]][0], x[i]);
+        chmax(g[c[i]][1], x[i]);
+    }
+
+    // 道筋の選択による、最小値
+    // dp[i][j] := 0~i色のボールをすべて取り切った後、i色のj(左端 or 右端)にいる時の最短移動距離
+    vector<vector<ll>> dp(n + 1, vector<ll>(2, 100000000000000000ll));
+    dp[0][0] = 0;
+    dp[0][1] = 0;
+    rep(i, n) {
+        // そこに整数がない場合
+        if(g[i + 1][0] == INF) {
+            dp[i + 1][0] = dp[i][0];
+            dp[i + 1][1] = dp[i][1];
+            g[i + 1][0] = g[i][0];
+            g[i + 1][1] = g[i][1];
+            continue;
+        }
+        ll m = abs(g[i + 1][0] - g[i + 1][1]);
+        rep(j, 2) {
+            rep(k, 2) {
+                chmin(dp[i + 1][(k + 1) % 2], dp[i][j] + abs(g[i][j] - g[i + 1][k]) + m);
+            }
+        }
+    }
+
+    // 最終的な移動距離 + 0への距離
+    ll ans = min(dp[n][1] + abs(g[n][1]), dp[n][0] + abs(g[n][0]));
+    cout << ans << endl;
 }
