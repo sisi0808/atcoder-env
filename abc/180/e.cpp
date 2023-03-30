@@ -74,6 +74,37 @@ const string alp = "abcdefghijklmnopqrstuvwxyz";
 using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+const int MAXN = 17;
+int n;
+vector<vector<int>> d;
+vector<vector<int>> dp;
+// int d[MAXN][MAXN];
+// int dp[1 << MAXN][MAXN];
+
+int rec(int S, int v) {
+    if(dp[S][v] >= 0) return dp[S][v];
+    if(S == (1 << n) - 1 && v == 0) return dp[S][v] = 0;
+    int tmp = 90000000;
+    rep(u, n) if(!(S >> u & 1)) tmp = min(tmp, rec(S | 1 << u, u) + d[v][u]);
+    return dp[S][v] = tmp;
+}
+
 int main(void) {
     fio();
+    cin >> n;
+    vector<int> x(n), y(n), z(n);
+    rep(i, n) cin >> x[i] >> y[i] >> z[i];
+
+    d.resize(n, vector<int>(n));
+    dp.resize((1 << n), vector<int>(n, -1));
+
+    /* 有効辺の初期化 */
+    rep(i, n) {
+        rep(j, n) {
+            d[i][j] = abs(x[j] - x[i]) + abs(y[j] - y[i]) + max(0, z[j] - z[i]);
+        }
+    }
+    // fill((int *)dp, (int *)(dp + (1 << MAXN)), -1);
+    cout << rec(0, 0) << endl;
+    return 0;
 }
