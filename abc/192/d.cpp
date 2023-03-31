@@ -26,6 +26,7 @@ const int SIZE = 100005;
 const int inf = 1000000000;
 const int modi = 1000000007;
 const long long INF = 10000000000;
+const long long _INF = 1000000000000000000LL;
 const long long modl = 1000000007LL;
 const long long modll = 998244353LL;
 
@@ -64,6 +65,46 @@ using mint = modint998244353;
 // using mint = modint1000000007;
 // cout << fixed << setprecision(12);
 
+/*
+ * 二分探索が良さげ
+ * M以下で最大の進数の数
+ */
+string x;
+ll m;
+
+bool f(ll mid) {
+    ll ans = 0;
+    rep(i, x.size()) {
+        if(ans > m / mid) return false;
+        ans *= mid;
+        ans += x[i] - '0';
+    }
+    return ans <= m;
+}
+
 int main(void) {
     fio();
+    cin >> x;
+    cin >> m;
+
+    // N進数以上
+    ll n = 0;
+    for(auto c : x) chmax(n, c - '0');
+    // Xの長さが1の時は、1か0しかありえない
+    if(x.size() == 1) {
+        cout << (n <= m ? 1 : 0) << endl;
+        return 0;
+    }
+
+    /* どんな二分探索でもここの書き方を変えずにできる！ */
+    /* okが最小値でも、最大値でも同じ書き方 */
+    ll ok = n;
+    // ll ng = m + 1;
+    ll ng = 1001001001001001001;
+    while(ng - ok > 1ll) {
+        ll mid = (ok + ng) / 2;
+        if(f(mid)) ok = mid;
+        else ng = mid;
+    }
+    cout << ok - n << endl;
 }
