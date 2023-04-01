@@ -44,7 +44,7 @@
 		],
 		"description": "Input vector"
 	},
-	// 配列２つ入力
+	// 配列2つ入力
 	"cinv2": {
 		"prefix": "cr2",
 		"body": [
@@ -52,6 +52,15 @@
 			"rep(i,${4:n}) cin>>${2:a}[i]>>${3:b}[i];"
 		],
 		"description": "Input vector2"
+	},
+	// 配列3つ入力
+	"cinv3": {
+		"prefix": "cr3",
+		"body": [
+			"vector<${1:ll}> ${2:a}(${5:n}), ${3:b}(${5:n}), ${4:c}(${5:n});",
+			"rep(i,${5:n}) cin>>${2:a}[i]>>${3:b}[i]>>${4:c}[i];"
+		],
+		"description": "Input vector3"
 	},
 	// 二重配列(升目）入力
 	"cinmasu": {
@@ -138,7 +147,7 @@
 			"/* okが最小値でも、最大値でも同じ書き方 */",
 			"ll ok = 0LL;",
 			"ll ng = 1000000000LL;",
-			"while (ok + 1 != ng) {",
+			"while (ng - ok > 1) {",
 			"\tll mid =  (ok + ng) / 2;",
 			"\tif (f(mid)) ok = mid;",
 			"\telse ng = mid;",
