@@ -90,7 +90,7 @@ int main(void) {
     // N進数以上
     ll n = 0;
     for(auto c : x) chmax(n, c - '0');
-    // Xの長さが1の時は、1か0しかありえない
+    // Xの長さが1の時は、答えが何でも蟻になってしまう
     if(x.size() == 1) {
         cout << (n <= m ? 1 : 0) << endl;
         return 0;
