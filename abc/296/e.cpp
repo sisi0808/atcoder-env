@@ -88,12 +88,13 @@ int main(void) {
     rep(i, n) cin >> a[i];
     rep(i, n) a[i]--;
 
+    // 強連結成分分解
     scc_graph g(n);
-    rep(i, n) {
-        g.add_edge(i, a[i]);
-    }
+    rep(i, n) g.add_edge(i, a[i]);
+
     ll ans = 0;
     for(auto v : g.scc()) {
+        // サイクルではない頂点の数
         if(v.size() == 1 && a[v[0]] != v[0]) ans++;
     }
     cout << n - ans << endl;
