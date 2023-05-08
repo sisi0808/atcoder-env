@@ -22,6 +22,12 @@ using namespace std;
 #define fi first
 #define se second
 
+#define print(x) cout << x << endl
+#define print2(x, y) cout << x << " " << y << endl
+
+// debug
+#define debug(x) cerr << #x << ":" << x << endl
+
 // alias g++='g++ -I/mnt/c/Users/Owner/Desktop/ac-library'
 using ll = long long;
 using ld = long double;
